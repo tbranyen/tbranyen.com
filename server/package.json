@@ -1,0 +1,21 @@
+{
+  "author": "Tim Branyen <tim@tabdeveloper.com> (@tbranyen)",
+  "name": "server",
+  "description": "tbranyen.com",
+  "version": "0.0.0",
+  "homepage": "http://tbranyen.com",
+  "repository": {
+    "type": "git",
+    "url": "tim@tabdeveloper.com:git/tbranyen.com"
+  },
+  "main": "lib/index",
+  "engines": {
+    "node": "~0.6.1"
+  },
+  "dependencies": {
+    "combyne": "*",
+    "express": "*",
+    "backbone": "*"
+  },
+  "devDependencies": {}
+}
