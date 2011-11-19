@@ -1,13 +1,7 @@
-Backbone = require("backbone");
-
-// Require libraries
+// Require process dependencies
 var os = require("os");
-var fs = require("fs");
 var readline = require("readline");
 var cluster = require("cluster");
-var express = require("express");
-var combyne = require("combyne");
-var content = require("./content");
 
 // Var up, bro
 var i, read;
@@ -92,6 +86,14 @@ process.on("message", function(msg) {
   }
 });
 
+// Require server dependencies
+Backbone = require("backbone");
+
+var combyne = require("combyne");
+var content = require("./content");
+var fs = require("fs");
+var express = require("express");
+
 // Create the site server
 var site = express.createServer();
 
@@ -103,26 +105,16 @@ function getLayout(name, callback) {
   });
 }
 
-//site.get("/", function(req, res) {
-//  var path = "posts/lua-tor-exit-nodes/";
-//
-//  getLayout("main", function(err, tmpl) {
-//    var headerContents = fs.readFileSync("../client/templates/header.html").toString();
-//    tmpl.partials.add("header", headerContents, {});
-//
-//    content.doc.assemble(path, function(html) {
-//      tmpl.partials.add("content", html, {});
-//
-//      res.send(tmpl.render());
-//    });
-//  });
-//});
-
-//site.get("/post/:id", function() {
-//
-//});
-
 // Serve static assets
-site.use("/", express.static("../client"));
+site.use("/assets", express.static("../client/assets"));
+
+// Homepage
+site.get("/", function(req, res) {
+  getLayout("index", function(err, tmpl) {
+    //tmpl.partials.add("content", html, {});
+
+    res.send(tmpl.render());
+  });
+});
 
 site.listen(1987);
