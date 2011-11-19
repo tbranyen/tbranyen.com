@@ -90,7 +90,7 @@ process.on("message", function(msg) {
 Backbone = require("backbone");
 
 var combyne = require("combyne");
-var content = require("./content");
+//var content = require("./content");
 var fs = require("fs");
 var express = require("express");
 
