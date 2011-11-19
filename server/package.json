@@ -8,14 +8,15 @@
     "type": "git",
     "url": "tim@tabdeveloper.com:git/tbranyen.com"
   },
-  "main": "lib/index",
+  "main": "lib/site",
   "engines": {
     "node": "~0.6.1"
   },
   "dependencies": {
     "combyne": "*",
     "express": "*",
-    "backbone": "*"
+    "backbone": "*",
+    "underscore": "*"
   },
   "devDependencies": {}
 }

@@ -1,10 +1,13 @@
+Backbone = require("backbone");
+
 // Require libraries
 var os = require("os");
 var fs = require("fs");
 var readline = require("readline");
 var cluster = require("cluster");
 var express = require("express");
-var site = express.createServer();
+var combyne = require("combyne");
+var content = require("./content");
 
 // Var up, bro
 var i, read;
@@ -89,17 +92,37 @@ process.on("message", function(msg) {
   }
 });
 
-// Serve static files
-site.use("/assets", express.static("../client/assets"));
-site.use("/lib", express.static("../client/lib"));
+// Create the site server
+var site = express.createServer();
 
-// API serving will happen here
-// site.use("/api", ...);
+function getLayout(name, callback) {
+  fs.readFile("../client/templates/layouts/" + name + ".html", function(err, buffer) {
+    if (err) { callback(err); }
 
-// Ensure all routes go home, client side app..
-site.get("*", function(req, res) {
-  res.end("Melancholia");
-});
+    callback(null, combyne(buffer.toString()));
+  });
+}
 
-// Actually listen
-site.listen(1444);
+//site.get("/", function(req, res) {
+//  var path = "posts/lua-tor-exit-nodes/";
+//
+//  getLayout("main", function(err, tmpl) {
+//    var headerContents = fs.readFileSync("../client/templates/header.html").toString();
+//    tmpl.partials.add("header", headerContents, {});
+//
+//    content.doc.assemble(path, function(html) {
+//      tmpl.partials.add("content", html, {});
+//
+//      res.send(tmpl.render());
+//    });
+//  });
+//});
+
+//site.get("/post/:id", function() {
+//
+//});
+
+// Serve static assets
+site.use("/", express.static("../client"));
+
+site.listen(1987);
