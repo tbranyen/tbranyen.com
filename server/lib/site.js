@@ -108,12 +108,37 @@ function getLayout(name, callback) {
 // Serve static assets
 site.use("/assets", express.static("../client/assets"));
 
+// Post
+site.get("/post/:id", function(req, res) {
+  getLayout("index", function(err, tmpl) {
+    tmpl.delimiters = {
+      FILTER: "`"
+    };
+
+    fs.readFile("../client/templates/post.html", function(err, buf) {
+      tmpl.partials.add("content", buf.toString(), {});
+
+      res.send(tmpl.render({
+        post_active: "active"
+      }));
+    });
+  });
+});
+
 // Homepage
 site.get("/", function(req, res) {
   getLayout("index", function(err, tmpl) {
-    //tmpl.partials.add("content", html, {});
+    tmpl.delimiters = {
+      FILTER: "`"
+    };
 
-    res.send(tmpl.render());
+    fs.readFile("../client/templates/home.html", function(err, buf) {
+      tmpl.partials.add("content", buf.toString(), {});
+
+      res.send(tmpl.render({
+        post_active: "active"
+      }));
+    });
   });
 });
 
