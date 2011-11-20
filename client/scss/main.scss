@@ -1,14 +1,29 @@
 @import "vendor/base";
-@import "vendor/layout";
 @import "vendor/skeleton";
 
-// SITE
+/*
+* Skeleton V1.1
+* Copyright 2011, Dave Gamache
+* www.getskeleton.com
+* Free to use under the MIT license.
+* http://www.opensource.org/licenses/mit-license.php
+* 8/17/2011
+*/
+
+/* Table of Content
+==================================================
+	#Site Styles
+	#Page Styles
+	#Media Queries
+	#Font-Face */
+
+/* #Site Styles
+================================================== */
 
 body {
   background: url("/assets/img/polaroid.png");
 }
 
-// Container styles
 .container {
   header {
     margin-top: 40px;
@@ -16,7 +31,8 @@ body {
     h1 {
       color: #444;
       font-size: 65px;
-      font-family: HelveticaNeue, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-family: "Raleway Thin", HelveticaNeue, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-weight: bold;
     }
 
     hr {
@@ -27,6 +43,18 @@ body {
       font-size: 20px;
       position: relative;
       top: -10px;
+      float: left;
+
+      a {
+        padding: 5px 15px 5px 15px;
+        background: #FFF;
+
+        text-decoration: none;
+      }
+
+      a:first-child {
+        margin-left: 0;
+      }
 
       a, a:visited {
         color: #75bcfe;
@@ -34,7 +62,24 @@ body {
       }
 
       a:hover {
-        color: #fecf75;
+        color: #ff4f4f;
+      }
+
+      a.active {
+        background: #ff4f4f;
+        color: #FFF;
+      }
+    }
+
+    aside {
+      height: 32px;
+      position: relative;
+      top: -14px;
+      text-align: right;
+      margin-: 5px;
+
+      img {
+        opacity: .5;
       }
     }
   }
@@ -84,3 +129,47 @@ body {
     }
   }
 }
+
+/* #Page Styles
+================================================== */
+
+/* #Media Queries
+================================================== */
+
+	/* Smaller than standard 960 (devices and browsers) */
+	@media only screen and (max-width: 959px) {}
+
+	/* Tablet Portrait size to standard 960 (devices and browsers) */
+	@media only screen and (min-width: 768px) and (max-width: 959px) {}
+
+	/* All Mobile Sizes (devices and browser) */
+	@media only screen and (max-width: 767px) {}
+
+	/* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
+	@media only screen and (min-width: 480px) and (max-width: 767px) {}
+
+	/* Mobile Portrait Size to Mobile Landscape Sizebrowsers) */
+	@media only screen and (max-width: 479px) {}
+
+
+/* #Font-Face
+================================================== */
+
+/*
+@font-face {
+  font-family: "Raleway Thin";
+  src: url("/assets/font/raleway_thin-webfont.eot");
+  src: local("☺"),
+    url("/assets/font/raleway_thin-webfont.woff") format("woff"),
+    url("/assets/font/raleway_thin-webfont.otf") format("opentype"),
+    url("/assets/font/raleway_thin-webfont.svg#raleway") format("svg");
+  };  
+
+@media screen and (max-device-width: 480px) {
+  @font-face {
+    font-family: "Raleway Thin";
+    src: url("/assets/font/raleway_thin-webfont.woff") format("woff"),
+    url("/assets/font/raleway_thin-webfont.otf") format("opentype"),
+    url("/assets/font/raleway_thin-webfont.svg#raleway") format("svg");
+}};
+*/
