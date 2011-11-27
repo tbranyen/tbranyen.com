@@ -860,6 +860,9 @@ or wrap each row of columns in a <div class="row"> */
 	#Font-Face */
 /* #Site Styles
 ================================================== */
+body {
+  background: url("/assets/img/dotnoise.png"); }
+
 .container .nav {
   padding: 5px 15px 5px 15px;
   background: #FFF;
@@ -873,7 +876,8 @@ or wrap each row of columns in a <div class="row"> */
   background: #ff4f4f;
   color: #FFF; }
 .container .nav.return {
-  padding-left: 0px; }
+  padding-left: 0px;
+  background: none; }
 .container header {
   margin-top: 40px; }
   .container header h1 {
@@ -938,6 +942,10 @@ or wrap each row of columns in a <div class="row"> */
       color: #FFF; }
     .container .intro div p {
       color: #CCC; }
+.container footer {
+  font-family: "Raleway Thin", HelveticaNeue, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 20px;
+  color: #75BCFE; }
 
 /* #Page Styles
 ================================================== */

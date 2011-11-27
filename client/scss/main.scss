@@ -21,7 +21,7 @@
 ================================================== */
 
 body {
-//  background: url("/assets/img/polaroid.png");
+  background: url("/assets/img/dotnoise.png");
 }
 
 .container {
@@ -48,6 +48,7 @@ body {
 
   .nav.return {
     padding-left: 0px;
+    background: none;
   }
 
   header {
@@ -158,7 +159,14 @@ body {
       }
     }
   }
+
+  footer {
+    font-family: "Raleway Thin", HelveticaNeue, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 20px;
+    color: #75BCFE;
+  }
 }
+
 
 /* #Page Styles
 ================================================== */
