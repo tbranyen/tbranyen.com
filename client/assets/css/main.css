@@ -914,10 +914,13 @@ body {
     padding-bottom: 10px;
     margin-bottom: 30px; }
     .container section .post h2 {
-      color: #444444; }
+      color: #444444;
+      font-size: 32px; }
+    .container section .post h3 {
+      font-size: 26px; }
     .container section .post p {
       line-height: 170%;
-      font-size: 18px;
+      font-size: 16px;
       font-family: "Georgia", "Times New Roman", Helvetica, Arial, sans-serif; }
   .container section li.post a {
     text-decoration: none; }

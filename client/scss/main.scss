@@ -120,11 +120,16 @@ body {
 
       h2 {
         color: $dark-gray;
+        font-size: 32px;
+      }
+
+      h3 {
+        font-size: 26px;
       }
 
       p {
         line-height: 170%;
-        font-size: 18px;
+        font-size: 16px;
         font-family: "Georgia", "Times New Roman", Helvetica, Arial, sans-serif;
       }
     }
