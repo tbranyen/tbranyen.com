@@ -158,6 +158,23 @@ function getLayout(name, callback) {
 // Serve static assets
 site.use("/assets", express.static("../client/assets"));
 
+// Resume
+site.get("/resume", function(req, res) {
+  getLayout("index", function(err, tmpl) {
+    tmpl.delimiters = {
+      FILTER: "`"
+    };
+
+    fs.readFile("../client/templates/resume.html", function(err, buf) {
+      tmpl.partials.add("content", buf.toString(), {});
+
+      res.send(tmpl.render({
+        resume_active: "active",
+      }));
+    });
+  });
+});
+
 // Projects
 site.get("/projects", function(req, res) {
   getLayout("index", function(err, tmpl) {

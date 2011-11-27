@@ -107,49 +107,6 @@ body {
   section {
     margin-top: 15px;
     margin-bottom: 30px;
-
-    .date {
-      text-transform: uppercase;
-      font-weight: bold;
-      font-size: 14px;
-      color: $light-gray;
-      margin-bottom: 10px;
-      display: inline-block;
-    }
-
-    .post {
-      padding-bottom: 10px;
-      margin-bottom: 30px;
-
-      h2 {
-        color: $dark-gray;
-        font-size: 32px;
-      }
-
-      h3 {
-        font-size: 26px;
-      }
-
-      p {
-        line-height: 170%;
-        font-size: 16px;
-        font-family: "Georgia", "Times New Roman", Helvetica, Arial, sans-serif;
-      }
-    }
-
-    li.post {
-      a {
-        text-decoration: none;
-      }
-
-      &:not(:last-child) {
-        border-bottom: 1px solid $light-gray;
-      }
-
-      &:not(:first-child) {
-        opacity: .4;
-      }
-    }
   }
 
   .intro {
@@ -198,6 +155,51 @@ body {
 /* #Page Styles
 ================================================== */
 
+.post-page {
+  .date {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 14px;
+    color: $light-gray;
+    margin-bottom: 10px;
+    display: inline-block;
+  }
+
+  .post {
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+
+    h2 {
+      color: $dark-gray;
+      font-size: 32px;
+    }
+
+    h3 {
+      font-size: 26px;
+    }
+
+    p {
+      line-height: 170%;
+      font-size: 16px;
+      font-family: "Georgia", "Times New Roman", Helvetica, Arial, sans-serif;
+    }
+  }
+
+  li.post {
+    a {
+      text-decoration: none;
+    }
+
+    &:not(:last-child) {
+      border-bottom: 1px solid $light-gray;
+    }
+
+    &:not(:first-child) {
+      opacity: .4;
+    }
+  }
+}
+
 .projects-page {
   .fork {
     display: inline-block;
@@ -212,7 +214,7 @@ body {
     margin-bottom: 10px;
     padding: 10px;
     position: relative;
-    background-color: $white;
+    background: $white;
     opacity: .6;
     box-shadow: 0px 0px 10px $light-gray;
 
@@ -229,6 +231,14 @@ body {
   
   .project:hover {
     opacity: 1;
+  }
+}
+
+.resume-page {
+  background: $white;
+
+  > div {
+    padding: 10px;
   }
 }
 
