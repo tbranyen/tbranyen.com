@@ -1,15 +1,30 @@
-    <section class="sixteen columns">
-      <p>
-        <a class="nav return" href="/">Back to Posts</a>
-      </p>
+    <section class="sixteen columns projects-page">
+      <h2>My Open Source Projects</h2>
+      {%if mine.length%}
+      <ul class="projects clearfix">
+        {%each mine as project%}
+        <li class="project">
+          <h3 class="name">{{project.name}}</h3>
+          <p class="description">{{project.description}}</p>
 
-      <div class="post">
-        <span class="date">Saturday, Nov 19, 2011</span>
-        <h2>Integrating Phonegap NativeControls with Backbone Views</h2>
-        <hr>
+          <span><a target="_blank" href="{{project.url}}">GitHub</a> | {{project.watchers}} watchers and {{project.forks}} forks</span>
+        </li>
+        {%endeach%}
+      </ul>
+      {%else%}
+      <p>I have no open source projects right now.</p>
+      {%endif%}
 
-        <h3>Backbone.View</h3>
-
-      </div>   
-
+      <h2 class="">Open Source Projects I Contribute To</h2>
+      {%if forks.length%}
+      <ul class="projects">
+        {%each forks as project%}
+        <li class="fork">
+          <a target="_blank" href="{{project.url}}">{{project.name}}</a>,
+        </li>
+        {%endeach%}
+      </ul>
+      {%else%}
+      <p>I have no open source projects right now.</p>
+      {%endif%}
     </section>

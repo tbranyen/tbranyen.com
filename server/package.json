@@ -16,7 +16,8 @@
     "combyne": "*",
     "express": "*",
     "backbone": "*",
-    "underscore": "*"
+    "underscore": "*",
+    "request": "*"
   },
   "devDependencies": {}
 }
