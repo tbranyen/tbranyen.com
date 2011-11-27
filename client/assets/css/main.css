@@ -865,10 +865,10 @@ body {
   padding: 5px 15px 5px 15px;
   background: white;
   text-decoration: none; }
-.container .nav, .container .nav:visited {
+.container a, .container a:visited {
   color: #75bcfe;
   font-weight: bold; }
-.container .nav:hover {
+.container a:hover {
   color: #fdd577; }
 .container .nav.active {
   background: #fdd577;
@@ -939,17 +939,16 @@ body {
     .container .intro div strong {
       color: white; }
     .container .intro div p {
-      color: #cccccc; }
+      color: #cccccc;
+      margin-bottom: 5px; }
 .container footer {
   font-family: "Raleway Thin", HelveticaNeue, "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 20px;
   margin-bottom: 20px;
-  color: #75bcfe; }
+  color: #555555; }
   .container footer a {
-    color: #fdd577;
+    color: #75bcfe;
     text-decoration: none; }
-  .container footer a.dark {
-    color: #444444; }
 
 /* #Media Queries
 ================================================== */
