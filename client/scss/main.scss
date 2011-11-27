@@ -12,10 +12,21 @@
 
 /* Table of Content
 ==================================================
+	#Colors
 	#Site Styles
-	#Page Styles
 	#Media Queries
 	#Font-Face */
+
+/* #Site Styles
+================================================== */
+
+$white: #FFFFFF;
+$gray: #555555;
+$light-gray: #CCCCCC;
+$dark-gray: #444444;
+$orange: #FDD577;
+$light-orange: #FEDF95;
+$blue: #75BCFE;
 
 /* #Site Styles
 ================================================== */
@@ -27,23 +38,23 @@ body {
 .container {
   .nav {
     padding: 5px 15px 5px 15px;
-    background: #FFF;
+    background: $white;
 
     text-decoration: none;
   }
 
   .nav, .nav:visited {
-    color: #75bcfe;
+    color: $blue;
     font-weight: bold;
   }
 
   .nav:hover {
-    color: #fedf95;
+    color: $orange;
   }
 
   .nav.active {
-    background: #fedf95;
-    color: #FFF;
+    background: $orange;
+    color: $white;
   }
 
   .nav.return {
@@ -55,7 +66,7 @@ body {
     margin-top: 40px;
 
     h1 {
-      color: #444;
+      color: $dark-gray;
       font-size: 65px;
       font-family: "Raleway Thin", HelveticaNeue, "Helvetica Neue", Helvetica, Arial, sans-serif;
       font-weight: bold;
@@ -98,7 +109,7 @@ body {
       text-transform: uppercase;
       font-weight: bold;
       font-size: 14px;
-      color: #CCC;
+      color: $light-gray;
       margin-bottom: 10px;
       display: inline-block;
     }
@@ -108,7 +119,7 @@ body {
       margin-bottom: 30px;
 
       h2 {
-        color: #333;
+        color: $dark-gray;
       }
 
       p {
@@ -124,7 +135,7 @@ body {
       }
 
       &:not(:last-child) {
-        border-bottom: 1px solid #CCC;
+        border-bottom: 1px solid $light-gray;
       }
 
       &:not(:first-child) {
@@ -134,28 +145,28 @@ body {
   }
 
   .intro {
-    background-color: #444;
+    background-color: $dark-gray;
 
     div {
       padding: 10px;
 
       h3 {
-        color: #CCC;
+        color: $light-orange;
       }
 
       img {
         float: left;
         margin-right: 15px;
         height: 80px;
-        border: 3px solid #555;
+        border: 3px solid $gray;
       }
 
       strong {
-        color: #FFF;
+        color: $white;
       }
 
       p {
-        color: #CCC;
+        color: $light-gray;
       }
     }
   }
@@ -163,13 +174,20 @@ body {
   footer {
     font-family: "Raleway Thin", HelveticaNeue, "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 20px;
-    color: #75BCFE;
+    margin-bottom: 20px;
+
+    color: $blue;
+
+    a {
+      color: $orange;
+      text-decoration: none;
+    }
+
+    a.dark {
+      color: $dark-gray;
+    }
   }
 }
-
-
-/* #Page Styles
-================================================== */
 
 /* #Media Queries
 ================================================== */

@@ -850,10 +850,12 @@ or wrap each row of columns in a <div class="row"> */
 */
 /* Table of Content
 ==================================================
+	#Colors
 	#Site Styles
-	#Page Styles
 	#Media Queries
 	#Font-Face */
+/* #Site Styles
+================================================== */
 /* #Site Styles
 ================================================== */
 body {
@@ -861,23 +863,23 @@ body {
 
 .container .nav {
   padding: 5px 15px 5px 15px;
-  background: #FFF;
+  background: white;
   text-decoration: none; }
 .container .nav, .container .nav:visited {
   color: #75bcfe;
   font-weight: bold; }
 .container .nav:hover {
-  color: #fedf95; }
+  color: #fdd577; }
 .container .nav.active {
-  background: #fedf95;
-  color: #FFF; }
+  background: #fdd577;
+  color: white; }
 .container .nav.return {
   padding-left: 0px;
   background: none; }
 .container header {
   margin-top: 40px; }
   .container header h1 {
-    color: #444;
+    color: #444444;
     font-size: 65px;
     font-family: "Raleway Thin", HelveticaNeue, "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: bold; }
@@ -905,14 +907,14 @@ body {
     text-transform: uppercase;
     font-weight: bold;
     font-size: 14px;
-    color: #CCC;
+    color: #cccccc;
     margin-bottom: 10px;
     display: inline-block; }
   .container section .post {
     padding-bottom: 10px;
     margin-bottom: 30px; }
     .container section .post h2 {
-      color: #333; }
+      color: #444444; }
     .container section .post p {
       line-height: 170%;
       font-size: 18px;
@@ -920,31 +922,35 @@ body {
   .container section li.post a {
     text-decoration: none; }
   .container section li.post:not(:last-child) {
-    border-bottom: 1px solid #CCC; }
+    border-bottom: 1px solid #cccccc; }
   .container section li.post:not(:first-child) {
     opacity: .4; }
 .container .intro {
-  background-color: #444; }
+  background-color: #444444; }
   .container .intro div {
     padding: 10px; }
     .container .intro div h3 {
-      color: #CCC; }
+      color: #fedf95; }
     .container .intro div img {
       float: left;
       margin-right: 15px;
       height: 80px;
-      border: 3px solid #555; }
+      border: 3px solid #555555; }
     .container .intro div strong {
-      color: #FFF; }
+      color: white; }
     .container .intro div p {
-      color: #CCC; }
+      color: #cccccc; }
 .container footer {
   font-family: "Raleway Thin", HelveticaNeue, "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 20px;
-  color: #75BCFE; }
+  margin-bottom: 20px;
+  color: #75bcfe; }
+  .container footer a {
+    color: #fdd577;
+    text-decoration: none; }
+  .container footer a.dark {
+    color: #444444; }
 
-/* #Page Styles
-================================================== */
 /* #Media Queries
 ================================================== */
 /* Smaller than standard 960 (devices and browsers) */
