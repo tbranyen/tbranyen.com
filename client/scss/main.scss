@@ -1,6 +1,6 @@
 @import "vendor/base";
 @import "vendor/skeleton";
-@import "vendor/solarized_light";
+@import "vendor/zenburn";
 
 /*
 * Skeleton V1.1
@@ -187,7 +187,13 @@ body {
   }
 
   code {
+    font-family: Courier;
+    font-size: 13px;
+    background: $dark-gray;
+    padding: 20px;
+    line-height: 18px;
     box-shadow: 0px 0px 10px $light-gray;
+    margin-bottom: 15px;
   }
 
   li.post {
