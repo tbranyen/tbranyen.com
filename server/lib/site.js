@@ -112,9 +112,17 @@ var Projects = Backbone.Collection.extend({
 
   sync: function(method, model, options) {
     request(model.url(), function(error, response, body) {
-      if (error) { return options.error(error); }
+      var data = JSON.parse(body);
 
-      return options.success(JSON.parse(body));
+      if (!data.length) {
+        model.page = 1;
+        return options.success(model.models);
+      }
+
+      model.add(data, { silent: true });
+
+      model.page = model.page + 1;
+      model.fetch();
     });
   },
 
@@ -122,8 +130,10 @@ var Projects = Backbone.Collection.extend({
     return -1 * new Date(project.get("pushed_at"));
   },
 
+  page: 1,
+
   url: function() {
-    return "https://api.github.com/users/" + this.owner + "/repos";
+    return "https://api.github.com/users/" + this.owner + "/repos?page=" + this.page;
   },
 
   initialize: function(models, options) {
@@ -167,15 +177,17 @@ var Posts = Backbone.Collection.extend({
     
     fs.readdir("../site-content/posts/", function(err, files) {
       files.forEach(function(file) {
-        content.doc.meta(file + "/", function(meta) {
-          meta.metadata.path = file + "/";
-          metadata.push(meta.metadata);
-          count++;
+        if (file[0] !== ".") {
+          content.doc.meta(file + "/", function(meta) {
+            meta.metadata.path = file + "/";
+            metadata.push(meta.metadata);
+            count++;
 
-          if (count === files.length) {
-            options.success(metadata);
-          }
-        });
+            if (count === files.length) {
+              options.success(metadata);
+            }
+          });
+        }
       });
     });
   }
