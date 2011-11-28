@@ -44,6 +44,12 @@ if (cluster.isMaster) {
       destroy();
 
       process.exit(0);
+    },
+
+    "refresh": function() {
+      forks.forEach(function(fork) {
+        fork.send({ cmd: "refresh" });
+      });
     }
   };
 
@@ -79,10 +85,16 @@ if (cluster.isMaster) {
   return;
 }
 
-// Kill off the process
 process.on("message", function(msg) {
-  if (msg.cmd && msg.cmd == "kill") {
-    process.exit();
+  switch (msg.cmd) {
+    case "kill":
+      process.exit();
+      break;
+
+    case "refresh":
+      all.fetch();
+      posts.fetch();
+      break;
   }
 });
 
@@ -212,88 +224,107 @@ site.use("/assets", express.static("../client/assets"));
 
 // Resume
 site.get("/resume", function(req, res) {
-  getLayout("index", function(err, tmpl) {
-    tmpl.delimiters = {
-      FILTER: "`"
-    };
+  try {
+    getLayout("index", function(err, tmpl) {
+      tmpl.delimiters = {
+        FILTER: "`"
+      };
 
-    fs.readFile("../client/templates/resume.html", function(err, buf) {
-      tmpl.partials.add("content", buf.toString(), {});
+      fs.readFile("../client/templates/resume.html", function(err, buf) {
+        tmpl.partials.add("content", buf.toString(), {});
 
-      res.send(tmpl.render({
-        resume_active: "active",
-      }));
+        res.send(tmpl.render({
+          resume_active: "active",
+        }));
+      });
     });
-  });
+  } catch(ex) {
+    res.send("internal error");
+  }
 });
 
 // Projects
 site.get("/projects", function(req, res) {
-  getLayout("index", function(err, tmpl) {
-    tmpl.delimiters = {
-      FILTER: "`"
-    };
+  try {
+    getLayout("index", function(err, tmpl) {
+      tmpl.delimiters = {
+        FILTER: "`"
+      };
 
-    fs.readFile("../client/templates/projects.html", function(err, buf) {
-      tmpl.partials.add("content", buf.toString(), {
-        mine: mine.toJSON(),
-        forks: forks.toJSON()
+      fs.readFile("../client/templates/projects.html", function(err, buf) {
+        tmpl.partials.add("content", buf.toString(), {
+          mine: mine.toJSON(),
+          forks: forks.toJSON()
+        });
+
+        res.send(tmpl.render({
+          projects_active: "active",
+        }));
       });
-
-      res.send(tmpl.render({
-        projects_active: "active",
-      }));
     });
-  });
+  } catch(ex) {
+    res.send("internal error");
+  }
 });
 
 // Post
 site.get("/post/:id", function(req, res) {
-  getLayout("index", function(err, tmpl) {
-    tmpl.delimiters = {
-      FILTER: "`"
-    };
+    getLayout("index", function(err, tmpl) {
+      tmpl.delimiters = {
+        FILTER: "`"
+      };
 
-    fs.readFile("../client/templates/post.html", function(err, buf) {
-      tmpl.filters.add("formatDate", function(date) {
-        return moment(date).format("dddd, MMM D, YYYY");
-      });
-
-      var post = posts.get(req.params.id).toJSON();
-
-      content.doc.assemble(post.path, function(html) {
-        tmpl.partials.add("content", buf.toString(), {
-          post: post,
-          content: html
+      fs.readFile("../client/templates/post.html", function(err, buf) {
+        tmpl.filters.add("formatDate", function(date) {
+          return moment(date).format("dddd, MMM D, YYYY");
         });
 
-        res.send(tmpl.render({ post_active: "active" }));
+        try {
+          var post = posts.get(req.params.id).toJSON();
+
+          content.doc.assemble(post.path, function(html) {
+            tmpl.partials.add("content", buf.toString(), {
+              post: post,
+              content: html
+            });
+
+            res.send(tmpl.render({ post_active: "active" }));
+          });
+        } catch(ex) {
+          res.send("internal error");
+        }
       });
     });
-  });
 });
+
+function home(req, res) {
+  try {
+    getLayout("index", function(err, tmpl) {
+      tmpl.delimiters = {
+        FILTER: "`"
+      };
+
+      fs.readFile("../client/templates/home.html", function(err, buf) {
+        tmpl.filters.add("formatDate", function(date) {
+          return moment(date).format("dddd, MMM D, YYYY");
+        });
+
+        tmpl.partials.add("content", buf.toString(), {
+          posts: posts.toJSON()
+        });
+
+        res.send(tmpl.render({
+          post_active: "active"
+        }));
+      });
+    });
+  } catch(ex) {
+    res.send("internal error");
+  }
+}
 
 // Homepage
-site.get("/", function(req, res) {
-  getLayout("index", function(err, tmpl) {
-    tmpl.delimiters = {
-      FILTER: "`"
-    };
-
-    fs.readFile("../client/templates/home.html", function(err, buf) {
-      tmpl.filters.add("formatDate", function(date) {
-        return moment(date).format("dddd, MMM D, YYYY");
-      });
-
-      tmpl.partials.add("content", buf.toString(), {
-        posts: posts.toJSON()
-      });
-
-      res.send(tmpl.render({
-        post_active: "active"
-      }));
-    });
-  });
-});
+site.get("/", home);
+site.get("*", home);
 
 site.listen(1987);
