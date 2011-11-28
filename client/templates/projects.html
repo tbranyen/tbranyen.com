@@ -1,5 +1,6 @@
     <section class="sixteen columns projects-page">
       <h2>My Open Source Projects</h2>
+      {%if mine.length%}
       <ul class="projects clearfix">
         {%each mine as project%}
         <li class="project">
@@ -10,13 +11,24 @@
         </li>
         {%endeach%}
       </ul>
+      {%else%}
+      <p>I have no open source projects right now.</p>
+      {%endif%}
 
       <h2 class="">Open Source Projects I Contribute To</h2>
+      {%if forks.length%}
       <ul class="projects">
         {%each forks as project%}
         <li class="fork">
-          <a target="_blank" href="{{project.url}}">{{project.name}}</a>{%if original.length > i%},{%endif%}
+          {%if original.length > i%}
+          <a target="_blank" href="{{project.url}}">{{project.name}}</a>, 
+          {%else%}
+          and <a target="_blank" href="{{project.url}}">{{project.name}}</a>
+          {%endif%}
         </li>
         {%endeach%}
       </ul>
+      {%else%}
+      <p>I have no open source projects right now.</p>
+      {%endif%}
     </section>
