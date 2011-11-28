@@ -90,26 +90,28 @@ process.on("message", function(msg) {
 Backbone = require("backbone");
 
 var combyne = require("combyne");
-//var content = require("./content");
+var content = require("./content");
 var fs = require("fs");
 var express = require("express");
-
-Backbone.sync = function(method, model, options) {
-  return options.success(require("./content/github.json"));
-};
+var request = require("request");
+var moment = require("moment");
 
 var Projects = Backbone.Collection.extend({
 
-  //parse: function(response) {
-  //  return response.repositories;
-  //},
+  sync: function(method, model, options) {
+    request(model.url(), function(error, response, body) {
+      if (error) { return options.error(error); }
+
+      return options.success(JSON.parse(body));
+    });
+  },
 
   comparator: function(project) {
     return -1 * new Date(project.get("pushed_at"));
   },
 
   url: function() {
-    return "http://github.com/api/v2/json/repos/show/" + this.owner;
+    return "https://api.github.com/users/" + this.owner + "/repos";
   },
 
   initialize: function(models, options) {
@@ -119,30 +121,80 @@ var Projects = Backbone.Collection.extend({
 });
 
 // Set the projects collection to tbranyen
-var projects = new Projects([], { owner: "tbranyen" });
+var all = new Projects([], { owner: "tbranyen" });
 var mine = new Projects();
 var forks = new Projects();
 
+var Post = Backbone.Model.extend({
+
+  idAttribute: "slug",
+
+  initialize: function() {
+    this.set({ slug: this.slugify() });
+  },
+
+  slugify: function(title) {
+    return this.get("title").toLowerCase().replace(/ /g, "-")
+      .replace(/[^\w-]+/g, "");
+  }
+
+});
+
+// TODO: Update this to pull directly from Git
+// Posts collection
+var Posts = Backbone.Collection.extend({
+  model: Post,
+
+  comparator: function(post) {
+    return -1 * new Date(post.get("posted"));
+  },
+
+  sync: function(method, model, options) {
+    var metadata = [];
+    var count = 0;
+    
+    fs.readdir("../site-content/posts/", function(err, files) {
+      files.forEach(function(file) {
+        content.doc.meta(file + "/", function(meta) {
+          meta.metadata.path = file + "/";
+          metadata.push(meta.metadata);
+          count++;
+
+          if (count === files.length) {
+            options.success(metadata);
+          }
+        });
+      });
+    });
+  }
+});
+
+var posts = new Posts();
+
 // When its filled...
-projects.bind("reset", function() {
-  mine.reset(projects.filter(function(project) {
+all.bind("reset", function() {
+  // Get only my repos
+  mine.reset(all.filter(function(project) {
     return !project.get("fork");
   }));
 
-  forks.reset(projects.filter(function(project) {
+  // Get all my forks
+  forks.reset(all.filter(function(project) {
     return project.get("fork");
   }));
 });
 
-// Fetch all projects
+// Fetch all projects and posts once a day
 setInterval(function() {
-  projects.fetch();
+  all.fetch();
+  posts.fetch();
 
 // Update once per day
 }, 1 * 24 * 3600000);
 
 // Always fetch immediately
-projects.fetch();
+posts.fetch();
+all.fetch();
 
 // Create the site server
 var site = express.createServer();
@@ -203,11 +255,20 @@ site.get("/post/:id", function(req, res) {
     };
 
     fs.readFile("../client/templates/post.html", function(err, buf) {
-      tmpl.partials.add("content", buf.toString(), {});
+      tmpl.filters.add("formatDate", function(date) {
+        return moment(date).format("dddd, MMM D, YYYY");
+      });
 
-      res.send(tmpl.render({
-        post_active: "active"
-      }));
+      var post = posts.get(req.params.id).toJSON();
+
+      content.doc.assemble(post.path, function(html) {
+        tmpl.partials.add("content", buf.toString(), {
+          post: post,
+          content: html
+        });
+
+        res.send(tmpl.render({ post_active: "active" }));
+      });
     });
   });
 });
@@ -220,7 +281,13 @@ site.get("/", function(req, res) {
     };
 
     fs.readFile("../client/templates/home.html", function(err, buf) {
-      tmpl.partials.add("content", buf.toString(), {});
+      tmpl.filters.add("formatDate", function(date) {
+        return moment(date).format("dddd, MMM D, YYYY");
+      });
+
+      tmpl.partials.add("content", buf.toString(), {
+        posts: posts.toJSON()
+      });
 
       res.send(tmpl.render({
         post_active: "active"

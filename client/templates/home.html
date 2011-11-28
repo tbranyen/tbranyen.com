@@ -1,18 +1,17 @@
     <section class="sixteen columns post-page">
+      {%if posts.length%}
       <ul class="posts">
+        {%each posts as post%}
         <li class="post">
-          <a href="/post/5">
-            <span class="date">Saturday, Nov 19, 2011</span>
-            <h2>Integrating Phonegap NativeControls with Backbone Views</h2>
+          <a href="/post/{{post.slug}}">
+            <span class="date">{{post.posted`formatDate}}</span>
+            <!--<span class="date">Saturday, Nov 19, 2011</span>-->
+            <h2>{{post.title}}</h2>
           </a>
         </li>
-        <li class="post">
-          <span class="date">Tuesday, Aug 30, 2010</span>
-          <h2>Lua code complete to identify Tor exit nodes</h2>
-        </li>
-        <li class="post">
-          <span class="date">Thursday, Jun 1, 2005</span>
-          <h2>Increasing JavaScript Array Performance</h2>
-        </li>
+        {%endeach%}
       </ul>
+      {%else%}
+        No posts written yet.
+      {%endif%}
     </section>
