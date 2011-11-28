@@ -7,7 +7,7 @@
           <h3 class="name">{{project.name}}</h3>
           <p class="description">{{project.description}}</p>
 
-          <span>On <a target="_blank" href="{{project.url}}">GitHub</a>, has {{project.watchers}} watchers and {{project.forks}} forks.</span>
+          <span>On <a target="_blank" href="{{project.html_url}}">GitHub</a>, has {{project.watchers}} watchers and {{project.forks}} forks.</span>
         </li>
         {%endeach%}
       </ul>
@@ -20,9 +20,9 @@
         {%each forks as project%}
         <li class="fork">
           {%if original.length > i%}
-          <a target="_blank" href="{{project.url}}">{{project.name}}</a>, 
+          <a target="_blank" href="{{project.html_url}}">{{project.name}}</a>, 
           {%else%}
-          and <a target="_blank" href="{{project.url}}">{{project.name}}</a>
+          and <a target="_blank" href="{{project.html_url}}">{{project.name}}</a>
           {%endif%}
         </li>
         {%endeach%}
