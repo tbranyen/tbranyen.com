@@ -274,6 +274,7 @@ site.get("/projects", function(req, res) {
         });
 
         res.send(tmpl.render({
+          title: "Projects | Tim Branyen @tbranyen",
           projects_active: "active",
         }));
       });
@@ -304,7 +305,10 @@ site.get("/post/:id", function(req, res) {
               content: html
             });
 
-            res.send(tmpl.render({ post_active: "active" }));
+            res.send(tmpl.render({
+              title: post.title + " | Tim Branyen @tbranyen",
+              post_active: "active"
+            }));
           });
         } catch(ex) {
           res.send("internal error");
@@ -330,6 +334,7 @@ function home(req, res) {
         });
 
         res.send(tmpl.render({
+          title: "Tim Branyen @tbranyen",
           post_active: "active"
         }));
       });
