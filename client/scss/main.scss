@@ -186,7 +186,7 @@ body {
     }
   }
 
-  iframe, code {
+  code {
     font-family: Courier;
     font-size: 13px;
     background: $dark-gray;
@@ -197,6 +197,10 @@ body {
   }
 
   li.post {
+    iframe {
+      box-shadow: 0px 0px 10px $light-gray;
+    }
+
     a {
       text-decoration: none;
     }
