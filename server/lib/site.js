@@ -92,8 +92,12 @@ process.on("message", function(msg) {
       break;
 
     case "refresh":
+      all.reset([]);
       all.fetch();
+
+      posts.reset([]);
       posts.fetch();
+
       break;
   }
 });
