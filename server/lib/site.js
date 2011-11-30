@@ -237,7 +237,7 @@ posts.bind("reset", function() {
       title: post.get("title"),
       description: post.get("title"),
       date: post.get("posted"),
-      url: "http://tbranyen.com/" + post.id
+      url: "http://tbranyen.com/post/" + post.id
     });
   }, posts);
 });
