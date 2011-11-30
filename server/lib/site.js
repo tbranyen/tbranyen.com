@@ -111,6 +111,7 @@ var fs = require("fs");
 var express = require("express");
 var request = require("request");
 var moment = require("moment");
+var RSS = require("rss");
 
 var Projects = Backbone.Collection.extend({
 
@@ -180,7 +181,8 @@ var Posts = Backbone.Collection.extend({
     var count = 0;
     
     fs.readdir("../site-content/posts/", function(err, files) {
-      files.forEach(function(file) {
+      // Ensure there are files
+      files && files.forEach(function(file) {
         if (file[0] !== ".") {
           content.doc.meta(file + "/", function(meta) {
             meta.metadata.path = file + "/";
@@ -193,6 +195,21 @@ var Posts = Backbone.Collection.extend({
           });
         }
       });
+    });
+  },
+
+  rss: function() {
+    return this.feed.xml();
+  },
+
+  initialize: function() {
+    this.feed = new RSS({
+      title: "Tim Branyen @tbranyen",
+      description: "JavaScript and web technology updates.",
+      feed_url: "http://tbranyen.com/rss.xml",
+      site_url: "http://tbranyen.com",
+      image_url: "",
+      author: "Tim Branyen @tbranyen"
     });
   }
 });
@@ -212,13 +229,28 @@ all.bind("reset", function() {
   }));
 });
 
+// When posts are updated add to the feed
+posts.bind("reset", function() {
+  // Add each post into the rss feed
+  posts.each(function(post) {
+    this.feed.item({
+      title: post.get("title"),
+      description: post.get("title"),
+      date: post.get("posted")
+    });
+  }, posts);
+});
+
 // Fetch all projects and posts once a day
 setInterval(function() {
+  all.reset([]);
   all.fetch();
+
+  posts.reset([]);
   posts.fetch();
 
-// Update once per day
-}, 1 * 24 * 3600000);
+// Update every hour
+}, 3600000);
 
 // Always fetch immediately
 posts.fetch();
@@ -343,6 +375,11 @@ function home(req, res) {
     res.send("internal error");
   }
 }
+
+site.get("/rss.xml", function(req, res) {
+  res.writeHead(200, { "Content-Type": "application/rss+xml" });
+  res.end(posts.rss());
+});
 
 // Homepage
 site.get("/", home);

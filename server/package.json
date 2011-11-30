@@ -20,7 +20,8 @@
     "request": "*",
     "moment": "*",
     "robotskirt": "*",
-    "highlight": "*"
+    "highlight": "*",
+    "rss": "*"
   },
   "devDependencies": {}
 }
