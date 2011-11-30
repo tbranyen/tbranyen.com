@@ -236,7 +236,8 @@ posts.bind("reset", function() {
     this.feed.item({
       title: post.get("title"),
       description: post.get("title"),
-      date: post.get("posted")
+      date: post.get("posted"),
+      url: "http://tbranyen.com/" + post.id
     });
   }, posts);
 });
