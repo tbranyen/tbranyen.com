@@ -21,6 +21,7 @@ Backbone = require("backbone");
 var combyne = require("combyne");
 var content = require("./content");
 var fs = require("fs");
+var exec = require("child_process").exec;
 var express = require("express");
 var request = require("request");
 var moment = require("moment");
@@ -293,6 +294,13 @@ function home(req, res) {
 site.get("/rss.xml", function(req, res) {
   res.writeHead(200, { "Content-Type": "application/rss+xml" });
   res.end(posts.rss());
+});
+
+site.post("/reload", function(req, res) {
+  var data = JSON.parse(req.params.payload);
+
+  console.log("Reloading");
+  exec("cd ../site-content; git pull; cd ../server");
 });
 
 // Homepage
