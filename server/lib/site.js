@@ -3,7 +3,6 @@ console.log("creating");
 process.on("message", function(msg) {
   switch (msg.cmd) {
     case "kill":
-      console.log("Dying");
       process.exit(0);
       break;
 
