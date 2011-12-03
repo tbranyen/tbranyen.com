@@ -57,10 +57,7 @@ if (cluster.isMaster) {
   
   // Refresh from the child fork
   process.on("message", function(command) {
-    // Detect if command exists
-    if (command in commands) {
-      commands[command]();
-    }
+    commands["refresh"]();
   });
 
   // Spin up initial forks
