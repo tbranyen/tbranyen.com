@@ -54,6 +54,14 @@ if (cluster.isMaster) {
       });
     }
   };
+  
+  // Refresh from the child fork
+  process.bind("message", function(command) {
+    // Detect if command exists
+    if (command in commands) {
+      commands[command]();
+    }
+  });
 
   // Spin up initial forks
   create();

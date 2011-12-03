@@ -297,7 +297,9 @@ site.get("/rss.xml", function(req, res) {
 });
 
 site.post("/reload", function(req, res) {
-  exec("cd ../site-content; git pull; cd ../server");
+  exec("cd ../site-content; git pull; cd ../server", function() {
+    process.send({ cmd: "reload" });
+  });
 });
 
 // Homepage
