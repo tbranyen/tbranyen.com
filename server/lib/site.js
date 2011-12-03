@@ -297,9 +297,6 @@ site.get("/rss.xml", function(req, res) {
 });
 
 site.post("/reload", function(req, res) {
-  var data = JSON.parse(req.params.payload);
-
-  console.log("Reloading");
   exec("cd ../site-content; git pull; cd ../server");
 });
 
