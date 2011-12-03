@@ -56,7 +56,9 @@ if (cluster.isMaster) {
   };
   
   // Refresh from the child fork
-  process.on("message", function(command) {
+  process.on("message", function(msg) {
+    var command = msg.cmd;
+
     // Detect if command exists
     if (command in commands) {
       commands[command]();
