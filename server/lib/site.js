@@ -1,5 +1,3 @@
-console.log("creating");
-
 process.on("message", function(msg) {
   switch (msg.cmd) {
     case "kill":
