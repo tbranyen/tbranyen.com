@@ -200,7 +200,20 @@ body {
     margin-bottom: 15px;
   }
 
+  .posts:not(:hover) li.post:first-child {
+    opacity: 1;
+  }
+
+  .posts:hover li.post {
+    opacity: .4;
+  }
+
   li.post {
+    opacity: .4;
+
+    -webkit-transition-property: opacity;
+    -webkit-transition-duration: .5s;
+
     iframe {
       box-shadow: 0px 0px 10px $light-gray;
     }
@@ -213,8 +226,8 @@ body {
       border-bottom: 1px solid $light-gray;
     }
 
-    &:not(:first-child) {
-      opacity: .4;
+    &:hover {
+      opacity: 1 !important;
     }
   }
 }

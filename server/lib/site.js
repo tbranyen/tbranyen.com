@@ -16,8 +16,7 @@ process.on("message", function(msg) {
 });
 
 // Require server dependencies
-Backbone = require("backbone");
-
+var Backbone = require("backbone");
 var combyne = require("combyne");
 var content = require("./content");
 var fs = require("fs");
@@ -175,7 +174,7 @@ all.fetch();
 var site = express.createServer();
 
 function getLayout(name, callback) {
-  fs.readFile("../client/templates/layouts/" + name + ".html", function(err, buffer) {
+  fs.readFile("./templates/layouts/" + name + ".html", function(err, buffer) {
     if (err) { callback(err); }
 
     callback(null, combyne(buffer.toString()));
@@ -193,7 +192,7 @@ site.get("/resume", function(req, res) {
         FILTER: "`"
       };
 
-      fs.readFile("../client/templates/resume.html", function(err, buf) {
+      fs.readFile("./templates/resume.html", function(err, buf) {
         tmpl.partials.add("content", buf.toString(), {});
 
         res.send(tmpl.render({
@@ -214,7 +213,7 @@ site.get("/projects", function(req, res) {
         FILTER: "`"
       };
 
-      fs.readFile("../client/templates/projects.html", function(err, buf) {
+      fs.readFile("./templates/projects.html", function(err, buf) {
         tmpl.partials.add("content", buf.toString(), {
           mine: mine.toJSON(),
           forks: forks.toJSON()
@@ -238,7 +237,7 @@ site.get("/post/:id", function(req, res) {
         FILTER: "`"
       };
 
-      fs.readFile("../client/templates/post.html", function(err, buf) {
+      fs.readFile("./templates/post.html", function(err, buf) {
         tmpl.filters.add("formatDate", function(date) {
           return moment(date).format("dddd, MMM D, YYYY");
         });
@@ -271,7 +270,7 @@ function home(req, res) {
         FILTER: "`"
       };
 
-      fs.readFile("../client/templates/home.html", function(err, buf) {
+      fs.readFile("./templates/home.html", function(err, buf) {
         tmpl.filters.add("formatDate", function(date) {
           return moment(date).format("dddd, MMM D, YYYY");
         });
