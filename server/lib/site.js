@@ -27,7 +27,6 @@ var moment = require("moment");
 var RSS = require("rss");
 
 var Projects = Backbone.Collection.extend({
-
   sync: function(method, model, options) {
     request(model.url(), function(error, response, body) {
       var data = JSON.parse(body);
@@ -57,7 +56,6 @@ var Projects = Backbone.Collection.extend({
   initialize: function(models, options) {
     this.owner = options && options.owner;
   }
-
 });
 
 // Set the projects collection to tbranyen
@@ -65,19 +63,23 @@ var all = new Projects([], { owner: "tbranyen" });
 var mine = new Projects();
 var forks = new Projects();
 
-var Post = Backbone.Model.extend({
+var History = Backbone.Collection.extend({
+});
 
+var Post = Backbone.Model.extend({
   idAttribute: "slug",
 
   initialize: function() {
     this.set({ slug: this.slugify() });
+
+    // Create a new history collection
+    this.history = new History({ slug: this.get("slug") });
   },
 
   slugify: function(title) {
     return this.get("title").toLowerCase().replace(/ /g, "-")
       .replace(/[^\w-]+/g, "");
   }
-
 });
 
 // TODO: Update this to pull directly from Git

@@ -5,10 +5,12 @@
 
       <div class="post">
         <span class="date">{{post.posted`formatDate}}</span>
-        <h2>{{post.title}}</h2>
+        <h2 class="instapaper_title">{{post.title}}</h2>
         <hr>
 
-        {{content}}
+        <div class="instapaper_body">
+          {{content}}
+        </div>
       </div>   
 
       <div class="comments">
