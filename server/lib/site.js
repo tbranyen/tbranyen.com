@@ -297,7 +297,7 @@ site.get("/rss.xml", function(req, res) {
   res.end(posts.rss());
 });
 
-site.post("/reload", function(req, res) {
+site.post("/reload/" + process.env["SITE_CONTENT_KEY"], function(req, res) {
   exec("cd ../site-content; git pull; cd ../server", function() {
     process.send({ cmd: "reload" });
   });
