@@ -249,6 +249,14 @@ body {
     font-size: 14px;
   }
 
+  .projects:not(:hover) li.project:first-child {
+    opacity: 1;
+  }
+
+  .projects:hover li.project {
+    opacity: .4;
+  }
+
   .project {
     width: 30%;
     height: 120px;
@@ -273,10 +281,10 @@ body {
       position: absolute;
       bottom: 10px;
     }
-  }
-  
-  .project:hover {
-    opacity: 1;
+
+    &:hover {
+      opacity: 1 !important;
+    }
   }
 }
 
