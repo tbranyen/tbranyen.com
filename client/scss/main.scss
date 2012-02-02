@@ -209,6 +209,7 @@ body {
     line-height: 18px;
     box-shadow: 0px 0px 10px $light-gray;
     margin-bottom: 25px;
+    overflow: auto;
   }
 
   .posts:not(:hover) li.post:first-child {
