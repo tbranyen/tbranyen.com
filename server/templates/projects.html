@@ -7,14 +7,14 @@
           <h3 class="name">{{project.name}}</h3>
           <p class="description">{{project.description}}</p>
 
-          <span>On <a target="_blank" href="{{project.html_url}}">GitHub</a>, has {{project.watchers}} watchers and {{project.forks}} forks.</span>
+          <span><a target="_blank" href="{{project.html_url}}">GitHub</a> | {{project.watchers}} watchers and {{project.forks}} forks.</span>
         </li>
         {%endeach%}
       </ul>
       {%else%}
       {%endif%}
 
-      <h2 class="">Open Source Projects I Contribute To</h2>
+      <h2 class="">Open Source Projects I Have Forked/Contribute to</h2>
       {%if forks.length%}
       <ul class="projects">
         {%each forks as project%}
