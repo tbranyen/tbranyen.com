@@ -256,6 +256,9 @@ body {
     h3 {
       word-break: break-word;
       font-size: 18px;
+      white-space: nowrap;
+      overflow:hidden;
+      text-overflow: ellipsis;
     }
 
     span {
