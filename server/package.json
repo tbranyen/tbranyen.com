@@ -19,8 +19,8 @@
     "underscore": "*",
     "request": "*",
     "moment": "*",
-    "robotskirt": "*",
-    "highlight": "*",
+    "marked": "*",
+    "highlight.js": "*",
     "rss": "*"
   },
   "devDependencies": {}
