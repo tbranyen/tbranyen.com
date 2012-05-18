@@ -97,4 +97,4 @@ if (cluster.isMaster) {
   return;
 }
 
-eval(fs.readFileSync("./lib/site.js").toString());
+eval(fs.readFileSync(__dirname + "/site.js").toString());

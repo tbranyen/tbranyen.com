@@ -265,6 +265,16 @@ site.get("/post/:id", function(req, res) {
     });
 });
 
+//site.get("/post/:id/assets/*", function(req, res) {
+//  var post = "/../../site-content/posts/" +
+//    posts.get(req.params.id).toJSON().path;
+//
+//  // The actual asset path
+//  var path = req.params[0];
+//
+//  fs.createReadStream(__dirname + post + "assets/" + path).pipe(res);
+//});
+
 function home(req, res) {
   try {
     getLayout("index", function(err, tmpl) {
