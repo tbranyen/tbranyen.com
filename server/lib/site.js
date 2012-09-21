@@ -25,6 +25,7 @@ var express = require("express");
 var request = require("request");
 var moment = require("moment");
 var RSS = require("rss");
+var path = require("path");
 
 var Projects = Backbone.Collection.extend({
   sync: function(method, model, options) {
@@ -265,15 +266,20 @@ site.get("/post/:id", function(req, res) {
     });
 });
 
-//site.get("/post/:id/assets/*", function(req, res) {
-//  var post = "/../../site-content/posts/" +
-//    posts.get(req.params.id).toJSON().path;
-//
-//  // The actual asset path
-//  var path = req.params[0];
-//
-//  fs.createReadStream(__dirname + post + "assets/" + path).pipe(res);
-//});
+site.get("/post/:id/assets/*", function(req, res) {
+  var post = "/../../site-content/posts/" +
+    posts.get(req.params.id).toJSON().path;
+
+  // The actual asset path
+  var assetPath = req.params[0];
+
+  if (path.relative(assetPath, __dirname) === "../lib") {
+    return fs.createReadStream(__dirname + post + "assets/" + assetPath).pipe(res);
+  }
+
+  // Whatever, hackers.
+  res.send(420);
+});
 
 function home(req, res) {
   try {

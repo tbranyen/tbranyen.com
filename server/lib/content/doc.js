@@ -52,7 +52,8 @@ var doc = {
       var extmap = {
         ".js": "javascript",
         ".php": "php",
-        ".lua": "lua"
+        ".lua": "lua",
+        ".xml": "xml"
       };
 
       // Convert scripts to GitHub flavored markdown
