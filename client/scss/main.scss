@@ -259,7 +259,7 @@ body {
   }
 
   .project {
-    width: 30%;
+    width: 30.4%;
     height: 120px;
     float: left;
     margin-right: 10px;
@@ -288,6 +288,10 @@ body {
     span {
       position: absolute;
       bottom: 10px;
+    }
+
+    &:nth-child(3n+3) {
+      margin-right: 0px;
     }
 
     &:hover {
