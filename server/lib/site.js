@@ -30,6 +30,8 @@ var path = require("path");
 var Projects = Backbone.Collection.extend({
   sync: function(method, model, options) {
     request(model.url(), function(error, response, body) {
+      if (error) { return; }
+
       var data = JSON.parse(body);
 
       if (!data.length) {
@@ -64,8 +66,7 @@ var all = new Projects([], { owner: "tbranyen" });
 var mine = new Projects();
 var forks = new Projects();
 
-var History = Backbone.Collection.extend({
-});
+var History = Backbone.Collection.extend({});
 
 var Post = Backbone.Model.extend({
   idAttribute: "slug",

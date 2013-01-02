@@ -53,7 +53,8 @@ var doc = {
         ".js": "javascript",
         ".php": "php",
         ".lua": "lua",
-        ".xml": "xml"
+        ".xml": "xml",
+        ".coffee": "coffeescript"
       };
 
       // Convert scripts to GitHub flavored markdown
