@@ -54,7 +54,8 @@ var doc = {
         ".php": "php",
         ".lua": "lua",
         ".xml": "xml",
-        ".coffee": "coffeescript"
+        ".coffee": "coffeescript",
+        ".yaml": "coffeescript"
       };
 
       // Convert scripts to GitHub flavored markdown
@@ -64,9 +65,12 @@ var doc = {
         var lol = fs.readFileSync("../site-content/posts/" + filepath + "assets/" + val).toString();
         var ext = path.extname(val);
 
-
-        codeBlock += hl.highlight(extmap[ext] || "text", lol).value;
-        codeBlock += "</code></pre>";
+        try {
+          codeBlock += hl.highlight(extmap[ext] || "text", lol).value;
+          codeBlock += "</code></pre>";
+        } catch (ex) {
+          console.log(val + " was unable to be highlighted");
+        }
 
         return codeBlock;
       });
