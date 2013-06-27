@@ -175,10 +175,12 @@ posts.fetch();
 all.fetch();
 
 // Create the site server
-var site = express.createServer();
+var site = express();
 
 function getLayout(name, callback) {
-  fs.readFile("./templates/layouts/" + name + ".html", function(err, buffer) {
+  var realPath = path.resolve("server/templates/layouts/" + name + ".html");
+
+  fs.readFile(realPath, function(err, buffer) {
     if (err) { callback(err); }
 
     callback(null, combyne(buffer.toString()));
@@ -186,7 +188,7 @@ function getLayout(name, callback) {
 }
 
 // Serve static assets
-site.use("/assets", express.static("../client/assets"));
+site.use("/assets", express.static(path.resolve("client/assets")));
 
 // Resume
 site.get("/resume", function(req, res) {
@@ -241,7 +243,7 @@ site.get("/post/:id", function(req, res) {
         FILTER: "`"
       };
 
-      fs.readFile("./templates/post.html", function(err, buf) {
+      fs.readFile(path.resolve("server/templates/post.html"), function(err, buf) {
         tmpl.filters.add("formatDate", function(date) {
           return moment(date).format("dddd, MMM D, YYYY");
         });
@@ -289,7 +291,9 @@ function home(req, res) {
         FILTER: "`"
       };
 
-      fs.readFile("./templates/home.html", function(err, buf) {
+      var realPath = path.resolve("server/templates/home.html");
+
+      fs.readFile(realPath, function(err, buf) {
         tmpl.filters.add("formatDate", function(date) {
           return moment(date).format("dddd, MMM D, YYYY");
         });

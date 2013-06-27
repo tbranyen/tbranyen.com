@@ -33,11 +33,10 @@ $blue: #75BCFE;
 /* #Site Styles
 ================================================== */
 
-body {
-  background: url("/assets/img/dotnoise.png");
-}
-
 .container {
+  width: 100%;
+  margin-top: 30px;
+
   .nav {
     padding: 5px 15px 5px 15px;
     text-transform: uppercase;
@@ -67,7 +66,49 @@ body {
   }
 
   header {
-    margin-top: 40px;
+    margin-left: 0px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 1000;
+    color: $light-gray;
+
+    .intro {
+      background-color: rgb(68, 68, 68);
+      text-align: center;
+      height: 27px;
+      padding: 10px;
+
+      h3 {
+        color: $light-orange;
+      }
+
+      img {
+        float: left;
+        margin-right: 15px;
+        height: 80px;
+        border: 3px solid $gray;
+      }
+
+      a {
+        text-decoration: none;
+        height: 22px;
+        display: inline-block;
+
+        &:hover {
+          border-bottom: 3px solid orange;
+        }
+      }
+
+      strong {
+        color: $white;
+      }
+
+      p {
+        margin-bottom: 5px;
+      }
+    }
 
     h1 {
       color: $dark-gray;
@@ -81,9 +122,17 @@ body {
     }
 
     nav {
-      font-size: 20px;
-      margin-left: 0;
-      margin-right: 0;
+      height: 50px;
+      background: #F3F3F3;
+      width: 100%;
+      display: block;
+      line-height: 45px;
+      margin: 0 auto;
+
+      a {
+        color: #333;
+        text-decoration: none;
+      }
     }
 
     aside {
@@ -108,48 +157,14 @@ body {
     }
   }
 
-  // Main contents
-  section {
-    margin-top: 15px;
-    margin-bottom: 30px;
-  }
-
-  .intro {
-    background-color: $dark-gray;
-
-    div {
-      padding: 10px;
-
-      h3 {
-        color: $light-orange;
-      }
-
-      img {
-        float: left;
-        margin-right: 15px;
-        height: 80px;
-        border: 3px solid $gray;
-      }
-
-      strong {
-        color: $white;
-      }
-
-      p {
-        color: $light-gray;
-
-        margin-bottom: 5px;
-      }
-    }
-  }
-
   footer {
     font-family: "Raleway Thin", HelveticaNeue, "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 16px;
     margin-bottom: 40px;
     margin-top: 20px;
-
+    width: 100% !important;
     color: $gray;
+    text-align: center;
 
     a {
       color: $blue;
@@ -162,6 +177,16 @@ body {
 ================================================== */
 
 .post-page {
+  margin: 0px auto;
+  width: 1184px;
+  display: block !important;
+  padding-top: 40px;
+
+  &.center {
+    text-align: center;
+    width: 100% !important;
+  }
+
   .date {
     text-transform: uppercase;
     font-weight: bold;
@@ -232,6 +257,7 @@ body {
 
     a {
       text-decoration: none;
+      display: block;
     }
 
     &:not(:last-child) {
@@ -239,6 +265,7 @@ body {
     }
 
     &:hover {
+      border-bottom: 1px solid #FFA500;
       opacity: 1 !important;
     }
   }
@@ -325,6 +352,10 @@ body {
 
 	/* All Mobile Sizes (devices and browser) */
 	@media only screen and (max-width: 767px) {
+    .container {
+      margin-top: 180px;
+    }
+
     .projects-page {
       .project {
         width: 100%;
