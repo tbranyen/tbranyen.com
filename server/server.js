@@ -1,8 +1,10 @@
 // Require process dependencies
 var os = require("os");
+var path = require("path");
 var fs = require("fs");
 var readline = require("readline");
 var cluster = require("cluster");
+var config = require(path.resolve(__dirname, "/../package.json"));
 
 // Var up, bro
 var i, read;
@@ -97,4 +99,4 @@ if (cluster.isMaster) {
   return;
 }
 
-eval(fs.readFileSync(__dirname + "/site.js").toString());
+eval(fs.readFileSync(path.resolve(__dirname, config.server.site)).toString());

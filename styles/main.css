@@ -822,8 +822,7 @@ pre .xml .css, pre .xml .javascript, pre .xml .vbscript, pre .tex .formula {
 /* #Site Styles
 ================================================== */
 .container {
-  width: 100%;
-  margin-top: 30px; }
+  width: 100%; }
   .container .nav {
     padding: 5px 15px 5px 15px;
     text-transform: uppercase;
@@ -842,18 +841,14 @@ pre .xml .css, pre .xml .javascript, pre .xml .vbscript, pre .tex .formula {
     padding-left: 0px;
     background: none; }
   .container header {
+    margin-top: 0px;
     margin-left: 0px;
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
-    z-index: 1000;
-    color: #cccccc; }
+    color: #cccccc;
+    width: 100%; }
     .container header .intro {
       background-color: #444444;
       text-align: center;
-      height: 27px;
-      padding: 10px; }
+      padding: 15px; }
       .container header .intro h3 {
         color: #fedf95; }
       .container header .intro img {
@@ -864,7 +859,8 @@ pre .xml .css, pre .xml .javascript, pre .xml .vbscript, pre .tex .formula {
       .container header .intro a {
         text-decoration: none;
         height: 22px;
-        display: inline-block; }
+        display: inline-block;
+        line-height: 28px; }
         .container header .intro a:hover {
           border-bottom: 3px solid orange; }
       .container header .intro strong {
@@ -955,6 +951,8 @@ pre .xml .css, pre .xml .javascript, pre .xml .vbscript, pre .tex .formula {
     box-shadow: 0px 0px 10px #cccccc;
     margin-bottom: 25px;
     overflow: auto; }
+  .post-page .posts {
+    margin: 0 auto; }
   .post-page .posts:not(:hover) li.post:first-child {
     opacity: 1; }
   .post-page .posts:hover li.post {
@@ -968,7 +966,7 @@ pre .xml .css, pre .xml .javascript, pre .xml .vbscript, pre .tex .formula {
     .post-page li.post a {
       text-decoration: none;
       display: block; }
-    .post-page li.post:not(:last-child) {
+    .post-page li.post {
       border-bottom: 1px solid #cccccc; }
     .post-page li.post:hover {
       border-bottom: 1px solid #FFA500;
@@ -1017,52 +1015,70 @@ pre .xml .css, pre .xml .javascript, pre .xml .vbscript, pre .tex .formula {
 
 /* #Media Queries
 ================================================== */
+/* We use this media query to add styles to any device that supports media queries */
+@media only screen { }
+/* Used to alter styles for screens at least 768px wide. This is where the grid changes. */
+@media only screen and (min-width: 768px) { }
+/* Used to alter styles for screens at least 1280px wide. */
+@media only screen and (min-width: 1280px) { }
+/* Used to alter styles for screens at least 1440px wide. */
+@media only screen and (min-width: 1440px) { }
+/* Apply styles to screens in landscape orientation */
+@media only screen and (orientation: landscape) { }
+/* Apply styles to screens in portrait orientation */
+@media only screen and (orientation: portrait) { }
 /* Smaller than standard 960 (devices and browsers) */
-@media only screen and (max-width: 959px) { }
-/* Tablet Portrait size to standard 960 (devices and browsers) */
-@media only screen and (min-width: 768px) and (max-width: 959px) {
-  .projects-page .project {
-    width: 46%; } }
-/* All Mobile Sizes (devices and browser) */
-@media only screen and (max-width: 767px) {
-  .container {
-    margin-top: 180px; }
+@media only screen and (max-width: 959px) {
 
-  .projects-page .project {
-    width: 100%; } }
-/* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
+
+  .post-page {
+    padding: 15px;
+    max-width: 100%;
+    box-sizing: border-box; }
+
+  .container footer {
+    padding: 15px;
+    max-width: 100%;
+    box-sizing: border-box; } }
+/* Tablet Portrait size to standard 960 (devices and browsers)
+@media only screen and (min-width: 768px) and (max-width: 959px) {
+  .projects-page {
+    .project {
+      width: 46%;
+    }
+  }
+}
+
+/* All Mobile Sizes (devices and browser) 
+@media only screen and (max-width: 767px) {
+  .projects-page {
+    .project {
+      width: 40%;
+    }
+  }
+}
+
+/* Mobile Landscape Size to Tablet Portrait (devices and browsers)
 @media only screen and (min-width: 480px) and (max-width: 767px) {
   aside {
-    float: left !important; }
+    float: left !important;
+  }
 
   .container header nav {
     font-size: 15px;
-    margin-bottom: 30px; } }
-/* Mobile Portrait Size to Mobile Landscape Sizebrowsers) */
+    margin-bottom: 30px;
+  }
+}
+
+/* Mobile Portrait Size to Mobile Landscape Sizebrowsers)
 @media only screen and (max-width: 479px) {
   aside {
-    float: left !important; }
+    float: left !important;
+  }
 
   .container header nav {
     font-size: 15px;
-    margin-bottom: 30px; } }
-/* #Font-Face
-================================================== */
-/*
-@font-face {
-  font-family: "Raleway Thin";
-  src: url("/assets/font/raleway_thin-webfont.eot");
-  src: local("☺"),
-    url("/assets/font/raleway_thin-webfont.woff") format("woff"),
-    url("/assets/font/raleway_thin-webfont.otf") format("opentype"),
-    url("/assets/font/raleway_thin-webfont.svg#raleway") format("svg");
-  };  
-
-@media screen and (max-device-width: 480px) {
-  @font-face {
-    font-family: "Raleway Thin";
-    src: url("/assets/font/raleway_thin-webfont.woff") format("woff"),
-    url("/assets/font/raleway_thin-webfont.otf") format("opentype"),
-    url("/assets/font/raleway_thin-webfont.svg#raleway") format("svg");
-}};
+    margin-bottom: 30px;
+  }
+}
 */

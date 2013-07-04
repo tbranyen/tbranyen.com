@@ -6,75 +6,23 @@ module.exports = {
   file: function(filePath, rev, callback) {
     callback = (rev && typeof rev === 'function') ? rev : callback;
 
-    // Define these out of git scope to reuse later on
-    var repo, branch;
     var opts = this.opts;
 
-    git.repo(opts.path, function(err) {
+    git.repo(opts.path, function(err, repo) {
       if (err) { throw new Error(err); }
-      repo = this;
 
-      repo.branch(opts.branch, function(err) {
+      repo.branch(opts.branch, function(err, branch) {
         if (err) { throw new Error(err); }
-        branch = this;
 
-        cont();
+        branch.file(filePath, function(err, contents) {
+          if (err) { throw new Error(err); }
+
+          contents.content(function(err, content) {
+            callback(content);
+          });
+        });
       });
     });
-
-    function cont() {
-      if (!callback) { return; };
-
-      var history, finishCallback;
-      var shas = [];
-      var wait = 0;
-      var end = false;
-
-      function testFinish() {
-        if(wait === 0 && end) {
-          finishCallback(shas);
-        }
-      }
-
-      // If revision is actually the callback, assume you want the HEAD file
-      if (typeof rev === 'function') {
-        history = branch.history();
-
-        history.on('commit', function(commit) {
-          wait++;
-
-          commit.tree().entry(filePath, function(entry) {
-            wait--;
-
-            entry && shas.push({ sha: commit.sha, content: entry.content });
-
-            testFinish();
-          });
-        });
-
-        history.on('end', function() {
-          finishCallback = function() {
-            return callback(shas);
-          };
-
-          end = true;
-
-          testFinish();
-        });
-      }
-      else if (rev === 'head') {
-        branch.tree().entry(filePath, function(entry) {
-          entry && callback({ sha: branch.sha, content: entry.content });
-        });
-      }
-      else {
-        repo.commit(rev, function(err, commit) {
-          commit.tree().entry(filePath, function(entry) {
-            entry && callback({ sha: commit.sha, content: entry.content });
-          });
-        });
-      }
-    }
   },
 
   history: function(filePath, callback) {

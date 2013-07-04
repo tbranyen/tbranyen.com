@@ -11,19 +11,37 @@ module.exports = ->
     sass:
       dist:
         files:
-          "client/assets/css/main.css": "client/scss/main.scss"
+          "styles/main.css": "styles/scss/main.scss"
 
+    # Run the site server.
     express:
       options:
         background: true
+        delay: 1
 
       development:
         options:
-          script: "server/lib/site.js"
+          script: "server/site.js"
+
+    # For development this will automatically build and reload while I'm
+    # working.
+    watch:
+      development:
+        files: [
+          "templates/**/*.*"
+          "styles/**/*.*"
+          "server/**/*.*"
+        ]
+
+        tasks: ["express", "sass"]
+        
+        options:
+          livereload: true
 
   # Load external Grunt task plugins.
   @loadNpmTasks "grunt-sass"
   @loadNpmTasks "grunt-express-server"
+  @loadNpmTasks "grunt-contrib-watch"
 
   # Default task.
-  @registerTask "default", ["sass", "express"]
+  @registerTask "default", ["express", "sass", "watch"]

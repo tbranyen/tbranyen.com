@@ -178,26 +178,22 @@ all.fetch();
 var site = express();
 
 function getLayout(name, callback) {
-  var realPath = path.resolve("server/templates/layouts/" + name + ".html");
+  var realPath = path.resolve("templates/layouts/" + name + ".html");
 
   fs.readFile(realPath, function(err, buffer) {
-    if (err) { callback(err); }
+    if (err) { return callback(err); }
 
     callback(null, combyne(buffer.toString()));
   });
 }
 
-// Serve static assets
-site.use("/assets", express.static(path.resolve("client/assets")));
+// Serve static styles.
+site.use("/styles", express.static(path.resolve("styles")));
 
 // Resume
 site.get("/resume", function(req, res) {
   try {
     getLayout("index", function(err, tmpl) {
-      tmpl.delimiters = {
-        FILTER: "`"
-      };
-
       fs.readFile("./templates/resume.html", function(err, buf) {
         tmpl.partials.add("content", buf.toString(), {});
 
@@ -215,11 +211,9 @@ site.get("/resume", function(req, res) {
 site.get("/projects", function(req, res) {
   try {
     getLayout("index", function(err, tmpl) {
-      tmpl.delimiters = {
-        FILTER: "`"
-      };
+      if (err) { return res.send(500); }
 
-      fs.readFile("./templates/projects.html", function(err, buf) {
+      fs.readFile("templates/projects.html", function(err, buf) {
         tmpl.partials.add("content", buf.toString(), {
           mine: mine.toJSON(),
           forks: forks.toJSON()
@@ -238,39 +232,37 @@ site.get("/projects", function(req, res) {
 
 // Post
 site.get("/post/:id", function(req, res) {
-    getLayout("index", function(err, tmpl) {
-      tmpl.delimiters = {
-        FILTER: "`"
-      };
+  getLayout("index", function(err, tmpl) {
+    if (err) { return res.send(500); }
 
-      fs.readFile(path.resolve("server/templates/post.html"), function(err, buf) {
-        tmpl.filters.add("formatDate", function(date) {
-          return moment(date).format("dddd, MMM D, YYYY");
-        });
-
-        try {
-          var post = posts.get(req.params.id).toJSON();
-
-          content.doc.assemble(post.path, function(html) {
-            tmpl.partials.add("content", buf.toString(), {
-              post: post,
-              content: html
-            });
-
-            res.send(tmpl.render({
-              title: post.title + " | Tim Branyen @tbranyen",
-              post_active: "active"
-            }));
-          });
-        } catch(ex) {
-          res.send("internal error");
-        }
+    fs.readFile(path.resolve("templates/post.html"), function(err, buf) {
+      tmpl.filters.add("formatDate", function(date) {
+        return moment(date).format("dddd, MMM D, YYYY");
       });
+
+      try {
+        var post = posts.get(req.params.id).toJSON();
+
+        content.doc.assemble(post.path, function(html) {
+          tmpl.partials.add("content", buf.toString(), {
+            post: post,
+            content: html
+          });
+
+          res.send(tmpl.render({
+            title: post.title + " | Tim Branyen @tbranyen",
+            post_active: "active"
+          }));
+        });
+      } catch(ex) {
+        res.send("internal error");
+      }
     });
+  });
 });
 
 site.get("/post/:id/assets/*", function(req, res) {
-  var post = "/../../site-content/posts/" +
+  var post = "/../../content/posts/" +
     posts.get(req.params.id).toJSON().path;
 
   // The actual asset path
@@ -285,32 +277,28 @@ site.get("/post/:id/assets/*", function(req, res) {
 });
 
 function home(req, res) {
-  try {
-    getLayout("index", function(err, tmpl) {
-      tmpl.delimiters = {
-        FILTER: "`"
-      };
+  getLayout("index", function(err, tmpl) {
+    if (err) {
+      return res.send(500);
+    }
 
-      var realPath = path.resolve("server/templates/home.html");
+    var realPath = path.resolve("templates/home.html");
 
-      fs.readFile(realPath, function(err, buf) {
-        tmpl.filters.add("formatDate", function(date) {
-          return moment(date).format("dddd, MMM D, YYYY");
-        });
-
-        tmpl.partials.add("content", buf.toString(), {
-          posts: posts.toJSON()
-        });
-
-        res.send(tmpl.render({
-          title: "Tim Branyen @tbranyen",
-          post_active: "active"
-        }));
+    fs.readFile(realPath, function(err, buf) {
+      tmpl.filters.add("formatDate", function(date) {
+        return moment(date).format("dddd, MMM D, YYYY");
       });
+
+      tmpl.partials.add("content", buf.toString(), {
+        posts: posts.toJSON()
+      });
+
+      res.send(tmpl.render({
+        title: "Tim Branyen @tbranyen",
+        post_active: "active"
+      }));
     });
-  } catch(ex) {
-    res.send("internal error");
-  }
+  });
 }
 
 site.get("/rss.xml", function(req, res) {

@@ -35,7 +35,6 @@ $blue: #75BCFE;
 
 .container {
   width: 100%;
-  margin-top: 30px;
 
   .nav {
     padding: 5px 15px 5px 15px;
@@ -66,19 +65,15 @@ $blue: #75BCFE;
   }
 
   header {
+    margin-top: 0px;
     margin-left: 0px;
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
-    z-index: 1000;
     color: $light-gray;
+    width: 100%;
 
     .intro {
       background-color: rgb(68, 68, 68);
       text-align: center;
-      height: 27px;
-      padding: 10px;
+      padding: 15px;
 
       h3 {
         color: $light-orange;
@@ -95,6 +90,7 @@ $blue: #75BCFE;
         text-decoration: none;
         height: 22px;
         display: inline-block;
+        line-height: 28px;
 
         &:hover {
           border-bottom: 3px solid orange;
@@ -237,6 +233,10 @@ $blue: #75BCFE;
     overflow: auto;
   }
 
+  .posts {
+    margin: 0 auto;
+  }
+
   .posts:not(:hover) li.post:first-child {
     opacity: 1;
   }
@@ -260,7 +260,7 @@ $blue: #75BCFE;
       display: block;
     }
 
-    &:not(:last-child) {
+    & {
       border-bottom: 1px solid $light-gray;
     }
 
@@ -338,74 +338,83 @@ $blue: #75BCFE;
 /* #Media Queries
 ================================================== */
 
-	/* Smaller than standard 960 (devices and browsers) */
-	@media only screen and (max-width: 959px) {}
+/* We use this media query to add styles to any device that supports media queries */
+@media only screen { }
 
-	/* Tablet Portrait size to standard 960 (devices and browsers) */
-	@media only screen and (min-width: 768px) and (max-width: 959px) {
-    .projects-page {
-      .project {
-        width: 46%;
-      }
-    }
+/* Used to alter styles for screens at least 768px wide. This is where the grid changes. */
+@media only screen and (min-width: 768px) {}
+
+/* Used to alter styles for screens at least 1280px wide. */
+@media only screen and (min-width: 1280px) {}
+
+/* Used to alter styles for screens at least 1440px wide. */
+@media only screen and (min-width: 1440px) {}
+
+/* Apply styles to screens in landscape orientation */
+@media only screen and (orientation: landscape) {}
+
+/* Apply styles to screens in portrait orientation */
+@media only screen and (orientation: portrait) {}
+
+/* Smaller than standard 960 (devices and browsers) */
+@media only screen and (max-width: 959px) {
+  .container header .intro {
   }
 
-	/* All Mobile Sizes (devices and browser) */
-	@media only screen and (max-width: 767px) {
-    .container {
-      margin-top: 180px;
-    }
-
-    .projects-page {
-      .project {
-        width: 100%;
-      }
-    }
+  .post-page {
+    padding: 15px;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
-	/* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
-	@media only screen and (min-width: 480px) and (max-width: 767px) {
-    aside {
-      float: left !important;
-    }
+  .container footer {
+    padding: 15px;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+}
 
-    .container header nav {
-      font-size: 15px;
-      margin-bottom: 30px;
+
+
+/* Tablet Portrait size to standard 960 (devices and browsers)
+@media only screen and (min-width: 768px) and (max-width: 959px) {
+  .projects-page {
+    .project {
+      width: 46%;
     }
   }
+}
 
-	/* Mobile Portrait Size to Mobile Landscape Sizebrowsers) */
-	@media only screen and (max-width: 479px) {
-    aside {
-      float: left !important;
-    }
-
-    .container header nav {
-      font-size: 15px;
-      margin-bottom: 30px;
+/* All Mobile Sizes (devices and browser) 
+@media only screen and (max-width: 767px) {
+  .projects-page {
+    .project {
+      width: 40%;
     }
   }
+}
 
+/* Mobile Landscape Size to Tablet Portrait (devices and browsers)
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+  aside {
+    float: left !important;
+  }
 
-/* #Font-Face
-================================================== */
+  .container header nav {
+    font-size: 15px;
+    margin-bottom: 30px;
+  }
+}
 
-/*
-@font-face {
-  font-family: "Raleway Thin";
-  src: url("/assets/font/raleway_thin-webfont.eot");
-  src: local("☺"),
-    url("/assets/font/raleway_thin-webfont.woff") format("woff"),
-    url("/assets/font/raleway_thin-webfont.otf") format("opentype"),
-    url("/assets/font/raleway_thin-webfont.svg#raleway") format("svg");
-  };  
+/* Mobile Portrait Size to Mobile Landscape Sizebrowsers)
+@media only screen and (max-width: 479px) {
+  aside {
+    float: left !important;
+  }
 
-@media screen and (max-device-width: 480px) {
-  @font-face {
-    font-family: "Raleway Thin";
-    src: url("/assets/font/raleway_thin-webfont.woff") format("woff"),
-    url("/assets/font/raleway_thin-webfont.otf") format("opentype"),
-    url("/assets/font/raleway_thin-webfont.svg#raleway") format("svg");
-}};
+  .container header nav {
+    font-size: 15px;
+    margin-bottom: 30px;
+  }
+}
 */

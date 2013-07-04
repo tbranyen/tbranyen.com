@@ -1,32 +1,44 @@
 {
   "name": "tbranyen.com",
-  "version": "0.0.0",
-  "description": "ERROR: No README.md file found!",
-  "main": "index.js",
+  "version": "0.1.0",
+  "description": "My personal website.",
+  "main": "server/lib/server",
+  "engines": {
+    "node": "~0.10.12"
+  },
   "dependencies": {
-    "backbone": "~0.9.10",
-    "backbone.layoutmanager": "~0.8.2",
+    "backbone": "~1.0.0",
+    "backbone.layoutmanager": "~0.8.8",
     "cheerio": "~0.10.5",
     "combyne": "~0.2.1",
-    "highlight.js": "~7.0.1",
-    "marked": "~0.2.7",
-    "requirejs": "~2.1.4",
-    "rss": "~0.0.4",
-    "underscore": "~1.4.3"
+    "highlight.js": "~7.3.0",
+    "marked": "~0.2.9",
+    "requirejs": "~2.1.6",
+    "rss": "~0.2.0",
+    "underscore": "~1.4.4",
+    "express": "~3.3.3",
+    "nodegit": "~0.0.79",
+    "request": "~2.21.0",
+    "moment": "~2.0.0"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-sass": "~0.6.0",
-    "grunt-develop": "0.0.3"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "grunt-develop": "0.0.3",
+    "grunt-contrib-livereload": "~0.1.2"
   },
   "repository": {
     "type": "git",
     "url": "git://github.com/tbranyen/tbranyen.com.git"
   },
   "author": "",
-  "license": "BSD",
-  "gitHead": "95c003b627879a365c0464fc910ad43e686546ac"
+  "license": "MIT",
+  "gitHead": "95c003b627879a365c0464fc910ad43e686546ac",
+  "content": {
+    "repo": "content/",
+    "branch": "master"
+  },
+  "server": {
+    "site": "site.js"
+  }
 }
