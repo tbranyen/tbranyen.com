@@ -24,8 +24,8 @@
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-sass": "~0.6.0",
-    "grunt-develop": "0.0.3",
-    "grunt-contrib-livereload": "~0.1.2"
+    "grunt-express-server": "~0.4.1",
+    "grunt-contrib-watch": "~0.4.4"
   },
   "repository": {
     "type": "git",
