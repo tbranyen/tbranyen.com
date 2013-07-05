@@ -1,12 +1,12 @@
-    <section class="sixteen columns post-page center">
-      <ul class="posts">
-        {%each posts as post%}
-        <li class="post">
-          <a href="/post/{{post.slug}}">
-            <span class="date">{{post.posted|formatDate}}</span>
-            <h2>{{post.title}}</h2>
-          </a>
-        </li>
-        {%endeach%}
-      </ul>
-    </section>
+<section class="home-page center">
+  <ul class="posts">
+    {%each posts as post%}
+    <li class="post">
+      <a href="/post/{{post.slug}}">
+        <span class="date">{{post.posted|formatDate}}</span>
+        <h2>{{post.title}}</h2>
+      </a>
+    </li>
+    {%endeach%}
+  </ul>
+</section>

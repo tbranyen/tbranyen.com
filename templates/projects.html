@@ -1,31 +1,31 @@
-    <section class="sixteen columns projects-page">
-      {%if mine.length%}
-      <ul class="projects clearfix">
-        {%each mine as project%}
-        <li class="project">
-          <h3 class="name">{{project.name}}</h3>
-          <p class="description">{{project.description}}</p>
+<section class="projects-page">
+  {%if mine.length%}
+  <ul class="projects clearfix">
+    {%each mine as project%}
+    <li class="project">
+      <h3 class="name">{{project.name}}</h3>
+      <p class="description">{{project.description}}</p>
 
-          <span><a target="_blank" href="{{project.html_url}}">GitHub</a> | {{project.watchers}} watchers and {{project.forks}} forks.</span>
-        </li>
-        {%endeach%}
-      </ul>
-      {%else%}
-      {%endif%}
+      <span><a target="_blank" href="{{project.html_url}}">GitHub</a> | {{project.watchers}} watchers and {{project.forks}} forks.</span>
+    </li>
+    {%endeach%}
+  </ul>
+  {%else%}
+  {%endif%}
 
-      <h2 class="">Open source projects I have forked/contribute to</h2>
-      {%if forks.length%}
-      <ul class="projects">
-        {%each forks as project%}
-        <li class="fork">
-          {%if original.length > i%}
-          <a target="_blank" href="{{project.html_url}}">{{project.name}}</a>, 
-          {%else%}
-          and <a target="_blank" href="{{project.html_url}}">{{project.name}}</a>
-          {%endif%}
-        </li>
-        {%endeach%}
-      </ul>
+  <h2 class="">Open source projects I have forked/contribute to</h2>
+  {%if forks.length%}
+  <ul class="projects">
+    {%each forks as project%}
+    <li class="fork">
+      {%if original.length > i%}
+      <a target="_blank" href="{{project.html_url}}">{{project.name}}</a>, 
       {%else%}
+      and <a target="_blank" href="{{project.html_url}}">{{project.name}}</a>
       {%endif%}
-    </section>
+    </li>
+    {%endeach%}
+  </ul>
+  {%else%}
+  {%endif%}
+</section>

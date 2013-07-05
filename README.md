@@ -1,8 +1,31 @@
-Personal site of Tim Branyen
-============================
+Tim Branyen
+===========
 
-Open sourced as an example of using some of my projects together to make
-something cool.
+Boston, MA
+
+### About ###
+
+I've open sourced this project to demonstrate using several of my projects
+together to accomplish a very specific goal for my personal website.
+
+I started with the idea of a website that had it's content stored in Git.  This
+would allow me to keep a paper trail of post updates, which in turn would
+encourage me to directly modify the post as well.  So long as every file is
+referenced by a specific SHA, that version will be loaded.
+
+I began development of this site in 2011 and put it through many rewrites.  It
+is now in a reasonable form fit for consumption by other developers for
+reference or reuse.
+
+### What can this framework do for me? ###
+
+I've implemented several specific ideas that may be useful for you:
+
+* Grunt-based workflow taking advantage of LiveReload. 
+* All content is stored is in Git, so files may be referenced by revision.
+* A custom template syntax that allows code snippets to be referenced and
+  automatically highlighted and embedded.
+* A performant Node.js Cluster-based server that will spawn to your core count.
 
 ### Getting started ###
 

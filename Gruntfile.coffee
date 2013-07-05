@@ -33,15 +33,53 @@ module.exports = ->
           "server/**/*.*"
         ]
 
-        tasks: ["express", "sass"]
+        tasks: ["stylus"]
         
         options:
           livereload: true
 
+    # The clean task ensures all files are removed from the dist/ directory so
+    # that no files linger from previous builds.
+    clean: ["dist/"]
+
+    # Run the Stylus preprocessor to get vanilla CSS.
+    stylus:
+      development:
+        options:
+          use: [require("fluidity")]
+
+        files:
+          "dist/main.css": "styles/main.styl"
+
+    # Minify the CSS for an optimal filesize.
+    cssmin:
+      release:
+        files:
+          "dist/main.min.css": [
+            "styles/normalize"
+            "dist/main.css"
+          ]
+
+    # Compress the built files for static GZip.
+    zopfli:
+      release:
+        options:
+          iterations: 50
+          format: "zlib"
+
+        files:
+          "dist/main.min.css.gz": "dist/main.min.css"
+
   # Load external Grunt task plugins.
-  @loadNpmTasks "grunt-sass"
   @loadNpmTasks "grunt-express-server"
   @loadNpmTasks "grunt-contrib-watch"
+  @loadNpmTasks "grunt-contrib-clean"
+  @loadNpmTasks "grunt-contrib-cssmin"
+  @loadNpmTasks "grunt-contrib-stylus"
+  @loadNpmTasks "grunt-zopfli"
 
   # Default task.
-  @registerTask "default", ["express", "sass", "watch"]
+  @registerTask "default", ["express", "stylus", "watch"]
+
+  # Release task..
+  @registerTask "release", ["clean", "stylus", "cssmin", "zopfli"]

@@ -8,10 +8,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   <link href="/rss.xml" type="application/rss+xml" rel="alternate"> 
-  <link rel="stylesheet" href="/styles/main.css">
+  <link rel="stylesheet" href="/dist/main.css">
 
   <title>{{title}}</title>
 
+  <!--
   <style>
     /*
     @keyframes airplane {
@@ -144,37 +145,29 @@
      right: 0;
     }
   </style>
+  -->
+  <script type="text/javascript" src="//use.typekit.net/eyx4afp.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 </head>
 
 <body>
-  <div class="container">
+  <div id="container">
     <header>
-      <div class="intro">
-        <p>
-          Hi! My name is 
-          <a href="https://twitter.com/tbranyen"><strong>Tim Branyen</strong></a> & I am a
-          <a href="#" class="toggleSkydive"><strong>skydiver</strong></a> who contributes to the
-          <a href="http://backbonejs.org/"><strong>backbone.js</strong></a> project, is an open source developer at
-          <a href="http://bocoup.com/"><strong>bocoup</strong></a>, and a maintainer of several
-          <a href="http://github.com/tbranyen"><strong>open-source</strong></a> projects.
-        </p>
-      </div>
-
-      <!--
-      <nav>
-        <a href="/">home</a>
-        <a href="/posts">posts</a>
-        <a href="/open">open source</a>
-      </nav>
-      -->
+      <span>Hi! My name is </span>
+      <a href="https://twitter.com/tbranyen"><strong>Tim Branyen</strong></a> & I am a
+      <a href="#" class="toggleSkydive"><strong>skydiver</strong></a> who contributes to the
+      <a href="http://backbonejs.org/"><strong>backbone.js</strong></a> project, is an open source developer at
+      <a href="http://bocoup.com/"><strong>bocoup</strong></a>, and a maintainer of several
+      <a href="http://github.com/tbranyen"><strong>open-source</strong></a> projects.
     </header>
 
-{%partial content%}
+    {%partial content%}
 
-    <footer class="sixteen">
+    <footer>
       Fork the <a class="dark" target="_blank" href="http://github.com/tbranyen/site-content/">content</a> of this site, it's <a target="blank" href="http://unlicense.org/">public domain</a>!
     </footer>
 
+    <!--
     <div class="cloud">
       <div class="poof one"></div>
       <div class="poof two"></div>
@@ -189,6 +182,7 @@
       </div>
     </div>
   </div>
+  -->
 
   <script type="text/javascript">
 
@@ -204,6 +198,7 @@
 
   </script>
 
+  <!--
   <script>
     document.querySelector(".toggleSkydive").addEventListener("click", function(ev) {
       ev.preventDefault();
@@ -211,6 +206,7 @@
       document.body.classList.add("skydive");
     });
   </script>
+  -->
 
   <script src="http://localhost:35729/livereload.js"></script>
 </body>

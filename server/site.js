@@ -97,11 +97,11 @@ var Posts = Backbone.Collection.extend({
     var metadata = [];
     var count = 0;
     
-    fs.readdir("../site-content/posts/", function(err, files) {
+    fs.readdir("content/posts/", function(err, files) {
       // Ensure there are files
       files && files.forEach(function(file) {
         if (file[0] !== ".") {
-          content.doc.meta(file + "/", function(meta) {
+          content.meta(file + "/", function(meta) {
             meta.metadata.path = file + "/";
             metadata.push(meta.metadata);
             count++;
@@ -188,7 +188,7 @@ function getLayout(name, callback) {
 }
 
 // Serve static styles.
-site.use("/styles", express.static(path.resolve("styles")));
+site.use("/dist", express.static(path.resolve("dist")));
 
 // Resume
 site.get("/resume", function(req, res) {
@@ -243,7 +243,7 @@ site.get("/post/:id", function(req, res) {
       try {
         var post = posts.get(req.params.id).toJSON();
 
-        content.doc.assemble(post.path, function(html) {
+        content.assemble(post.path, function(html) {
           tmpl.partials.add("content", buf.toString(), {
             post: post,
             content: html
@@ -306,8 +306,8 @@ site.get("/rss.xml", function(req, res) {
   res.end(posts.rss());
 });
 
-site.post("/reload/" + process.env["SITE_CONTENT_KEY"], function(req, res) {
-  exec("cd ../site-content; git pull; cd ../server", function() {
+site.post("/reload/" + process.env.SITE_CONTENT_KEY, function(req, res) {
+  exec("cd ../content; git pull; cd ../server", function() {
     process.send({ cmd: "reload" });
   });
 });
@@ -316,4 +316,4 @@ site.post("/reload/" + process.env["SITE_CONTENT_KEY"], function(req, res) {
 site.get("/", home);
 site.get("*", home);
 
-site.listen(1987);
+site.listen(8000, process.env.HOST || "127.0.0.1");
