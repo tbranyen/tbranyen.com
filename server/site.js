@@ -316,4 +316,4 @@ site.post("/reload/" + process.env.SITE_CONTENT_KEY, function(req, res) {
 site.get("/", home);
 site.get("*", home);
 
-site.listen(8000, process.env.HOST || "127.0.0.1");
+site.listen(8000, "127.0.0.1");

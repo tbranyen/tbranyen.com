@@ -38,7 +38,7 @@ var document = module.exports = {
 
   meta: function(filePath, callback) {
     // Read in the file path
-    storage.file("posts/" + filePath + "post.md", "head", function(contents) {
+    storage.file("posts/" + filePath + "post.md", function(contents) {
       var parts = document.parse(contents);
 
       callback(parts);
@@ -46,10 +46,15 @@ var document = module.exports = {
   },
 
   // Take a content file path and render out the content
-  assemble: function(filepath, callback) {
+  assemble: function(filepath, rev, callback) {
+    // Allow argument shifting.
+    if (typeof rev === "function") {
+      callback = rev;
+      rev = undefined;
+    }
+
     // Read in the file path
-    storage.file("posts/" + filepath + "post.md", "head", function(post) {
-      var contents = post;
+    storage.file("posts/" + filepath + "post.md", rev, function(contents, revs) {
       var parts = document.parse(contents);
       var tmpl = combyne(parts.contents, parts.metadata);
       var extmap = {
@@ -60,6 +65,9 @@ var document = module.exports = {
         ".coffee": "coffeescript",
         ".yaml": "coffeescript"
       };
+
+      // Attach the revisions.
+      tmpl.context.revs = revs;
 
       // Convert scripts to GitHub flavored markdown
       tmpl.filters.add("render", function(val) {

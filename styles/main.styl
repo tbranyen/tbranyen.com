@@ -7,20 +7,28 @@
 // Syntax highlighting.
 @import "zenburn.css"
 
+// Grid settings to ensure mobile responsiveness.
+grid-width = 100%
+grid-min-width = 320px
+
+*
+  box-sizing border-box
+
 #container
   grid()
 
   header
-    color #CCC
-    background-color #444
+    color #444
     text-align center
     padding 15px
     line-height 28px
     font-size 14px
     font-family HelveticaNeue, 'Helvetica Neue', Helvetica, Arial, sans-serif
+    border-bottom 2px solid #7A7A7A
+    box-shadow 0px 3px 3px #E9E9E9
 
     a
-      color #FFF
+      color #444
       text-decoration none
 
       &:hover
@@ -47,8 +55,8 @@
         opacity .4
         border-bottom 1px solid #CCC
 
-        transition-property: opacity;
-        transition-duration: .5s;
+        transition-property opacity
+        transition-duration .5s
 
         &:hover
           border-bottom 1px solid #FFA500

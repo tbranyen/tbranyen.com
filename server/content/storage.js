@@ -1,48 +1,51 @@
-var git = require('nodegit');
+var git = require("nodegit");
+var Q = require("q");
 
-module.exports = {
-  opts: {},
+exports.opts = {};
 
-  file: function(filePath, rev, callback) {
-    callback = (rev && typeof rev === 'function') ? rev : callback;
+exports.file = function(filePath, rev, callback) {
+  // Allow argument shifting.
+  if (typeof rev === "function") {
+    callback = rev;
+    rev = undefined;
+  }
 
-    var opts = this.opts;
+  var opts = this.opts;
 
-    git.repo(opts.path, function(err, repo) {
+  git.repo(opts.path, function(err, repo) {
+    if (err) { throw new Error(err); }
+
+    // Commits will override branches.
+    var method = rev ? "commit" : "branch";
+
+    // If a commit was specified use that revision, otherwise default to
+    // branch.
+    repo[method](rev || opts.branch, function(err, branch) {
       if (err) { throw new Error(err); }
 
-      repo.branch(opts.branch, function(err, branch) {
+      branch.file(filePath, function(err, file) {
         if (err) { throw new Error(err); }
 
-        branch.file(filePath, function(err, contents) {
-          if (err) { throw new Error(err); }
-
-          contents.content(function(err, content) {
-            callback(content);
+        file.content(function(err, content) {
+          // Send back the revisions for each file as well.
+          exports.history(filePath, function(revs) {
+            callback(content, revs);
           });
         });
       });
     });
-  },
+  });
+};
 
-  history: function(filePath, callback) {
+exports.history = function(filePath, callback) {
+  var opts = this.opts;
 
-    var repo, branch;
-    var opts = this.opts;
+  git.repo(opts.path, function(err, repo) {
+    if (err) { throw new Error(err); }
 
-    git.repo(opts.path, function(err) {
-      repo = this;
+    repo.branch(opts.branch, function(err, branch) {
+      if (err) { throw new Error(err); }
 
-      repo.branch(opts.branch, function(err) {
-        branch = this;
-
-        cont();
-      });
-    });
-
-    function cont() {
-      if (!callback) { return; };
-    
       var finish, history, lastSha;
       var shas = [];
 
@@ -53,6 +56,7 @@ module.exports = {
           inc: function() {
             i = i+1;
           },
+
           dec: function() {
             if(!(i = i-1)) {
               cb();
@@ -72,26 +76,35 @@ module.exports = {
       finish.inc();
 
       history = branch.history();
-      history.on('commit', function(commit) {
+      history.on("commit", function(err, commit) {
         finish.inc();
 
-        var walk = commit.tree().walk();
-        walk.on('entry', function(idx, entry) {
-          if (entry.name === filePath && lastSha !== entry.sha) {
-            lastSha = entry.sha;
-            shas.push(commit.sha);
-          }
-        });
+        commit.tree(function(err, tree) {
+          var walk = tree.walk();
 
-        walk.on('end', finish.dec);
+          walk.on("entry", function(err, entry) {
+            var name = Q.nfcall(entry.name);
+            var sha = Q.nfcall(entry.sha);
+
+            // Have to spread out the calls.
+            Q.spread([name, sha], function(name, sha) {
+              if (name === filePath && lastSha !== sha) {
+                lastSha = sha;
+                shas.push(sha);
+              }
+            });
+          });
+
+          walk.on("end", finish.dec);
+        })
       });
 
-      history.on('end', finish.dec);
-    }
-  },
+      history.on("end", finish.dec);
+    });
+  });
+};
 
-  use: function(path, branch) {
-    this.opts.path = path;
-    this.opts.branch = branch;
-  }
+exports.use = function(path, branch) {
+  this.opts.path = path;
+  this.opts.branch = branch;
 };
