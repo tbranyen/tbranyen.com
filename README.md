@@ -29,6 +29,43 @@ I've implemented several specific ideas that may be useful for you:
 
 ### Getting started ###
 
+Ensure you have [Node.js](http://nodejs.org/) and [Git](http://git-scm.org/)
+installed.
+
+Clone this repository:
+
+``` bash
+# Bring down the source.
+git clone https://github.com/tbranyen/tbranyen.com.git my-site
+
+# Enter the directory.
+cd my-site
+```
+
+Install the dependencies.
+
+``` bash
+# Ensure all NPM dependencies are installed locally.
+npm install
+
+# Make sure you have Grunt CLI installed globally as well.
+sudo npm install -g grunt-cli
+```
+
+Run the server.
+
+``` bash
+# This will compile all Stylus, run a web server on port 1987, and
+# automatically refresh the server when files change.
+grunt
+```
+
+Open your browser to [http://localhost:1987](http://localhost:1987) to view
+the contents.
+
+**Note: There may be a small delay until posts show up, this is a known issue
+that will be fixed.**
+
 ### Setting up content ###
 
 The website framework has been designed to load an external Git repository of
