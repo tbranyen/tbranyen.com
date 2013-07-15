@@ -22,7 +22,8 @@
     "moment": "~2.0.0",
     "fluidity": "~0.1.5",
     "stylus": "~0.33.1",
-    "q": "~0.9.6"
+    "q": "~0.9.6",
+    "underscore.deferred": "~0.4.0"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

@@ -298,13 +298,13 @@ site.get("/post/:id/:rev", function(req, res) {
 });
 
 site.get("/post/:id/assets/*", function(req, res) {
-  var post = "/../../content/posts/" +
+  var post = "/../content/posts/" +
     posts.get(req.params.id).toJSON().path;
 
   // The actual asset path
   var assetPath = req.params[0];
 
-  if (path.relative(assetPath, __dirname) === "../lib") {
+  if (path.relative(assetPath, __dirname) === "../server") {
     return fs.createReadStream(__dirname + post + "assets/" + assetPath).pipe(res);
   }
 

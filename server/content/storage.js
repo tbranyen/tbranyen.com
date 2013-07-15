@@ -1,6 +1,6 @@
 var git = require("nodegit");
-var Q = require("q");
 var fs = require("fs");
+var flow = require("./flow");
 
 exports.opts = {};
 
@@ -13,33 +13,27 @@ exports.file = function(filePath, rev, callback) {
 
   var opts = this.opts;
 
-  git.repo(opts.path, function(err, repo) {
-    if (err) { throw new Error(err); }
-
+  flow.promisfy(git, "repo", opts.path).then(function(repo) {
     // Commits will override branches.
     var method = rev ? "commit" : "branch";
 
     // If a commit was specified use that revision, otherwise default to
     // branch.
-    repo[method](rev || opts.branch, function(err, branch) {
-      if (err) { throw new Error(err); }
-
-      branch.file(filePath, function(err, file) {
-        if (err) {
-          // Attempt to load from filesystem.
-          return fs.readFile(opts.path + filePath, function(err, contents) {
-            if (err) { throw new Error(err); }
-
-            // No revisions when pulling from FS.
-            callback(String(contents), []);
-          });
-        }
-
-        file.content(function(err, content) {
+    flow.promisfy(repo, method, rev || opts.branch).then(function(branch) {
+      // Look up this specific file in the given commit/branch.
+      flow.promisfy(branch, "file", filePath).then(function(file) {
+        // Read in the file's content.
+        flow.promisfy(file, "content").then(function(content) {
           // Send back the revisions for each file as well.
           exports.history(filePath, function(revs) {
             callback(content, revs);
           });
+        });
+      }).fail(function(err) {
+        // Attempt to load from filesystem.
+        flow.promisfy(fs, "readFile", opts.path + filePath).then(function(contents) {
+          // No revisions when pulling from FS.
+          callback(String(contents), []);
         });
       });
     });
@@ -48,67 +42,39 @@ exports.file = function(filePath, rev, callback) {
 
 exports.history = function(filePath, callback) {
   var opts = this.opts;
+  var lastSha;
 
-  git.repo(opts.path, function(err, repo) {
-    if (err) { throw new Error(err); }
-
-    repo.branch(opts.branch, function(err, branch) {
-      if (err) { throw new Error(err); }
-
-      var finish, history, lastSha;
+  flow.promisfy(git, "repo", opts.path).then(function(repo) {
+    flow.promisfy(repo, "branch", opts.branch).then(function(branch) {
       var shas = [];
+      var history = flow.promisfyEvent(branch.history(), "on", "commit");
 
-      function complete(cb) {
-        var i = 0;
+      var wait = history.progress(function(commit) {
+        var sha = flow.promisfy(commit, "sha");
+        var tree = flow.promisfy(commit, "tree");
 
-        return {
-          inc: function() {
-            i = i+1;
-          },
+        return flow.when([sha, tree]).then(function(commitSha, tree) {
+          var tree = flow.promisfyEvent(tree.walk(), "on", "entry");
 
-          dec: function() {
-            if(!(i = i-1)) {
-              cb();
+          tree.progress(function(entry) {
+            var path = flow.promisfy(entry, "path");
+            var sha = flow.promisfy(entry, "sha");
 
-              // Ensure correct reset
-              cb = undefined;
-              i = 0;
-            }
-          }
-        };
-      }
-
-      finish = complete(function() {
-        callback(shas);
-      });
-
-      finish.inc();
-
-      history = branch.history();
-      history.on("commit", function(err, commit) {
-        finish.inc();
-
-        commit.sha(function(err, commitSha) {
-          commit.tree(function(err, tree) {
-            var walk = tree.walk();
-
-            walk.on("entry", function(err, entry) {
-              entry.path(function(err, path) {
-                entry.sha(function(err, sha) {
-                  if (path === filePath && lastSha !== sha) {
-                    lastSha = sha;
-                    shas.push(commitSha);
-                  }
-                });
-              });
+            return flow.when([path, sha]).then(function(path, sha) {
+              if (path === filePath && lastSha !== sha) {
+                lastSha = sha;
+                shas.push(commitSha);
+              }
             });
-
-            walk.on("end", finish.dec);
           });
+
+          return tree;
         });
       });
 
-      history.on("end", finish.dec);
+      flow.when([wait, history]).then(function() {
+        callback(shas);
+      });
     });
   });
 };
