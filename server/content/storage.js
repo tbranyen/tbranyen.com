@@ -88,24 +88,24 @@ exports.history = function(filePath, callback) {
       history.on("commit", function(err, commit) {
         finish.inc();
 
-        commit.tree(function(err, tree) {
-          var walk = tree.walk();
+        commit.sha(function(err, commitSha) {
+          commit.tree(function(err, tree) {
+            var walk = tree.walk();
 
-          walk.on("entry", function(err, entry) {
-            var name = Q.nfcall(entry.name);
-            var sha = Q.nfcall(entry.sha);
-
-            // Have to spread out the calls.
-            Q.spread([name, sha], function(name, sha) {
-              if (name === filePath && lastSha !== sha) {
-                lastSha = sha;
-                shas.push(sha);
-              }
+            walk.on("entry", function(err, entry) {
+              entry.path(function(err, path) {
+                entry.sha(function(err, sha) {
+                  if (path === filePath && lastSha !== sha) {
+                    lastSha = sha;
+                    shas.push(commitSha);
+                  }
+                });
+              });
             });
-          });
 
-          walk.on("end", finish.dec);
-        })
+            walk.on("end", finish.dec);
+          });
+        });
       });
 
       history.on("end", finish.dec);

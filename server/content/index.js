@@ -66,19 +66,16 @@ var document = module.exports = {
         ".yaml": "coffeescript"
       };
 
-      // Attach the revisions.
-      tmpl.context.revs = revs;
-
       // Convert scripts to GitHub flavored markdown
       tmpl.filters.add("render", function(val) {
         var type = val.split(".").pop();
         var codeBlock = "<pre><code>";
-        var lol = fs.readFileSync(basePath + "content/posts/" + filepath +
+        var source = fs.readFileSync(basePath + "content/posts/" + filepath +
           "assets/" + val).toString();
         var ext = path.extname(val);
 
         try {
-          codeBlock += hl.highlight(extmap[ext] || "text", lol).value;
+          codeBlock += hl.highlight(extmap[ext] || "text", source).value;
           codeBlock += "</code></pre>";
         } catch (ex) {
           console.log(val + " was unable to be highlighted");
@@ -87,7 +84,7 @@ var document = module.exports = {
         return codeBlock;
       });
 
-      callback(marked(tmpl.render()));
+      callback(marked(tmpl.render()), revs);
     });
   }
 };

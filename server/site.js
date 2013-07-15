@@ -231,7 +231,7 @@ site.get("/projects", function(req, res) {
   }
 });
 
-// Post
+// Always the most current post.
 site.get("/post/:id", function(req, res) {
   getLayout("index", function(err, tmpl) {
     if (err) { return res.send(500); }
@@ -244,10 +244,12 @@ site.get("/post/:id", function(req, res) {
       try {
         var post = posts.get(req.params.id).toJSON();
 
-        content.assemble(post.path, function(html) {
+        content.assemble(post.path, function(html, revs) {
           tmpl.partials.add("content", buf.toString(), {
             post: post,
-            content: html
+            revs: revs,
+            content: html,
+            url: req.url
           });
 
           res.send(tmpl.render({
@@ -257,6 +259,39 @@ site.get("/post/:id", function(req, res) {
         });
       } catch(ex) {
         res.send("internal error");
+      }
+    });
+  });
+});
+
+// Specific post in history.
+site.get("/post/:id/:rev", function(req, res) {
+  getLayout("index", function(err, tmpl) {
+    if (err) { return res.send(500); }
+
+    fs.readFile(path.resolve("templates/post.html"), function(err, buf) {
+      tmpl.filters.add("formatDate", function(date) {
+        return moment(date).format("dddd, MMM D, YYYY");
+      });
+
+      try {
+        var post = posts.get(req.params.id).toJSON();
+
+        content.assemble(post.path, req.params.rev, function(html, revs) {
+          tmpl.partials.add("content", buf.toString(), {
+            post: post,
+            revs: revs,
+            content: html,
+            url: req.url
+          });
+
+          res.send(tmpl.render({
+            title: post.title + " | Tim Branyen @tbranyen",
+            post_active: "active"
+          }));
+        });
+      } catch(ex) {
+        res.send("Internal error:<br><pre>" + ex.stack + "</pre>");
       }
     });
   });
