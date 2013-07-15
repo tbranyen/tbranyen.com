@@ -4,7 +4,7 @@ var path = require("path");
 var fs = require("fs");
 var readline = require("readline");
 var cluster = require("cluster");
-var config = require(path.resolve(__dirname, "/../package.json"));
+var config = require(path.join(__dirname, "/../package.json"));
 
 // Var up, bro
 var i, read;
