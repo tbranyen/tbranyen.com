@@ -6,7 +6,7 @@
       <p><span class="date">{{post.posted|formatDate}}</span></p>
     </div>
 
-    {%each revs%} <a href="/post/{{post.slug}}/{{.}}">{{.}}</a> {%endeach%}
+    <center>{%each revs%} <a href="/post/{{post.slug}}/{{.}}">{{.}}</a> {%endeach%}</center>
 
     <h2 class="instapaper_title">{{post.title}}</h2>
     <hr>
