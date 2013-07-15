@@ -5,8 +5,10 @@
 
     <div class="revs">
       {%each revs%}
-        <a href="/post/{{post.slug}}/{{.}}">{{.|slice 6}}</a>
-        {%if i < revs.length%}·{%endif%}
+        <a class="sha" href="/post/{{post.slug}}/{{.}}">
+          <div>{{.|slice 6}}</div>
+        </a>
+        {%if i < revs.length%}<span class="pipe"></span>{%endif%}
       {%endeach%}
     </div>
 

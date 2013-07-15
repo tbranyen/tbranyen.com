@@ -39,6 +39,7 @@
     .revs
       text-align center
       line-height 28px
+      margin-bottom 40px
 
     &.post-page
       max-width 960px
@@ -97,8 +98,38 @@
           opacity .4
           transition opacity .5s linear
 
-          &:hover
-            opacity 1
+          .sha
+            color transparent
+            display inline-block
+            border-radius 25px
+            background #FFF
+            width 15px
+            height 15px
+            border 10px solid #0084FF
+            padding 0
+            transition background .5s linear
+
+            div
+              text-align center
+              position relative
+              top 22px
+              left -15px
+              transition color .5s linear
+              font-size 12px
+
+            &:hover, &:last-child
+              background #FFCD55
+
+              div
+                color #333
+
+          .pipe
+            background #0084FF
+            height 5px
+            width 10px
+            position relative
+            display inline-block
+            top -14px
 
         .instapaper_title
           font-size 30px
@@ -137,7 +168,6 @@
 
     &.home-page
       text-align center
-      padding-top 20px;
 
       .posts
         list-style none
@@ -151,8 +181,6 @@
           opacity .4
 
         .post
-          padding-bottom 10px
-          margin-bottom 30px
           opacity .4
           border-bottom 1px solid #CCC
           padding-left: 10px;
@@ -177,6 +205,8 @@
             margin-top 10px
 
           a
+            padding-top 30px
+            padding-bottom 10px
             text-decoration none
             display block
 
