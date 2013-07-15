@@ -30,7 +30,8 @@ module.exports = ->
         files: [
           "templates/**/*.*"
           "styles/**/*.*"
-          "server/**/*.*"
+          "server/**/*.*",
+          "content/**/*.*"
         ]
 
         tasks: ["stylus"]
@@ -45,9 +46,6 @@ module.exports = ->
     # Run the Stylus preprocessor to get vanilla CSS.
     stylus:
       development:
-        options:
-          use: [require("fluidity")]
-
         files:
           "dist/main.css": "styles/main.styl"
 

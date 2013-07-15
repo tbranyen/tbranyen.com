@@ -1,15 +1,11 @@
 <section class="post-page">
-  <p>
-    <a class="nav return" href="/">Back to Posts</a>
-  </p>
-
-  <p>
-    <h3>Other revisions</h3>
-    <ul>
-    </ul>
-
   <div class="post">
-    <span class="date">{{post.posted|formatDate}}</span>
+    <div class="preamble">
+      <p><a class="nav return" href="/">Home</a></p>
+
+      <p><span class="date">{{post.posted|formatDate}}</span></p>
+    </div>
+
     <h2 class="instapaper_title">{{post.title}}</h2>
     <hr>
 
@@ -17,6 +13,8 @@
       {{content}}
     </div>
   </div>   
+
+  <hr class="post-clear">
 
   <div class="comments">
     <div id="disqus_thread"></div>

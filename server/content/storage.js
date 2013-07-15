@@ -1,5 +1,6 @@
 var git = require("nodegit");
 var Q = require("q");
+var fs = require("fs");
 
 exports.opts = {};
 
@@ -24,7 +25,15 @@ exports.file = function(filePath, rev, callback) {
       if (err) { throw new Error(err); }
 
       branch.file(filePath, function(err, file) {
-        if (err) { throw new Error(err); }
+        if (err) {
+          // Attempt to load from filesystem.
+          return fs.readFile(opts.path + filePath, function(err, contents) {
+            if (err) { throw new Error(err); }
+
+            // No revisions when pulling from FS.
+            callback(String(contents), []);
+          });
+        }
 
         file.content(function(err, content) {
           // Send back the revisions for each file as well.

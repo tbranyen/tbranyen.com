@@ -189,6 +189,7 @@ function getLayout(name, callback) {
 
 // Serve static styles.
 site.use("/dist", express.static(path.resolve("dist")));
+site.use("/styles", express.static(path.resolve("styles")));
 
 // Resume
 site.get("/resume", function(req, res) {
