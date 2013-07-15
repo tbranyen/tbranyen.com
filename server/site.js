@@ -134,7 +134,7 @@ var Posts = Backbone.Collection.extend({
 var posts = new Posts();
 
 // When its filled...
-all.bind("reset", function() {
+all.on("sync", function() {
   // Get only my repos
   mine.reset(all.filter(function(project) {
     return !project.get("fork");
@@ -147,7 +147,7 @@ all.bind("reset", function() {
 });
 
 // When posts are updated add to the feed
-posts.bind("reset", function() {
+posts.on("sync", function() {
   // Add each post into the rss feed
   posts.each(function(post) {
     this.feed.item({
@@ -252,6 +252,10 @@ site.get("/post/:id", function(req, res) {
             url: req.url
           });
 
+          tmpl.filters.add("slice", function(val, count) {
+            return val.slice(0, count);
+          });
+
           res.send(tmpl.render({
             title: post.title + " | Tim Branyen @tbranyen",
             post_active: "active"
@@ -283,6 +287,10 @@ site.get("/post/:id/:rev", function(req, res) {
             revs: revs,
             content: html,
             url: req.url
+          });
+
+          tmpl.filters.add("slice", function(val, count) {
+            return val.slice(0, count);
           });
 
           res.send(tmpl.render({

@@ -3,10 +3,15 @@
     <div class="preamble">
       <p><a class="nav return" href="/">Home</a></p>
 
-      <p><span class="date">{{post.posted|formatDate}}</span></p>
+    <div class="revs">
+      {%each revs%}
+        <a href="/post/{{post.slug}}/{{.}}">{{.|slice 6}}</a>
+        {%if i < revs.length%}·{%endif%}
+      {%endeach%}
     </div>
 
-    <center>{%each revs%} <a href="/post/{{post.slug}}/{{.}}">{{.}}</a> {%endeach%}</center>
+      <p><span class="date">{{post.posted|formatDate}}</span></p>
+    </div>
 
     <h2 class="instapaper_title">{{post.title}}</h2>
     <hr>
