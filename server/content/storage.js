@@ -47,13 +47,14 @@ exports.history = function(filePath, callback) {
   flow.promisfy(git, "repo", opts.path).then(function(repo) {
     flow.promisfy(repo, "branch", opts.branch).then(function(branch) {
       var shas = [];
+      var revs = [];
       var history = flow.promisfyEvent(branch.history(), "on", "commit");
 
-      var wait = history.progress(function(commit) {
+      history.progress(function(commit) {
         var sha = flow.promisfy(commit, "sha");
         var tree = flow.promisfy(commit, "tree");
 
-        return flow.when([sha, tree]).then(function(commitSha, tree) {
+        revs.push(flow.when([sha, tree]).then(function(commitSha, tree) {
           var tree = flow.promisfyEvent(tree.walk(), "on", "entry");
 
           tree.progress(function(entry) {
@@ -69,11 +70,13 @@ exports.history = function(filePath, callback) {
           });
 
           return tree;
-        });
+        }));
       });
 
-      flow.when([wait, history]).then(function() {
-        callback(shas);
+      history.then(function() {
+        flow.when(revs).then(function() {
+          callback(shas);
+        });
       });
     });
   });
