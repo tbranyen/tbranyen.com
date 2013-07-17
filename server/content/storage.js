@@ -1,6 +1,7 @@
 var git = require("nodegit");
 var fs = require("fs");
 var flow = require("./flow");
+var Q = require("q");
 
 exports.opts = {};
 
@@ -13,17 +14,17 @@ exports.file = function(filePath, rev, callback) {
 
   var opts = this.opts;
 
-  flow.promisfy(git, "repo", opts.path).then(function(repo) {
+  Q.ninvoke(git, "repo", opts.path).then(function(repo) {
     // Commits will override branches.
     var method = rev ? "commit" : "branch";
 
     // If a commit was specified use that revision, otherwise default to
     // branch.
-    flow.promisfy(repo, method, rev || opts.branch).then(function(branch) {
+    Q.ninvoke(repo, method, rev || opts.branch).then(function(branch) {
       // Look up this specific file in the given commit/branch.
-      flow.promisfy(branch, "file", filePath).then(function(file) {
+      Q.ninvoke(branch, "file", filePath).then(function(file) {
         // Read in the file's content.
-        flow.promisfy(file, "content").then(function(content) {
+        Q.ninvoke(file, "content").then(function(content) {
           // Send back the revisions for each file as well.
           exports.history(filePath, function(revs) {
             callback(content, revs);
@@ -31,7 +32,7 @@ exports.file = function(filePath, rev, callback) {
         });
       }).fail(function(err) {
         // Attempt to load from filesystem.
-        flow.promisfy(fs, "readFile", opts.path + filePath).then(function(contents) {
+        Q.ninvoke(fs, "readFile", opts.path + filePath).then(function(contents) {
           // No revisions when pulling from FS.
           callback(String(contents), []);
         });
@@ -44,8 +45,8 @@ exports.history = function(filePath, callback) {
   var opts = this.opts;
   var lastSha;
 
-  flow.promisfy(git, "repo", opts.path).then(function(repo) {
-    flow.promisfy(repo, "branch", opts.branch).then(function(branch) {
+  Q.ninvoke(git, "repo", opts.path).then(function(repo) {
+    Q.ninvoke(repo, "branch", opts.branch).then(function(branch) {
       var shas = [];
       var revs = [];
       var history = flow.promisfyEvent(branch.history(), "on", "commit");
