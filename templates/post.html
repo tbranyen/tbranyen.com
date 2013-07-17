@@ -1,16 +1,14 @@
 <section class="post-page">
   <div class="post">
     <div class="preamble">
-      <p><a class="nav return" href="/">Home</a></p>
-
-    <div class="revs">
-      {%each revs%}
-        <a class="sha" href="/post/{{post.slug}}/{{.}}">
-          <div>{{.|slice 6}}</div>
-        </a>
-        {%if i < revs.length%}<span class="pipe"></span>{%endif%}
-      {%endeach%}
-    </div>
+      <div class="revs">
+        {%each revs%}
+          <a class="sha" href="/post/{{post.slug}}/{{.}}">
+            <div>{{.|slice 6}}</div>
+          </a>
+          {%if i < revs.length%}<span class="pipe"></span>{%endif%}
+        {%endeach%}
+      </div>
 
       <p><span class="date">{{post.posted|formatDate}}</span></p>
     </div>
