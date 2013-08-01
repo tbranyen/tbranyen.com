@@ -5,29 +5,23 @@ var Q = require("q");
 
 exports.opts = {};
 
-exports.file = function(filePath, rev, callback) {
-  // Allow argument shifting.
-  if (typeof rev === "function") {
-    callback = rev;
-    rev = undefined;
-  }
-
+exports.file = function(filePath, rev) {
   var opts = this.opts;
 
-  Q.ninvoke(git, "repo", opts.path).then(function(repo) {
+  return Q.ninvoke(git, "repo", opts.path).then(function(repo) {
     // Commits will override branches.
     var method = rev ? "commit" : "branch";
 
     // If a commit was specified use that revision, otherwise default to
     // branch.
-    Q.ninvoke(repo, method, rev || opts.branch).then(function(branch) {
+    return Q.ninvoke(repo, method, rev || opts.branch).then(function(branch) {
       // Look up this specific file in the given commit/branch.
-      Q.ninvoke(branch, "file", filePath).then(function(file) {
+      return Q.ninvoke(branch, "file", filePath).then(function(file) {
         // Read in the file's content.
-        Q.ninvoke(file, "content").then(function(content) {
+        return Q.ninvoke(file, "content").then(function(content) {
           // Send back the revisions for each file as well.
-          exports.history(filePath, function(revs) {
-            callback(content, revs);
+          return Q.invoke(exports, "history", filePath).then(function(revs) {
+            return [content, revs];
           });
         });
       }).fail(function(err) {

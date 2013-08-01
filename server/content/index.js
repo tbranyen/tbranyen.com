@@ -37,8 +37,11 @@ var document = module.exports = {
   },
 
   meta: function(filePath, callback) {
-    // Read in the file path
-    storage.file("posts/" + filePath + "post.md", function(contents) {
+    // Read in the file path.
+    var fileLookup = storage.file("posts/" + filePath + "post.md");
+    
+    // Once completed, return the parsed document contents.
+    fileLookup.then(function(contents) {
       var parts = document.parse(contents);
 
       callback(parts);
@@ -53,8 +56,11 @@ var document = module.exports = {
       rev = undefined;
     }
 
-    // Read in the file path
-    storage.file("posts/" + filepath + "post.md", rev, function(contents, revs) {
+    // Read in the file path.
+    var fileLookup = storage.file("posts/" + filepath + "post.md", rev);
+    
+    // Once read in, apply syntax highlighting and render out the template.
+    fileLookup.then(function(contents, revs) {
       var parts = document.parse(contents);
       var tmpl = combyne(parts.contents, parts.metadata);
       var extmap = {
@@ -78,7 +84,7 @@ var document = module.exports = {
           codeBlock += hl.highlight(extmap[ext] || "text", source).value;
           codeBlock += "</code></pre>";
         } catch (ex) {
-          console.log(val + " was unable to be highlighted");
+          console.warn(val + " was unable to be highlighted");
         }
 
         return codeBlock;
