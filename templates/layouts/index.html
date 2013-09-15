@@ -8,144 +8,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   <link href="/rss.xml" type="application/rss+xml" rel="alternate"> 
-  <link rel="stylesheet" href="/dist/main.css">
+  <link rel="stylesheet" href="/dist/styles.min.css">
 
   <title>{{title}}</title>
-
-  <!--
-  <style>
-    /*
-    @keyframes airplane {
-      from {
-      }
-
-      to {
-        margin-left: 0%;
-        width: 100%;
-      }
-    }
-    */
-
-    body.skydive {
-      background: #3FC9FF;
-    }
-
-    body {
-      -webkit-transition: all linear 2s;
-    }
-
-    body.skydive .container header {
-      width: 220px;
-      height: 40px;
-      background: #444;
-      color: transparent;
-
-      border-top-right-radius: 15px;
-      border-bottom-right-radius: 15px;
-      overflow: auto;
-    }
-
-    body.skydive .container header strong {
-      color: transparent;
-    }
-
-    body.skydive .post-page, body.skydive footer {
-      display: none !important;
-    }
-
-    @-webkit-keyframes animY {
-      from {
-        -webkit-transform: rotateY(0deg) rotateX(0deg) rotateZ(0deg);
-      }
-      to{
-        -webkit-transform: rotateY(360deg) rotateX(360deg) rotateZ(90deg);
-      }
-    }
-
-    .animateY {
-      -webkit-animation : animY 6s infinite linear;
-    }
-
-    body.skydive #container {
-      position: fixed;
-      bottom: 0px;
-      left: -120px;
-      right: -120px;
-      height: 130px;
-      overflow: hidden;
-      border-top-left-radius: 150%;
-      border-top-right-radius: 150%;
-      box-shadow: 2px -2px 12px rgba(0, 255, 255, 0.8);
-    }
-
-    body.skydive .earth {
-      position: relative;
-      margin: 0 auto;
-      width: 100%;
-      height: 100%;  
-      background: green;
-      background: -webkit-linear-gradient(top, #22C222, #119911);
-    }
-
-    body.skydive .runway {
-      background: #5C5C5C;
-      width: 60px;
-      height: 100%;
-      margin: 0 auto;
-      margin-right: 30%;
-      box-shadow: 0px 1px 3px #FFF;
-      -webkit-transform: skew(76deg);
-    }
-
-    body.skydive .runway .path {
-      width: 5px;
-      height: 100%;
-      margin: 0 auto;
-      background: yellow;
-    }
-
-    body.skydive .sun {
-      position: fixed;
-      top: -75px;
-      right: -75px;
-      width: 150px;
-      height: 150px;
-      background: #FDF8BC;
-      border-radius: 300px;
-      box-shadow: -11px 12px 60px #91F8F4;
-    }
-
-    body.skydive .cloud {
-      position: absolute;
-      width: 155px;
-      height: 130px;
-      top: 50px;
-      left: 150px;
-    }
-
-    body.skydive .cloud .poof {
-      position: absolute;
-      background: rgba(255, 255, 255, 0.9);
-      width: 100px;
-      height: 100px;
-      border-radius: 100px;
-      -webkit-filter: blur(5px);
-    }
-
-    body.skydive .cloud .poof.one {
-      left: 50%;
-    }
-
-    body.skydive .cloud .poof.two {
-     bottom: 0;
-    }
-
-    body.skydive .cloud .poof.three {
-     bottom: 0;
-     right: 0;
-    }
-  </style>
-  -->
 </head>
 
 <body>
@@ -178,23 +43,6 @@
       Fork the <a class="dark" target="_blank" href="http://github.com/tbranyen/site-content/">content</a> of this site, it's <a target="blank" href="http://unlicense.org/">public domain</a>!
     </footer>
 
-    <!--
-    <div class="cloud">
-      <div class="poof one"></div>
-      <div class="poof two"></div>
-      <div class="poof three"></div>
-    </div>
-    <div class="sun"></div>
-    <div id="container">
-      <div class="earth">
-        <div class="runway">
-          <div class="path"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-  -->
-
   <script type="text/javascript">
 
     var _gaq = _gaq || [];
@@ -208,16 +56,6 @@
     })();
 
   </script>
-
-  <!--
-  <script>
-    document.querySelector(".toggleSkydive").addEventListener("click", function(ev) {
-      ev.preventDefault();
-
-      document.body.classList.add("skydive");
-    });
-  </script>
-  -->
 
   <script src="http://localhost:35729/livereload.js"></script>
 </body>

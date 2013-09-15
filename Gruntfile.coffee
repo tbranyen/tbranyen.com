@@ -39,7 +39,7 @@ module.exports = ->
     cssmin:
       release:
         files:
-          "dist/main.min.css": [
+          "dist/styles.min.css": [
             "styles/normalize"
             "dist/main.css"
           ]
@@ -51,22 +51,28 @@ module.exports = ->
           format: "zlib"
 
         files:
-          "dist/main.min.css.gz": "dist/main.min.css"
+          "dist/styles.min.css.gz": "dist/styles.min.css"
 
     rsync:
+      options:
+        src: "."
+        host: "tbranyen.com"
+        recursive: true
+        syncDestIgnoreExcl: true
+
+        exclude: [
+          "/.git"
+          "/node_modules"
+          "/content"
+        ]
+
       "staging":
         options:
-          src: "."
           dest: "/var/sites/tbranyen.com/subdomains/staging."
-          host: "tbranyen.com"
-          recursive: true
-          syncDest: true
 
-          exclude: [
-            "/.git"
-            "/node_modules"
-            "/content"
-          ]
+      "production":
+        options:
+          dest: "/var/sites/tbranyen.com/www"
 
   @loadNpmTasks "grunt-express-server"
   @loadNpmTasks "grunt-contrib-watch"
