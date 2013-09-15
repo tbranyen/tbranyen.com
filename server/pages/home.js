@@ -1,5 +1,6 @@
 var fs = require("fs");
 var path = require("path");
+var moment = require("moment");
 var util = require("../lib/util");
 
 var posts = require("../lib/posts");

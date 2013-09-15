@@ -12,7 +12,7 @@ storage.use(basePath + config.content.repo, config.content.branch);
 
 var document = module.exports = {
   // Parse out a post or any bit of content that has meta data.
-  parse: function(contents) {
+  parse: function(contents, revs) {
     var i, len, parts, key, val;
     var obj = { metadata: {}, contents: "" };
     var docs = contents.split("\n\n");
@@ -42,7 +42,7 @@ var document = module.exports = {
     
     // Once completed, return the parsed document contents.
     fileLookup.then(function(contents) {
-      var parts = document.parse(contents);
+      var parts = document.parse.apply(document, contents);
 
       callback(parts);
     });

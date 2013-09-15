@@ -30,16 +30,16 @@ var Posts = Backbone.Collection.extend({
     var metadata = [];
     var count = 0;
     
-    fs.readdir("content/posts/", function(err, files) {
+    fs.readdir("content/posts/", function(err, folders) {
       // Ensure there are files
-      files && files.forEach(function(file) {
-        if (file[0] !== ".") {
-          content.meta(file + "/", function(meta) {
-            meta.metadata.path = file + "/";
+      folders && folders.forEach(function(folder) {
+        if (folder[0] !== ".") {
+          content.meta(folder + "/", function(meta) {
+            meta.metadata.path = folder + "/";
             metadata.push(meta.metadata);
             count++;
 
-            if (count === files.length) {
+            if (count === folders.length) {
               options.success(metadata);
             }
           });

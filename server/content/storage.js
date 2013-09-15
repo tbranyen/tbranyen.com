@@ -8,30 +8,38 @@ exports.opts = {};
 exports.file = function(filePath, rev) {
   var opts = this.opts;
 
-  return Q.ninvoke(git, "repo", opts.path).then(function(repo) {
+  return Q.ninvoke(git.Repo, "open", opts.path).then(function(repo) {
     // Commits will override branches.
-    var method = rev ? "commit" : "branch";
+    var method = rev ? "getCommit" : "getBranch";
 
     // If a commit was specified use that revision, otherwise default to
     // branch.
-    return Q.ninvoke(repo, method, rev || opts.branch).then(function(branch) {
+    return Q.ninvoke(repo, method, rev || opts.branch).then(function(commit) {
       // Look up this specific file in the given commit/branch.
-      return Q.ninvoke(branch, "file", filePath).then(function(file) {
-        // Read in the file's content.
-        return Q.ninvoke(file, "content").then(function(content) {
+      return Q.ninvoke(commit, "getEntry", filePath);
+    }).then(function(tree) {
+      // Read in the file's content.
+      return Q.ninvoke(tree, "getBlob");
+    }).then(function(blob) {
+      return [blob.toString(), []];
+    });
+
+    /*
           // Send back the revisions for each file as well.
-          return Q.invoke(exports, "history", filePath).then(function(revs) {
-            return [content, revs];
-          });
+          //return Q.invoke(exports, "history", filePath).then(function(revs) {
+            //return [entry, revs];
+            console.log(blob.toString());
+          //});
         });
       }).fail(function(err) {
         // Attempt to load from filesystem.
-        Q.ninvoke(fs, "readFile", opts.path + filePath).then(function(contents) {
+        return Q.ninvoke(fs, "readFile", opts.path + filePath).then(function(contents) {
           // No revisions when pulling from FS.
-          callback(String(contents), []);
+          return String(contents), [];
         });
       });
     });
+    */
   });
 };
 
@@ -39,8 +47,8 @@ exports.history = function(filePath, callback) {
   var opts = this.opts;
   var lastSha;
 
-  Q.ninvoke(git, "repo", opts.path).then(function(repo) {
-    Q.ninvoke(repo, "branch", opts.branch).then(function(branch) {
+  Q.ninvoke(git.Repo, "open", opts.path).then(function(repo) {
+    Q.ninvoke(repo, "getBranch", opts.branch).then(function(branch) {
       var shas = [];
       var revs = [];
       var history = flow.promisfyEvent(branch.history(), "on", "commit");
