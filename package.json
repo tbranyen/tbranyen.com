@@ -8,20 +8,20 @@
   },
   "dependencies": {
     "backbone": "~1.0.0",
-    "backbone.layoutmanager": "~0.8.8",
+    "backbone.layoutmanager": "~0.9.2",
     "cheerio": "~0.10.5",
     "combyne": "~0.2.1",
     "highlight.js": "~7.3.0",
     "marked": "~0.2.9",
     "requirejs": "~2.1.6",
     "rss": "~0.2.0",
+    "nodegit": "~0.1.0",
     "underscore": "~1.4.4",
     "express": "~3.3.3",
-    "nodegit": "~0.1.0",
     "request": "~2.21.0",
     "moment": "~2.0.0",
     "stylus": "~0.33.1",
-    "q": "git://github.com/kriskowal/q.git#master",
+    "q": "~0.9.7",
     "underscore.deferred": "~0.4.0"
   },
   "devDependencies": {
@@ -31,15 +31,14 @@
     "grunt-contrib-clean": "~0.4.1",
     "grunt-contrib-stylus": "~0.5.1",
     "grunt-contrib-cssmin": "~0.6.1",
-    "grunt-zopfli": "~0.3.1"
+    "grunt-zopfli": "~0.3.1",
+    "grunt-rsync": "~0.2.1"
   },
   "repository": {
     "type": "git",
     "url": "git://github.com/tbranyen/tbranyen.com.git"
   },
-  "author": "",
   "license": "MIT",
-  "gitHead": "95c003b627879a365c0464fc910ad43e686546ac",
   "content": {
     "repo": "content/",
     "branch": "master"

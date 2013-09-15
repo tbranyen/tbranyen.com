@@ -42,9 +42,7 @@ var document = module.exports = {
     
     // Once completed, return the parsed document contents.
     fileLookup.then(function(contents) {
-      var parts = document.parse.apply(document, contents);
-
-      callback(parts);
+      callback(document.parse.apply(document, contents));
     });
   },
 
@@ -60,7 +58,9 @@ var document = module.exports = {
     var fileLookup = storage.file("posts/" + filepath + "post.md", rev);
     
     // Once read in, apply syntax highlighting and render out the template.
-    fileLookup.then(function(contents, revs) {
+    fileLookup.then(function(result) {
+      var contents = result[0];
+      var revs = result[1];
       var parts = document.parse(contents);
       var tmpl = combyne(parts.contents, parts.metadata);
       var extmap = {

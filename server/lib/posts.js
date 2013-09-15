@@ -17,8 +17,7 @@ var Post = Backbone.Model.extend({
   }
 });
 
-// TODO: Update this to pull directly from Git
-// Posts collection
+// Posts collection.
 var Posts = Backbone.Collection.extend({
   model: Post,
 
@@ -31,19 +30,20 @@ var Posts = Backbone.Collection.extend({
     var count = 0;
     
     fs.readdir("content/posts/", function(err, folders) {
-      // Ensure there are files
-      folders && folders.forEach(function(folder) {
-        if (folder[0] !== ".") {
-          content.meta(folder + "/", function(meta) {
-            meta.metadata.path = folder + "/";
-            metadata.push(meta.metadata);
-            count++;
+      // Ensure there are files.
+      folders && folders.filter(function(folder) {
+        // No dotfiles.
+        return folder[0] !== ".";
+      }).forEach(function(folder) {
+        content.meta(folder + "/", function(meta) {
+          meta.metadata.path = folder + "/";
+          metadata.push(meta.metadata);
+          count++;
 
-            if (count === folders.length) {
-              options.success(metadata);
-            }
-          });
-        }
+          if (count === folders.length) {
+            options.success(metadata);
+          }
+        });
       });
     });
   },

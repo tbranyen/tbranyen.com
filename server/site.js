@@ -27,6 +27,7 @@ site.use("/styles", express.static(path.resolve("styles")));
 // Attach pages.
 require("./pages/resume").attachTo(site);
 require("./pages/projects").attachTo(site);
+require("./pages/post").attachTo(site);
 require("./pages/home").attachTo(site);
 
 // Serve RSS.

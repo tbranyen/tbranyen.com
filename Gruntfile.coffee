@@ -53,12 +53,28 @@ module.exports = ->
         files:
           "dist/main.min.css.gz": "dist/main.min.css"
 
+    rsync:
+      "staging":
+        options:
+          src: "."
+          dest: "/var/sites/tbranyen.com/subdomains/staging."
+          host: "tbranyen.com"
+          recursive: true
+          syncDest: true
+
+          exclude: [
+            "/.git"
+            "/node_modules"
+            "/content"
+          ]
+
   @loadNpmTasks "grunt-express-server"
   @loadNpmTasks "grunt-contrib-watch"
   @loadNpmTasks "grunt-contrib-clean"
   @loadNpmTasks "grunt-contrib-cssmin"
   @loadNpmTasks "grunt-contrib-stylus"
   @loadNpmTasks "grunt-zopfli"
+  @loadNpmTasks "grunt-rsync"
 
   @registerTask "default", ["express", "stylus", "watch"]
-  @registerTask "release", ["clean", "stylus", "cssmin", "zopfli"]
+  @registerTask "release", ["clean", "stylus", "cssmin", "zopfli", "rsync"]

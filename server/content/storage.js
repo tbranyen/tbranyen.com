@@ -22,6 +22,12 @@ exports.file = function(filePath, rev) {
       return Q.ninvoke(tree, "getBlob");
     }).then(function(blob) {
       return [blob.toString(), []];
+    }).fail(function(err) {
+      // Attempt to load from filesystem.
+      return Q.ninvoke(fs, "readFile", opts.path + filePath).then(function(contents) {
+        // No revisions when pulling from FS.
+        return [String(contents), []];
+      });
     });
 
     /*
@@ -31,13 +37,7 @@ exports.file = function(filePath, rev) {
             console.log(blob.toString());
           //});
         });
-      }).fail(function(err) {
-        // Attempt to load from filesystem.
-        return Q.ninvoke(fs, "readFile", opts.path + filePath).then(function(contents) {
-          // No revisions when pulling from FS.
-          return String(contents), [];
-        });
-      });
+      })
     });
     */
   });
