@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "My personal website.",
   "main": "server",
+  "private": true,
   "engines": {
     "node": "~0.10.12"
   },
