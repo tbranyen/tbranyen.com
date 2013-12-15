@@ -1,6 +1,6 @@
-var fs = require("fs");
-var path = require("path");
-var combyne = require("combyne");
+const fs = require("fs");
+const path = require("path");
+const combyne = require("combyne");
 
 exports.getLayout = function(name, callback) {
   var realPath = path.resolve("templates/layouts/" + name + ".html");

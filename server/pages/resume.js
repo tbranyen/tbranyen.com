@@ -8,6 +8,7 @@ exports.attachTo = function(site) {
 
           res.send(tmpl.render({
             resume_active: "active",
+            node_env: process.env.NODE_ENV
           }));
         });
       });

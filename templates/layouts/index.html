@@ -29,10 +29,12 @@
     <nav class="preamble">
       <p>
         <a class="nav return" href="/">Posts</a>
+        <!--
         <span class="amp">&amp;</span>
         <a class="nav return" href="/">Projects</a>
         <span class="amp">&amp;</span>
         <a class="nav return" href="/">Talks</a>
+        -->
       </p>
       <hr>
     </nav>
@@ -57,6 +59,8 @@
 
   </script>
 
-  <script src="http://localhost:35729/livereload.js"></script>
+  {%if node_env == "development"%}
+    <script src="http://localhost:35729/livereload.js"></script>
+  {%endif%}
 </body>
 </html>

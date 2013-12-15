@@ -25,7 +25,8 @@ function home(req, res) {
 
       res.send(tmpl.render({
         title: "Tim Branyen @tbranyen",
-        post_active: "active"
+        post_active: "active",
+        node_env: process.env.NODE_ENV
       }));
     });
   });

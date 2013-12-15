@@ -14,6 +14,7 @@ exports.attachTo = function(site) {
           res.send(tmpl.render({
             title: "Projects | Tim Branyen @tbranyen",
             projects_active: "active",
+            node_env: process.env.NODE_ENV
           }));
         });
       });

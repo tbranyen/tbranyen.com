@@ -1,4 +1,4 @@
-var Backbone = require("backbone");
+const Backbone = require("backbone");
 
 var Projects = Backbone.Collection.extend({
   sync: function(method, model, options) {
