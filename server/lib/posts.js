@@ -31,7 +31,7 @@ var Posts = Backbone.Collection.extend({
     fs.readdir("content/posts/", function(err, folders) {
       // Ensure there are files.
       folders && folders.filter(function(folder) {
-        // No dotfiles.
+        // Exclude dotfiles.
         return folder[0] !== ".";
       }).forEach(function(folder) {
         content.meta(folder + "/", function(meta) {
@@ -66,21 +66,20 @@ var Posts = Backbone.Collection.extend({
 var posts = new Posts();
 
 // When posts are updated add to the feed
-posts.on("sync", function() {
-  // Add each post into the rss feed
-  posts.each(function(post) {
-    this.feed.item({
-      title: post.get("title"),
-      description: post.get("title"),
-      date: post.get("posted"),
-      url: "http://tbranyen.com/post/" + post.id
-    });
-  }, posts);
-});
+//posts.on("sync", function() {
+//  // Add each post into the rss feed
+//  posts.each(function(post) {
+//    this.feed.item({
+//      title: post.get("title"),
+//      description: post.get("title"),
+//      date: post.get("posted"),
+//      url: "http://tbranyen.com/post/" + post.id
+//    });
+//  }, posts);
+//});
 
 // TODO FileSystem Updates.
 
-// FIXME
 // Always fetch immediately
 posts.fetch();
 

@@ -82,5 +82,3 @@ To create your own content:
 ### Technical details ###
 
 ### Stack ###
-
-### License ###

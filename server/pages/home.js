@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const _ = require("underscore");
 const moment = require("moment");
 const util = require("../lib/util");
 const posts = require("../lib/posts");
@@ -17,6 +18,7 @@ function home(req, res) {
       tmpl.filters.add("formatDate", function(date) {
         return moment(date).format("dddd, MMM D, YYYY");
       });
+
 
       tmpl.partials.add("content", buf.toString(), {
         posts: posts.toJSON()
