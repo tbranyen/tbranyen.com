@@ -1,7 +1,7 @@
-var git = require("nodegit");
-var fs = require("fs");
-var flow = require("./flow");
-var Q = require("q");
+const git = require("nodegit");
+const fs = require("fs");
+const flow = require("./flow");
+const Q = require("q");
 
 exports.opts = {};
 
@@ -15,13 +15,32 @@ exports.file = function(filePath, rev) {
     // If a commit was specified use that revision, otherwise default to
     // branch.
     return Q.ninvoke(repo, method, rev || opts.branch).then(function(commit) {
-      // Look up this specific file in the given commit/branch.
-      return Q.ninvoke(commit, "getEntry", filePath);
-    }).then(function(tree) {
+      return Q.all([
+        // Look up this specific file in the given commit/branch.
+        Q.ninvoke(commit, "getEntry", filePath),
+        // Get the file diffs.
+        Q.ninvoke(commit, "getDiff")
+      ]);
+    }).spread(function(tree, diffList) {
+      var diffs = diffList.reduce(function(memo, diff) {
+        diff.patches().forEach(function(patch) {
+          var oldFile = patch.oldFile().path();
+          var newFile = patch.newFile().path();
+
+          memo[newFile] = memo[newFile] || [];
+
+          patch.hunks().forEach(function(hunk) {
+            memo[newFile].push({ header: hunk.header(), lines: hunk.lines() });
+          });
+        });
+
+        return memo;
+      }, {});
+
       // Read in the file's content.
-      return Q.ninvoke(tree, "getBlob");
-    }).then(function(blob) {
-      return [blob.toString(), []];
+      return Q.all([Q.ninvoke(tree, "getBlob"), diffs]);
+    }).spread(function(blob, diffs) {
+      return [blob.toString(), diffs];
     }).fail(function(err) {
       // Attempt to load from filesystem.
       return Q.ninvoke(fs, "readFile", opts.path + filePath).then(function(contents) {

@@ -1,8 +1,10 @@
-exports.attachTo = function(site) {
+const fs = require("fs");
+const util = require("../lib/util");
 
+exports.attachTo = function(site) {
   site.get("/projects", function(req, res) {
     try {
-      getLayout("index", function(err, tmpl) {
+      util.getLayout("index", function(err, tmpl) {
         if (err) { return res.send(500); }
 
         fs.readFile("templates/projects.html", function(err, buf) {
@@ -22,5 +24,4 @@ exports.attachTo = function(site) {
       res.send("internal error");
     }
   });
-
 };

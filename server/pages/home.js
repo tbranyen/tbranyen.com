@@ -1,10 +1,9 @@
-var fs = require("fs");
-var path = require("path");
-var moment = require("moment");
-var util = require("../lib/util");
-
-var posts = require("../lib/posts");
-var content = require("../content");
+const fs = require("fs");
+const path = require("path");
+const moment = require("moment");
+const util = require("../lib/util");
+const posts = require("../lib/posts");
+const content = require("../content");
 
 function home(req, res) {
   util.getLayout("index", function(err, tmpl) {

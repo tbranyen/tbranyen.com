@@ -3,7 +3,6 @@ if (process.env.NODE_ENV === "production" && require("cluster").isMaster) {
   return require("./lib/master").startup();
 }
 
-// Third-party.
 const path = require("path");
 const fs = require("fs");
 const express = require("express");
@@ -11,8 +10,6 @@ const combyne = require("combyne");
 const request = require("request");
 const moment = require("moment");
 const RSS = require("rss");
-
-// Internal.
 const content = require("./content");
 const projects = require("./lib/projects").allForUser("tbranyen");
 const posts = require("./lib/posts").posts;

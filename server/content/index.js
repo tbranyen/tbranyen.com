@@ -1,16 +1,16 @@
-var fs = require("fs");
-var path = require("path");
-var combyne = require("combyne");
-var storage = require("./storage");
-var hl = require("highlight.js");
-var marked = require("marked");
-var basePath = __dirname + "/../../";
-var config = require(basePath + "package.json");
+const fs = require("fs");
+const path = require("path");
+const combyne = require("combyne");
+const storage = require("./storage");
+const hl = require("highlight.js");
+const marked = require("marked");
+const basePath = __dirname + "/../../";
+const config = require(basePath + "package.json");
 
 // Configure the storage driver.
 storage.use(basePath + config.content.repo, config.content.branch);
 
-var document = module.exports = {
+var document = {
   // Parse out a post or any bit of content that has meta data.
   parse: function(contents, revs) {
     var i, len, parts, key, val;
@@ -94,3 +94,5 @@ var document = module.exports = {
     });
   }
 };
+
+module.exports = document;

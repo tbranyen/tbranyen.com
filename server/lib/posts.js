@@ -1,8 +1,7 @@
-var fs = require("fs");
-var Backbone = require("backbone");
-var RSS = require("rss");
-
-var content = require("../content");
+const fs = require("fs");
+const Backbone = require("backbone");
+const RSS = require("rss");
+const content = require("../content");
 
 var Post = Backbone.Model.extend({
   idAttribute: "slug",

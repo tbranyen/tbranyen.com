@@ -1,4 +1,4 @@
-var _ = require("underscore.deferred");
+const _ = require("underscore.deferred");
 
 exports.promisfy = function(context, fn) {
   var def = new _.Deferred();
