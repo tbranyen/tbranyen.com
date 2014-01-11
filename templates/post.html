@@ -2,12 +2,6 @@
   <div class="post">
     <div class="preamble">
       <div class="revs">
-        {%each revs%}
-          <a class="sha" href="/post/{{post.slug}}/{{.}}">
-            <div>{{.|slice 6}}</div>
-          </a>
-          {%if i < revs.length%}<span class="pipe"></span>{%endif%}
-        {%endeach%}
       </div>
 
       <p><span class="date">{{post.posted|formatDate}}</span></p>
@@ -20,8 +14,6 @@
       {{content}}
     </div>
   </div>   
-
-  <hr class="post-clear">
 
   {%if node_env == "production"%}
     <div class="comments">

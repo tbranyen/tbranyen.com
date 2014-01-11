@@ -9,5 +9,6 @@ module.exports = ->
     development:
       options:
         node_env: "development"
+        spawn: false
 
   @loadNpmTasks "grunt-express-server"

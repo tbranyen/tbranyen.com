@@ -16,7 +16,7 @@
     "marked": "~0.2.10",
     "requirejs": "~2.1.9",
     "rss": "~0.2.1",
-    "nodegit": "~0.1.0",
+    "nodegit": "nodegit/nodegit#master",
     "underscore": "~1.5.2",
     "express": "~3.4.7",
     "request": "~2.30.0",
@@ -39,9 +39,5 @@
     "type": "git",
     "url": "git://github.com/tbranyen/tbranyen.com.git"
   },
-  "license": "MIT",
-  "content": {
-    "repo": "content/",
-    "branch": "master"
-  }
+  "license": "MIT"
 }

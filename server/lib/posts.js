@@ -24,6 +24,12 @@ var Posts = Backbone.Collection.extend({
     return -1 * new Date(post.get("posted"));
   },
 
+  parse: function(resp) {
+    return resp.filter(function(post) {
+      return !post.hidden;
+    });
+  },
+
   sync: function(method, model, options) {
     var metadata = [];
     var count = 0;

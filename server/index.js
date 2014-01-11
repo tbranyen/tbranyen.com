@@ -20,11 +20,17 @@ var site = express();
 site.use("/dist", express.static(path.resolve("dist")));
 site.use("/styles", express.static(path.resolve("styles")));
 
-// Attach pages.
-require("./pages/resume").attachTo(site);
-require("./pages/projects").attachTo(site);
-require("./pages/post").attachTo(site);
-require("./pages/home").attachTo(site);
+// Automatically attach all pages that have been defined in the `pages`
+// directory.
+fs.readdirSync(__dirname + "/pages/").filter(function(path) {
+  return path[0] !== ".";
+}).forEach(function(path) {
+  try {
+    require("./pages/" + path.slice(0, -3)).attachTo(site);
+  } catch (ex) {
+    console.error("Unable to load", path, ex);
+  }
+});
 
 // Serve RSS.
 site.get("/rss.xml", function(req, res) {

@@ -5,7 +5,7 @@ const storage = require("./storage");
 const hl = require("highlight.js");
 const marked = require("marked");
 const basePath = __dirname + "/../../";
-const config = require(basePath + "package.json");
+const config = require(basePath + "config.json");
 
 // Configure the storage driver.
 storage.use(basePath + config.content.repo, config.content.branch);

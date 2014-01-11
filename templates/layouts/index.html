@@ -11,6 +11,9 @@
   <link rel="stylesheet" href="/dist/styles.min.css">
 
   <title>{{title}}</title>
+
+  <script type="text/javascript" src="//use.typekit.net/eyx4afp.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 </head>
 
 <body>
@@ -19,22 +22,20 @@
       <div class="inner-header">
         <span>Hi! My name is </span>
         <a href="https://twitter.com/tbranyen"><strong>Tim Branyen</strong></a> & I am a
-        <a href="#" class="toggleSkydive"><strong>skydiver</strong></a> who contributes to the
-        <a href="http://backbonejs.org/"><strong>backbone.js</strong></a> project, is an open source developer at
-        <a href="http://bocoup.com/"><strong>bocoup</strong></a>, and a maintainer of several
+        <a href="#" class="toggleSkydive"><strong>skydiver</strong></a>,
+        <!--<a href="http://backbonejs.org/"><strong>backbone.js</strong></a> project,--> an open source developer at
+        <a href="http://bocoup.com/"><strong>bocoup</strong></a>, and a maintainer of
         <a href="http://github.com/tbranyen"><strong>open-source</strong></a> projects.
       </div>
     </header>
 
     <nav class="preamble">
       <p>
-        <a class="nav return" href="/">Posts</a>
-        <span class="amp">&amp;</span>
-        <a class="nav return" href="/projects">Projects</a>
-        <span class="amp">&amp;</span>
-        <a class="nav return" href="/talks">Talks</a>
-        <span class="amp">&amp;</span>
-        <a class="nav return" href="/resume">Resume</a>
+        <a class="nav return {{posts_active}}" href="/">Posts</a>
+        <span class="amp">&bull;</span>
+        <a class="nav return {{projects_active}}" href="/projects">Projects</a>
+        <span class="amp">&bull;</span>
+        <a class="nav return {{talks_active}}" href="/talks">Talks</a>
       </p>
       <hr>
     </nav>
@@ -42,6 +43,7 @@
     {%partial content%}
 
     <footer>
+      <hr>
       Fork the <a class="dark" target="_blank" href="http://github.com/tbranyen/site-content/">content</a> of this site, it's <a target="blank" href="http://unlicense.org/">public domain</a>!
     </footer>
 

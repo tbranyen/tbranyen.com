@@ -31,7 +31,7 @@ function recent_post(req, res) {
 
           res.send(tmpl.render({
             title: post.title + " | Tim Branyen @tbranyen",
-            post_active: "active",
+            posts_active: "active",
             node_env: process.env.NODE_ENV
           }));
         });

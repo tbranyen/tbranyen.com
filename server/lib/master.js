@@ -29,3 +29,8 @@ exports.teardown = function() {
 
   workers.length = 0;
 };
+
+exports.restart = function() {
+  exports.teardown();
+  exports.startup();
+};

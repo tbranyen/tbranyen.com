@@ -8,13 +8,13 @@ Boston, MA
 I've open sourced this project to demonstrate using several of my projects
 together to accomplish a very specific goal for my personal website.
 
-I started with the idea of a website that had it's content stored in Git.  This
-would allow me to keep a paper trail of post updates, which in turn would
-encourage me to directly modify the post as well.  So long as every file is
-referenced by a specific SHA, that version will be loaded.
+I started with the idea of content being stored in Git instead of a traditional
+database.  This allowed me to keep a paper trail of post updates, which would
+encourage me to keep posts up-to-date.  Every file could be referenced by a
+specific SHA, cool urls don't change.
 
-I began development of this site in 2011 and put it through many rewrites.  It
-is now in a reasonable form fit for consumption by other developers for
+I began development of this site in 2011 and have put it through many rewrites.
+It is now in a reasonable form fit for consumption by other developers for
 reference or reuse.
 
 ### What can this framework do for me? ###
@@ -26,6 +26,10 @@ I've implemented several specific ideas that may be useful for you:
 * A custom template syntax that allows code snippets to be referenced and
   automatically highlighted and embedded.
 * A performant Node.js Cluster-based server that will spawn to your core count.
+* Static output to eliminate pegging the Git repository on every reload.
+* Theming and easy configuration to customize on your own.
+* Optimization of HTML, CSS, and JavaScript.
+* Internationalization support.
 
 ### Getting started ###
 
@@ -63,9 +67,6 @@ grunt
 Open your browser to [http://localhost:1987](http://localhost:1987) to view
 the contents.
 
-**Note: There may be a small delay until posts show up, this is a known issue
-that will be fixed.**
-
 ### Setting up content ###
 
 The website framework has been designed to load an external Git repository of
@@ -82,3 +83,4 @@ To create your own content:
 ### Technical details ###
 
 ### Stack ###
+
