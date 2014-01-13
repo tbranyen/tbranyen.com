@@ -11,14 +11,14 @@ const request = require("request");
 const moment = require("moment");
 const RSS = require("rss");
 const content = require("./content");
-const projects = require("./lib/projects").allForUser("tbranyen");
 const posts = require("./lib/posts").posts;
 
 var site = express();
 
 // Serve static styles.
 site.use("/dist", express.static(path.resolve("dist")));
-site.use("/styles", express.static(path.resolve("styles")));
+site.use("/themes", express.static(path.resolve("themes")));
+site.use("/bower_components", express.static(path.resolve("bower_components")));
 
 // Automatically attach all pages that have been defined in the `pages`
 // directory.

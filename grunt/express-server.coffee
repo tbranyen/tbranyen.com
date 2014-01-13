@@ -1,7 +1,6 @@
 module.exports = ->
   @config "express",
     options:
-      background: true
       delay: 1
       script: "."
       port: 1987

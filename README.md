@@ -10,7 +10,7 @@ together to accomplish a very specific goal for my personal website.
 
 I started with the idea of content being stored in Git instead of a traditional
 database.  This allowed me to keep a paper trail of post updates, which would
-encourage me to keep posts up-to-date.  Every file could be referenced by a
+encourage me to keep posts up-to-date.  Every file can be referenced by a
 specific SHA, cool urls don't change.
 
 I began development of this site in 2011 and have put it through many rewrites.

@@ -1,0 +1,61 @@
+@import "_guide"
+
+#container
+  overflow hidden
+
+header
+  background header-background
+  color header-color
+  font-size 1.5rem
+  font-style normal
+  font-weight 100
+  line-height 1.5
+  padding 1.5rem
+  
+  .inner-header
+    text-align center
+    max-width global-max-width
+    margin 0 auto
+
+  a
+    color header-anchor-color
+    padding-bottom 0.4rem
+
+    &:hover
+      border-bottom header-anchor-hover-border-bottom
+
+nav
+  padding 0 1.0rem
+  text-align center
+  max-width global-max-width
+  margin 0 auto
+  margin-bottom 6.0rem
+
+  .divider
+    color nav-divider-color
+    font-weight bold
+
+  a
+    color nav-anchor-color
+    opacity 0.5
+
+    &:hover, &.active
+      opacity 1
+
+section
+  max-width global-max-width
+  margin 0 auto
+
+footer
+  max-width global-max-width
+  line-height 2
+  padding 6.0rem 1.0rem 1.5rem 1.0rem
+  text-align center
+  margin 0 auto
+
+  a
+    color footer-anchor-color
+    font-weight bold
+
+    &:hover
+      color footer-anchor-hover-color

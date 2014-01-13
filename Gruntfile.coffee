@@ -7,18 +7,18 @@ module.exports = ->
     "watch"
   ]
 
-  @registerTask "deploy:stage", [
+  @registerTask "build", [
     "clean"
     "stylus"
     "cssmin"
-    "zopfli"
+  ]
+
+  @registerTask "deploy:stage", [
+    "build"
     "rsync:staging"
   ]
 
   @registerTask "deploy:prod", [
-    "clean"
-    "stylus"
-    "cssmin"
-    "zopfli"
+    "build"
     "rsync:production"
   ]

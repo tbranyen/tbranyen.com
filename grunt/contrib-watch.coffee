@@ -3,7 +3,7 @@ module.exports = ->
     development:
       files: [
         "templates/**/*.*"
-        "styles/**/*.*"
+        "themes/**/*.*"
         "server/**/*.*",
         "content/**/*.*"
       ]

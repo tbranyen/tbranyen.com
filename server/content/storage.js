@@ -3,6 +3,8 @@ const fs = require("fs");
 const flow = require("./flow");
 const Q = require("q");
 
+var isDevelopment = process.env.NODE_ENV === "development";
+
 exports.opts = {};
 
 exports.file = function(filePath, rev) {
@@ -40,7 +42,15 @@ exports.file = function(filePath, rev) {
       // Read in the file's content.
       return Q.all([Q.ninvoke(tree, "getBlob"), diffs]);
     }).spread(function(blob, diffs) {
-      return [blob.toString(), diffs];
+      if (!isDevelopment) {
+        return [blob.toString(), diffs];
+      }
+
+      // Always load from the filesystem in development.
+      return Q.ninvoke(fs, "readFile", opts.path + filePath).then(function(contents) {
+        // Pass along the real diffs.
+        return [String(contents), diffs];
+      });
     }).fail(function(err) {
       // Attempt to load from filesystem.
       return Q.ninvoke(fs, "readFile", opts.path + filePath).then(function(contents) {

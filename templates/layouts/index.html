@@ -8,7 +8,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   <link href="/rss.xml" type="application/rss+xml" rel="alternate"> 
-  <link rel="stylesheet" href="/dist/styles.min.css">
+
+  {%if node_env == "development"%}
+    <link rel="stylesheet" href="/dist/styles.css">
+  {%else%}
+    <link rel="stylesheet" href="/dist/styles.min.css">
+  {%endif%}
 
   <title>{{title}}</title>
 
@@ -32,9 +37,9 @@
     <nav class="preamble">
       <p>
         <a class="nav return {{posts_active}}" href="/">Posts</a>
-        <span class="amp">&bull;</span>
+        <span class="divider">&bull;</span>
         <a class="nav return {{projects_active}}" href="/projects">Projects</a>
-        <span class="amp">&bull;</span>
+        <span class="divider">&bull;</span>
         <a class="nav return {{talks_active}}" href="/talks">Talks</a>
       </p>
       <hr>
@@ -44,7 +49,7 @@
 
     <footer>
       <hr>
-      Fork the <a class="dark" target="_blank" href="http://github.com/tbranyen/site-content/">content</a> of this site, it's <a target="blank" href="http://unlicense.org/">public domain</a>!
+      Fork the <a target="_blank" href="https://github.com/tbranyen/site-content/">content</a> of this <a target="_blank" href="https://github.com/tbranyen/tbranyen.com">site</a>, it's <a target="blank" href="http://unlicense.org/">public domain</a>!
     </footer>
 
   {%if node_env == "development"%}
