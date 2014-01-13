@@ -8,7 +8,11 @@ module.exports = ->
         "content/**/*.*"
       ]
 
-      tasks: ["stylus", "cssmin", "express"]
+      tasks: [
+        "stylus"
+        "cssmin"
+        "express:development"
+      ]
       
       options:
         livereload: true

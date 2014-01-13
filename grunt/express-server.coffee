@@ -4,10 +4,14 @@ module.exports = ->
       delay: 1
       script: "."
       port: 1987
+      spawn: false
 
     development:
       options:
         node_env: "development"
-        spawn: false
+
+    production:
+      options:
+        node_env: "production"
 
   @loadNpmTasks "grunt-express-server"

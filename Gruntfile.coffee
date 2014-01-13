@@ -2,7 +2,7 @@ module.exports = ->
   @loadTasks "grunt"
 
   @registerTask "default", [
-    "express"
+    "express:development"
     "stylus"
     "watch"
   ]
@@ -13,12 +13,12 @@ module.exports = ->
     "cssmin"
   ]
 
-  @registerTask "deploy:stage", [
+  @registerTask "deploy:staging", [
     "build"
     "rsync:staging"
   ]
 
-  @registerTask "deploy:prod", [
+  @registerTask "deploy:production", [
     "build"
     "rsync:production"
   ]
