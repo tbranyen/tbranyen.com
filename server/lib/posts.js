@@ -3,6 +3,12 @@ const Backbone = require("backbone");
 const RSS = require("rss");
 const content = require("../content");
 
+var basePath = __dirname + "/../../";
+var config = require(basePath + "config.json");
+
+// Locate the configuration and set the engine.
+content.configure(basePath, config);
+
 var Post = Backbone.Model.extend({
   idAttribute: "slug",
 
@@ -32,20 +38,17 @@ var Posts = Backbone.Collection.extend({
 
   sync: function(method, model, options) {
     var metadata = [];
-    var count = 0;
+    var count = 1;
     
     fs.readdir("content/posts/", function(err, folders) {
-      // Ensure there are files.
-      folders && folders.filter(function(folder) {
-        // Exclude dotfiles.
-        return folder[0] !== ".";
-      }).forEach(function(folder) {
+      folders.forEach(function(folder) {
         content.meta(folder + "/", function(meta) {
           meta.metadata.path = folder + "/";
           metadata.push(meta.metadata);
           count++;
 
           if (count === folders.length) {
+            console.log("here");
             options.success(metadata);
           }
         });

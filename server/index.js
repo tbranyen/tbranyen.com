@@ -10,6 +10,7 @@ const combyne = require("combyne");
 const request = require("request");
 const moment = require("moment");
 const RSS = require("rss");
+const i18n = require("i18n");
 const content = require("./content");
 const posts = require("./lib/posts").posts;
 
@@ -18,7 +19,8 @@ var site = express();
 // Serve static styles.
 site.use("/dist", express.static(path.resolve("dist")));
 site.use("/themes", express.static(path.resolve("themes")));
-site.use("/bower_components", express.static(path.resolve("bower_components")));
+site.use("/bower_components",
+  express.static(path.resolve("bower_components")));
 
 // Automatically attach all pages that have been defined in the `pages`
 // directory.
@@ -40,3 +42,11 @@ site.get("/rss.xml", function(req, res) {
 
 // Listen server on the given port and host.
 site.listen(process.env.PORT || 1987, process.env.HOST || "127.0.0.1");
+
+// Export the site for external usage.
+//module.exports = site;
+
+//process.on('exit', function() {
+//  require.cache = {};
+//  require._cache = {};
+//});

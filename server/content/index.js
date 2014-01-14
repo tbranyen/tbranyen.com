@@ -4,13 +4,16 @@ const combyne = require("combyne");
 const storage = require("./storage");
 const hl = require("highlight.js");
 const marked = require("marked");
-const basePath = __dirname + "/../../";
-const config = require(basePath + "config.json");
-
-// Configure the storage driver.
-storage.use(basePath + config.content.repo, config.content.branch);
 
 var document = {
+  // Set base path and configure the storage engine.
+  configure: function(basePath, config) {
+    var basePath = __dirname + "/../../";
+
+    // Configure the storage driver.
+    storage.use(basePath + config.content.repo, config.content.branch);
+  },
+
   // Parse out a post or any bit of content that has meta data.
   parse: function(contents, revs) {
     var i, len, parts, key, val;
@@ -36,6 +39,7 @@ var document = {
     return obj;
   },
 
+  // FIXME: Hardcoded `posts/` path prefix.
   meta: function(filePath, callback) {
     // Read in the file path.
     var fileLookup = storage.file("posts/" + filePath + "post.md");
@@ -46,7 +50,7 @@ var document = {
     });
   },
 
-  // Take a content file path and render out the content
+  // Take a content file path and render out the content.
   assemble: function(filepath, rev, callback) {
     // Allow argument shifting.
     if (typeof rev === "function") {
@@ -76,8 +80,8 @@ var document = {
       tmpl.filters.add("render", function(val) {
         var type = val.split(".").pop();
         var codeBlock = "<pre><code>";
-        var source = fs.readFileSync(basePath + "content/posts/" + filepath +
-          "assets/" + val).toString();
+        var source = fs.readFileSync(document.basePath + "content/posts/" +
+          filepath + "assets/" + val).toString();
         var ext = path.extname(val);
 
         try {

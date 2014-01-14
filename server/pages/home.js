@@ -19,7 +19,6 @@ function home(req, res) {
         return moment(date).format("dddd, MMM D, YYYY");
       });
 
-
       tmpl.partials.add("content", buf.toString(), {
         posts: posts.toJSON()
       });

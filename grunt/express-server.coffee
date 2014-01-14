@@ -5,6 +5,7 @@ module.exports = ->
       script: "."
       port: 1987
       spawn: false
+      background: true
 
     development:
       options:
