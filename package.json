@@ -11,7 +11,7 @@
     "backbone": "~1.1.0",
     "backbone.layoutmanager": "~0.9.4",
     "cheerio": "~0.12.4",
-    "combyne": "~0.2.1",
+    "combyne": "combyne/combyne#master",
     "highlight.js": "~7.5.0",
     "marked": "~0.2.10",
     "requirejs": "~2.1.9",

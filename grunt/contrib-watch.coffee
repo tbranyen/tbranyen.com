@@ -11,7 +11,7 @@ module.exports = ->
       tasks: [
         "stylus"
         "cssmin"
-        "server:development"
+        "express:development"
       ]
       
       options:
