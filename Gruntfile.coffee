@@ -8,9 +8,11 @@ module.exports = ->
   ]
 
   @registerTask "build", [
+    "express:production"
     "clean"
     "stylus"
     "cssmin"
+    "static"
   ]
 
   @registerTask "deploy:staging", [

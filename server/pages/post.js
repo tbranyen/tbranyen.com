@@ -22,7 +22,8 @@ function recent_post(req, res) {
             post: post,
             revs: revs,
             content: html,
-            url: req.url
+            url: req.url,
+            node_env: process.env.NODE_ENV
           });
 
           tmpl.registerFilter("slice", function(val, count) {
@@ -59,7 +60,8 @@ function specific_post(req, res) {
             post: post,
             revs: revs,
             content: html,
-            url: req.url
+            url: req.url,
+            node_env: process.env.NODE_ENV
           });
 
           tmpl.registerFilter("slice", function(val, count) {
@@ -68,7 +70,8 @@ function specific_post(req, res) {
 
           res.send(tmpl.render({
             title: post.title + " | Tim Branyen @tbranyen",
-            post_active: "active"
+            post_active: "active",
+            node_env: process.env.NODE_ENV
           }));
         });
       } catch(ex) {

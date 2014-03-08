@@ -7,15 +7,20 @@
   <meta name="author" content="Tim Branyen @tbranyen">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <link href="/rss.xml" type="application/rss+xml" rel="alternate"> 
+  <link rel="alternate" href="/rss.xml" type="application/rss+xml"> 
 
-  <link rel="stylesheet" href="/dist/styles.css">
   {%if node_env == "development"%}
     <link rel="stylesheet" href="/dist/styles.css">
   {%endif%}
 
+  {%if node_env == "production"%}
+    <link rel="stylesheet" href="/dist/styles.min.css">
+  {%endif%}
+
   <title>{{title}}</title>
 
+  <script type="text/javascript" src="//use.typekit.net/eyx4afp.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 </head>
 
 <body>
@@ -51,6 +56,20 @@
 
   {%if node_env == "development"%}
     <script src="http://localhost:35729/livereload.js"></script>
+  {%endif%}
+
+  {%if node_env == "production"%}
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-27325220-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
   {%endif%}
 </body>
 </html>

@@ -7,7 +7,7 @@ function talks(req, res) {
       tmpl.registerPartial("content", buf.toString(), {});
 
       res.send(tmpl.render({
-        title: "Projects | Tim Branyen @tbranyen",
+        title: "Talks | Tim Branyen @tbranyen",
         talks_active: "active",
         node_env: process.env.NODE_ENV
       }));
