@@ -1,7 +1,10 @@
 var request = require("request");
 var cheerio = require("cheerio");
+var grunt = require("grunt");
 
 var seen = [];
+
+request = request.defaults({ encoding: null });
 
 function parsePage(url, path, options, callback) {
   console.log("Processing", "http://" + url + path);
@@ -12,10 +15,32 @@ function parsePage(url, path, options, callback) {
       return;
     }
 
+    var root = resp.request.path !== "/" ? resp.request.path : "/index";
+
     var $ = cheerio.load(body);
+
     var page = {
-      href: resp.request.path
+      href: root + ".html"
     };
+
+    // Save all images.
+    var images = $("img"); 
+
+    images.each(function() {
+      var img = {
+        href: this.attr("src")
+      };
+
+      options.counter += 1;
+
+      // Fetch the image and save the contents.
+      request("http://" + url + img.href, function(err, resp, body) {
+        options.counter -= 1;
+        img.html = body;
+      });
+
+      options.pages.push(img);
+    });
 
     // Iterate over every page here.
     var anchors = $("a");
@@ -76,12 +101,9 @@ module.exports = function(grunt) {
     // Start crawling the site.
     parsePage(options.host + ":" + options.port, options.path, options, function() {
       options.pages.forEach(function(page) {
-        if (page.href === "/") {
-          grunt.file.write(options.out + page.href + "index.html", page.html);
-        }
-        else {
-          grunt.file.write(options.out + page.href + ".html", page.html);
-        }
+        grunt.file.write(options.out + page.href, page.html, {
+          encoding: null
+        });
       });
       done();
     });

@@ -31,9 +31,7 @@ var Posts = Backbone.Collection.extend({
   },
 
   parse: function(resp) {
-    return resp.filter(function(post) {
-      return !post.hidden;
-    });
+    return resp;
   },
 
   sync: function(method, model, options) {
