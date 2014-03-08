@@ -48,7 +48,6 @@ var Posts = Backbone.Collection.extend({
           count++;
 
           if (count === folders.length) {
-            console.log("here");
             options.success(metadata);
           }
         });

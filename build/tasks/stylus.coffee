@@ -1,6 +1,6 @@
-config = require "../config.json"
-
 module.exports = ->
+  config = @file.readJSON "config.json"
+
   @config "stylus",
     development:
       files:

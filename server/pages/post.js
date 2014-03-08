@@ -10,7 +10,7 @@ function recent_post(req, res) {
     if (err) { return res.send(500); }
 
     fs.readFile(path.resolve("templates/post.html"), function(err, buf) {
-      tmpl.filters.add("formatDate", function(date) {
+      tmpl.registerFilter("formatDate", function(date) {
         return moment(date).format("dddd, MMM D, YYYY");
       });
 
@@ -18,14 +18,14 @@ function recent_post(req, res) {
         var post = posts.get(req.params.id).toJSON();
 
         content.assemble(post.path, function(html, revs) {
-          tmpl.partials.add("content", buf.toString(), {
+          tmpl.registerPartial("content", buf.toString(), {
             post: post,
             revs: revs,
             content: html,
             url: req.url
           });
 
-          tmpl.filters.add("slice", function(val, count) {
+          tmpl.registerFilter("slice", function(val, count) {
             return val.slice(0, count);
           });
 
@@ -47,7 +47,7 @@ function specific_post(req, res) {
     if (err) { return res.send(500); }
 
     fs.readFile(path.resolve("templates/post.html"), function(err, buf) {
-      tmpl.filters.add("formatDate", function(date) {
+      tmpl.registerFilter("formatDate", function(date) {
         return moment(date).format("dddd, MMM D, YYYY");
       });
 
@@ -55,14 +55,14 @@ function specific_post(req, res) {
         var post = posts.get(req.params.id).toJSON();
 
         content.assemble(post.path, req.params.rev, function(html, revs) {
-          tmpl.partials.add("content", buf.toString(), {
+          tmpl.registerPartial("content", buf.toString(), {
             post: post,
             revs: revs,
             content: html,
             url: req.url
           });
 
-          tmpl.filters.add("slice", function(val, count) {
+          tmpl.registerFilter("slice", function(val, count) {
             return val.slice(0, count);
           });
 

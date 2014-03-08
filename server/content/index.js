@@ -60,7 +60,7 @@ var document = {
 
     // Read in the file path.
     var fileLookup = storage.file("posts/" + filepath + "post.md", rev);
-    
+
     // Once read in, apply syntax highlighting and render out the template.
     fileLookup.then(function(result) {
       var contents = result[0];
@@ -77,10 +77,10 @@ var document = {
       };
 
       // Convert scripts to GitHub flavored markdown
-      tmpl.filters.add("render", function(val) {
+      tmpl.registerFilter("render", function(val) {
         var type = val.split(".").pop();
         var codeBlock = "<pre><code>";
-        var source = fs.readFileSync(document.basePath + "content/posts/" +
+        var source = fs.readFileSync("content/posts/" +
           filepath + "assets/" + val).toString();
         var ext = path.extname(val);
 
@@ -95,6 +95,8 @@ var document = {
       });
 
       callback(marked(tmpl.render()), revs);
+    }).fail(function(e) {
+      console.log(e.stack);
     });
   }
 };

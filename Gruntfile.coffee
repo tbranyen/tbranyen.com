@@ -1,5 +1,5 @@
 module.exports = ->
-  @loadTasks "grunt"
+  @loadTasks "build/tasks"
 
   @registerTask "default", [
     "express:development"

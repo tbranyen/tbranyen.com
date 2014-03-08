@@ -15,11 +15,11 @@ function home(req, res) {
     var realPath = path.resolve("templates/home.html");
 
     fs.readFile(realPath, function(err, buf) {
-      tmpl.filters.add("formatDate", function(date) {
+      tmpl.registerFilter("formatDate", function(date) {
         return moment(date).format("dddd, MMM D, YYYY");
       });
 
-      tmpl.partials.add("content", buf.toString(), {
+      tmpl.registerPartial("content", buf.toString(), {
         posts: posts.toJSON()
       });
 
