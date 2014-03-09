@@ -1,4 +1,6 @@
 module.exports = ->
+  @loadNpmTasks "grunt-express-server"
+
   @config "express",
     options:
       delay: 1
@@ -14,5 +16,3 @@ module.exports = ->
     production:
       options:
         node_env: "production"
-
-  @loadNpmTasks "grunt-express-server"

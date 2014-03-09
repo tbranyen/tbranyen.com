@@ -1,4 +1,6 @@
 module.exports = ->
+  @loadNpmTasks "grunt-zopfli"
+
   @config "zopfli",
     release:
       options:
@@ -7,5 +9,3 @@ module.exports = ->
 
       files:
         "dist/styles.min.css.gz": "dist/styles.min.css"
-
-  @loadNpmTasks "grunt-zopfli"

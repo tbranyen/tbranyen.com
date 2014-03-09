@@ -1,4 +1,6 @@
 module.exports = ->
+  @loadNpmTasks "grunt-rsync"
+
   @config "rsync",
     options:
       src: "."
@@ -19,5 +21,3 @@ module.exports = ->
     production:
       options:
         dest: "/var/sites/tbranyen.com/www"
-
-  @loadNpmTasks "grunt-rsync"

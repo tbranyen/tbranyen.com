@@ -1,4 +1,6 @@
 module.exports = ->
+  @loadNpmTasks "grunt-contrib-watch"
+
   @config "watch",
     development:
       files: [
@@ -16,5 +18,3 @@ module.exports = ->
       
       options:
         livereload: true
-
-  @loadNpmTasks "grunt-contrib-watch"
