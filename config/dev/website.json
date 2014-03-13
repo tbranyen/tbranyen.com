@@ -1,0 +1,9 @@
+{
+  "base_dir": "/var/www",
+
+  "config": {
+    "release":"master"
+  },
+
+  "version": "0.1.0"
+}
