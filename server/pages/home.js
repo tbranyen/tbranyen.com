@@ -1,37 +1,25 @@
-const fs = require("fs");
-const path = require("path");
-const _ = require("underscore");
 const moment = require("moment");
-const util = require("../lib/util");
+const createPage = require("../util/createPage");
 const posts = require("../lib/posts");
-const content = require("../content");
 
 function home(req, res) {
-  util.getLayout("index", function(err, tmpl) {
-    if (err) {
-      return res.send(500);
-    }
-
-    var realPath = path.resolve("templates/home.html");
-
-    fs.readFile(realPath, function(err, buf) {
-      tmpl.registerFilter("formatDate", function(date) {
-        return moment(date).format("dddd, MMM D, YYYY");
-      });
-
-      tmpl.registerPartial("content", buf.toString(), {
-        posts: posts.toJSON()
-      });
-
-      res.send(tmpl.render({
-        title: "Tim Branyen @tbranyen",
-        posts_active: "active",
-        node_env: process.env.NODE_ENV
-      }));
+  createPage("index", "home").spread(function(pageLayout, home) {
+    pageLayout.registerFilter("formatDate", function(date) {
+      return moment(date).format("dddd, MMM D, YYYY");
     });
+
+    pageLayout.registerPartial("content", String(home), {
+      posts: posts.toJSON()
+    });
+
+    res.send(pageLayout.render({
+      title: "Tim Branyen @tbranyen",
+      posts_active: "active",
+      node_env: process.env.NODE_ENV
+    }));
   });
 }
 
-exports.attachTo = function(site) {
+module.exports = function(site) {
   site.get("/", home);
 };

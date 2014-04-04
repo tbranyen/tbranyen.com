@@ -1,8 +1,10 @@
+@import "nib"
 @import "_guide"
 
 section.post-page
   padding 0px 25px
   max-width 96.0rem
+  margin-top 0
 
   hr
     padding 0
@@ -51,7 +53,7 @@ section.post-page
       text-align center
 
     .instapaper_body
-      font-size 19px
+      font-size 1.8rem
       line-height 32px
 
     .inline_code_block
@@ -69,38 +71,66 @@ section.post-page
 
     .preamble
       text-align center
-      color #000
-      opacity .4
-      transition opacity .5s linear
+      color #999999
 
-      .revs
-        margin-top 15px
-        opacity .5
+      .date
+        clear both
 
-        .sha
-          color transparent
+      .stats
+        font-size 0
+        position relative
+        height 55px
+        margin 0 auto
+
+        hr
+          position absolute
+          top 30px
+          width 100%
+          z-index -1
+          border-style solid
+          border-color #E6E6E6
+          border-width 0px
+          border-top-width 1px
+
+        .entry
+          margin 0 auto
           display inline-block
-          border-radius 25px
-          background #FFF
-          width 15px
-          height 15px
-          border 10px solid #0084FF
-          padding 0
-          transition background .5s linear
+          font-size 0
+          width 50px
+          position relative
+          left -8px
+          margin-right 10px
+
+        a
+          float left
+          height 0
+          position relative
+          padding 10px
+          top 20px
+          padding-left 16.7px
 
           div
-            text-align center
-            position relative
-            top 22px
-            left -15px
-            transition color .5s linear
-            font-size 12px
+            width 16.7px
+            height 15px
+            min-height 3px
+            opacity .8
 
-          &:hover
-            background #FFCD55
+            &.added, &.modified, &.deleted
+              background #B7CEBB
+              position absolute
+              left 0
+              bottom 8px
 
-            div
-              color #333
+            &.added
+              bottom 8px
+
+            &.modified 
+              background #AFC9D5
+              left 16.7px
+
+            &.deleted
+              background #C2938C
+              left 33.4px
 
       .pipe
         background #0084FF

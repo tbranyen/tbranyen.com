@@ -3,9 +3,9 @@ const path = require("path");
 const moment = require("moment");
 const util = require("../lib/util");
 const posts = require("../lib/posts");
-const content = require("../content");
+const consumare = require("consumare");
 
-function recent_post(req, res) {
+function show_post(req, res) {
   util.getLayout("index", function(err, tmpl) {
     if (err) { return res.send(500); }
 
@@ -16,11 +16,30 @@ function recent_post(req, res) {
 
       try {
         var post = posts.get(req.params.id).toJSON();
+        var sha = req.params.rev;
 
-        content.assemble(post.path, function(html, revs) {
+        consumare.assemble(post.path, sha, function(html, revs) {
+          var max = 0;
+
           tmpl.registerPartial("content", buf.toString(), {
             post: post,
-            revs: revs,
+            revs: revs.map(function(rev) {
+              var added = rev.stats.added;
+              var deleted = rev.stats.deleted;
+              var modified = rev.stats.modified;
+
+              // Find the largest number to set as base.
+              max = Math.max(max, added, deleted, modified);
+
+              rev.stats.added = (added / max) * 100;
+              rev.stats.deleted = (deleted / max) * 100;
+              rev.stats.modified = (modified / max) * 100;
+
+              // Construct a usable post url.
+              rev.url = "/post/" + post.slug + "/" + rev.sha;
+
+              return rev;
+            }).reverse(),
             content: html,
             url: req.url,
             node_env: process.env.NODE_ENV
@@ -33,44 +52,6 @@ function recent_post(req, res) {
           res.send(tmpl.render({
             title: post.title + " | Tim Branyen @tbranyen",
             posts_active: "active",
-            node_env: process.env.NODE_ENV
-          }));
-        });
-      } catch(ex) {
-        res.send(404);
-      }
-    });
-  });
-}
-
-function specific_post(req, res) {
-  util.getLayout("index", function(err, tmpl) {
-    if (err) { return res.send(500); }
-
-    fs.readFile(path.resolve("templates/post.html"), function(err, buf) {
-      tmpl.registerFilter("formatDate", function(date) {
-        return moment(date).format("dddd, MMM D, YYYY");
-      });
-
-      try {
-        var post = posts.get(req.params.id).toJSON();
-
-        content.assemble(post.path, req.params.rev, function(html, revs) {
-          tmpl.registerPartial("content", buf.toString(), {
-            post: post,
-            revs: revs,
-            content: html,
-            url: req.url,
-            node_env: process.env.NODE_ENV
-          });
-
-          tmpl.registerFilter("slice", function(val, count) {
-            return val.slice(0, count);
-          });
-
-          res.send(tmpl.render({
-            title: post.title + " | Tim Branyen @tbranyen",
-            post_active: "active",
             node_env: process.env.NODE_ENV
           }));
         });
@@ -99,8 +80,8 @@ function post_assets(req, res) {
   res.send(420);
 }
 
-exports.attachTo = function(site) {
-  site.get("/post/:id", recent_post);
-  site.get("/post/:id/:rev", specific_post);
+module.exports = function(site) {
+  site.get("/post/:id", show_post);
+  site.get("/post/:id/:rev", show_post);
   site.get("/post/:id/assets/*", post_assets);
 };

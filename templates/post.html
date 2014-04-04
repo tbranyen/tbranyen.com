@@ -1,7 +1,18 @@
 <section class="post-page">
   <div class="post">
     <div class="preamble">
-      <div class="revs">
+      <div class="stats">
+        <hr>
+
+        {%each revs as rev%}
+          <div class="entry">
+            <a href="{{rev.url}}" title="{{rev.sha}}" class="stats">
+              <div class="added" style="height: {{rev.stats.added}}%"></div>
+              <div class="modified" style="height: {{rev.stats.modified}}%"></div>
+              <div class="deleted" style="height: {{rev.stats.deleted}}%"></div>
+            </a>
+          </div>
+        {%endeach%}
       </div>
 
       <p><span class="date">{{post.posted|formatDate}}</span></p>

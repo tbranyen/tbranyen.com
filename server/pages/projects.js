@@ -20,6 +20,6 @@ function projects(req, res) {
   });
 }
 
-exports.attachTo = function(site) {
+module.exports = function(site) {
   site.get("/projects", projects);
 };

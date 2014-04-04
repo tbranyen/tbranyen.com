@@ -14,7 +14,6 @@
     "combyne": "combyne/combyne#master",
     "highlight.js": "~7.5.0",
     "marked": "~0.2.10",
-    "requirejs": "~2.1.9",
     "rss": "~0.2.1",
     "nodegit": "nodegit/nodegit#master",
     "underscore": "~1.5.2",
@@ -23,8 +22,7 @@
     "moment": "~2.4.0",
     "stylus": "~0.41.3",
     "q": "~0.9.7",
-    "underscore.deferred": "~0.4.0",
-    "i18n": "~0.4.1"
+    "consumare": "~0.1.0"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

@@ -11,7 +11,6 @@ const request = require("request");
 const moment = require("moment");
 const RSS = require("rss");
 const i18n = require("i18n");
-const content = require("./content");
 const posts = require("./lib/posts").posts;
 
 var site = express();
@@ -28,7 +27,7 @@ fs.readdirSync(__dirname + "/pages/").filter(function(path) {
   return path[0] !== ".";
 }).forEach(function(path) {
   try {
-    require("./pages/" + path.slice(0, -3)).attachTo(site);
+    require("./pages/" + path.slice(0, -3))(site);
   } catch (ex) {
     console.error("Unable to load", path, ex);
   }
@@ -42,11 +41,3 @@ site.get("/rss.xml", function(req, res) {
 
 // Listen server on the given port and host.
 site.listen(process.env.PORT || 1987, process.env.HOST || "127.0.0.1");
-
-// Export the site for external usage.
-//module.exports = site;
-
-//process.on('exit', function() {
-//  require.cache = {};
-//  require._cache = {};
-//});

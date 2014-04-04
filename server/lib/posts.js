@@ -1,13 +1,13 @@
 const fs = require("fs");
 const Backbone = require("backbone");
 const RSS = require("rss");
-const content = require("../content");
+const consumare = require("consumare");
 
 var basePath = __dirname + "/../../";
 var config = require(basePath + "config.json");
 
 // Locate the configuration and set the engine.
-content.configure(basePath, config);
+consumare.configure(basePath, config);
 
 var Post = Backbone.Model.extend({
   idAttribute: "slug",
@@ -40,7 +40,7 @@ var Posts = Backbone.Collection.extend({
     
     fs.readdir("content/posts/", function(err, folders) {
       folders.forEach(function(folder) {
-        content.meta(folder + "/", function(meta) {
+        consumare.meta("posts/" + folder + "/post.md", function(meta) {
           meta.metadata.path = folder + "/";
           metadata.push(meta.metadata);
           count++;

@@ -15,6 +15,6 @@ function talks(req, res) {
   });
 }
 
-exports.attachTo = function(site) {
+module.exports = function(site) {
   site.get("/talks", talks);
 };
