@@ -1,8 +1,0 @@
-{
-  "theme": "default",
-
-  "content": {
-    "repo": "content/",
-    "branch": "master"
-  }
-}

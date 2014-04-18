@@ -49,8 +49,9 @@ Install the dependencies:
 # Ensure all NPM dependencies are installed locally.
 npm install
 
-# Make sure you have Grunt CLI installed globally as well.
-sudo npm install -g grunt-cli
+# Make sure you have Grunt CLI installed globally as well, you may need to
+# run this command with elevated privileges.
+npm install -g grunt-cli
 ```
 
 Run the server:
@@ -128,4 +129,3 @@ To create your own content:
 ### Technical details ###
 
 ### Stack ###
-

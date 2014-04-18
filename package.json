@@ -33,8 +33,15 @@
     "grunt-contrib-cssmin": "~0.6.1",
     "grunt-zopfli": "~0.3.1",
     "grunt-rsync": "~0.2.1",
-    "request": "^2.30.0",
-    "cheerio": "^0.12.4"
+    "request": "~2.30.0",
+    "cheerio": "~0.12.4"
+  },
+  "site": {
+    "theme": "default",
+    "content": {
+      "repo": "content/",
+      "branch": "master"
+    }
   },
   "repository": {
     "type": "git",

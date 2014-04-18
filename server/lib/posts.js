@@ -2,9 +2,10 @@ const fs = require("fs");
 const Backbone = require("backbone");
 const RSS = require("rss");
 const consumare = require("consumare");
+const Q = require("q");
 
 var basePath = __dirname + "/../../";
-var config = require(basePath + "config.json");
+var config = require(basePath + "package.json").site;
 
 // Locate the configuration and set the engine.
 consumare.configure(basePath, config);
@@ -37,6 +38,7 @@ var Posts = Backbone.Collection.extend({
   sync: function(method, model, options) {
     var metadata = [];
     var count = 1;
+    var deferred = Q.defer();
     
     fs.readdir("content/posts/", function(err, folders) {
       folders.forEach(function(folder) {
@@ -47,10 +49,13 @@ var Posts = Backbone.Collection.extend({
 
           if (count === folders.length) {
             options.success(metadata);
+            deferred.resolve(metadata);
           }
         });
       });
     });
+
+    return deferred.promise;
   },
 
   rss: function() {
@@ -69,8 +74,6 @@ var Posts = Backbone.Collection.extend({
   }
 });
 
-var posts = new Posts();
-
 // When posts are updated add to the feed
 //posts.on("sync", function() {
 //  // Add each post into the rss feed
@@ -86,8 +89,5 @@ var posts = new Posts();
 
 // TODO FileSystem Updates.
 
-// Always fetch immediately
-posts.fetch();
-
 // Expose the posts.
-module.exports = posts;
+module.exports = new Posts().fetch();

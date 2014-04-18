@@ -1,6 +1,13 @@
 module.exports = ->
   @loadTasks "build/tasks"
 
+  @initConfig
+    theme: "default"
+
+    content:
+      repo: "content/"
+      branch: "master"
+
   @registerTask "default", [
     "express:development"
     "stylus"
