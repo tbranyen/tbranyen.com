@@ -5,64 +5,60 @@ const util = require("../lib/util");
 const posts = require("../lib/posts");
 const consumare = require("consumare");
 
-function show_post(req, res) {
-  util.getLayout("index", function(err, tmpl) {
-    if (err) { return res.send(500); }
+const createPage = require("../util/createPage");
 
-    fs.readFile(path.resolve("templates/post.html"), function(err, buf) {
-      tmpl.registerFilter("formatDate", function(date) {
-        return moment(date).format("dddd, MMM D, YYYY");
-      });
+function showPost(req, res) {
+  createPage("layouts/index", "post").spread(function(page, postPage) {
+    try {
+      var post = posts.get(req.params.id).toJSON();
+      var sha = req.params.rev;
 
-      try {
-        var post = posts.get(req.params.id).toJSON();
-        var sha = req.params.rev;
+      consumare.assemble(post.path, sha, function(html, revs) {
+        var max = 0;
 
-        consumare.assemble(post.path, sha, function(html, revs) {
-          var max = 0;
+        postPage.data = {
+          post: post,
+          revs: revs.map(function(rev) {
+            var added = rev.stats.added;
+            var deleted = rev.stats.deleted;
+            var modified = rev.stats.modified;
 
-          tmpl.registerPartial("content", buf.toString(), {
-            post: post,
-            revs: revs.map(function(rev) {
-              var added = rev.stats.added;
-              var deleted = rev.stats.deleted;
-              var modified = rev.stats.modified;
+            // Find the largest number to set as base.
+            max = Math.max(max, added, deleted, modified);
 
-              // Find the largest number to set as base.
-              max = Math.max(max, added, deleted, modified);
+            rev.stats.added = (added / max) * 100;
+            rev.stats.deleted = (deleted / max) * 100;
+            rev.stats.modified = (modified / max) * 100;
 
-              rev.stats.added = (added / max) * 100;
-              rev.stats.deleted = (deleted / max) * 100;
-              rev.stats.modified = (modified / max) * 100;
+            // Construct a usable post url.
+            rev.url = "/post/" + post.slug + "/" + rev.sha;
 
-              // Construct a usable post url.
-              rev.url = "/post/" + post.slug + "/" + rev.sha;
+            return rev;
+          }).reverse(),
+          content: html,
+          url: req.url,
+          node_env: process.env.NODE_ENV
+        };
 
-              return rev;
-            }).reverse(),
-            content: html,
-            url: req.url,
-            node_env: process.env.NODE_ENV
-          });
+        page.registerPartial("content", postPage);
 
-          tmpl.registerFilter("slice", function(val, count) {
-            return val.slice(0, count);
-          });
-
-          res.send(tmpl.render({
-            title: post.title + " | Tim Branyen @tbranyen",
-            posts_active: "active",
-            node_env: process.env.NODE_ENV
-          }));
+        page.registerFilter("slice", function(val, count) {
+          return val.slice(0, count);
         });
-      } catch(ex) {
-        res.send(404);
-      }
-    });
+
+        res.send(page.render({
+          title: post.title + " | Tim Branyen @tbranyen",
+          posts_active: "active",
+          node_env: process.env.NODE_ENV
+        }));
+      });
+    } catch(ex) {
+      res.send(404);
+    }
   });
 }
 
-function post_assets(req, res) {
+function postAssets(req, res) {
   var post = "/../content/posts/" + posts.get(req.params.id).toJSON().path;
 
   // The actual asset path
@@ -81,7 +77,7 @@ function post_assets(req, res) {
 }
 
 module.exports = function(site) {
-  site.get("/post/:id", show_post);
-  site.get("/post/:id/:rev", show_post);
-  site.get("/post/:id/assets/*", post_assets);
+  site.get("/post/:id", showPost);
+  site.get("/post/:id/:rev", showPost);
+  site.get("/post/:id/assets/*", postAssets);
 };

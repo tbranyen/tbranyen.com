@@ -15,20 +15,23 @@ const posts = require("./lib/posts").posts;
 
 var site = express();
 
-// Serve static styles.
-site.use("/dist", express.static(path.resolve("dist")));
-site.use("/themes", express.static(path.resolve("themes")));
-site.use("/bower_components",
-  express.static(path.resolve("bower_components")));
+// Serve static files.
+["dist", "themes", "bower_components"].forEach(function(name) {
+  site.use("/" + name, express.static(path.resolve(name)));
+});
 
 // Automatically attach all pages that have been defined in the `pages`
 // directory.
-fs.readdirSync(__dirname + "/pages/").filter(function(path) {
+var paths = fs.readdirSync(__dirname + "/pages/").filter(function(path) {
   return path[0] !== ".";
-}).forEach(function(path) {
+});
+
+// Require all pages.
+paths.forEach(function(path) {
   try {
     require("./pages/" + path.slice(0, -3))(site);
-  } catch (ex) {
+  }
+  catch (ex) {
     console.error("Unable to load", path, ex);
   }
 });

@@ -1,7 +1,8 @@
-const fs = require("fs");
+const promisify = require("promisify-node");
+const fs = promisify("fs");
 const Backbone = require("backbone");
 const RSS = require("rss");
-const consumare = require("consumare");
+const consumare = promisify("consumare", require);
 const Q = require("q");
 
 var basePath = __dirname + "/../../";
@@ -31,31 +32,20 @@ var Posts = Backbone.Collection.extend({
     return -1 * new Date(post.get("posted"));
   },
 
-  parse: function(resp) {
-    return resp;
-  },
-
   sync: function(method, model, options) {
-    var metadata = [];
-    var count = 1;
-    var deferred = Q.defer();
-    
-    fs.readdir("content/posts/", function(err, folders) {
-      folders.forEach(function(folder) {
-        consumare.meta("posts/" + folder + "/post.md", function(meta) {
-          meta.metadata.path = folder + "/";
-          metadata.push(meta.metadata);
-          count++;
+    return fs.readdir("content/posts/").then(function(folders) {
+      var promises = folders.map(function(folder) {
+        var path = "posts/" + folder + "/post.md";
 
-          if (count === folders.length) {
-            options.success(metadata);
-            deferred.resolve(metadata);
-          }
+        return consumare.meta(path).then(function(meta) {
+          meta.metadata.path = folder + "/";
+
+          return meta.metadata;
         });
       });
-    });
 
-    return deferred.promise;
+      return Q.all(promises).then(options.success);
+    });
   },
 
   rss: function() {
@@ -74,20 +64,22 @@ var Posts = Backbone.Collection.extend({
   }
 });
 
+var posts = new Posts();
+
 // When posts are updated add to the feed
-//posts.on("sync", function() {
-//  // Add each post into the rss feed
-//  posts.each(function(post) {
-//    this.feed.item({
-//      title: post.get("title"),
-//      description: post.get("title"),
-//      date: post.get("posted"),
-//      url: "http://tbranyen.com/post/" + post.id
-//    });
-//  }, posts);
-//});
+posts.on("sync", function() {
+  // Add each post into the rss feed
+  posts.each(function(post) {
+    posts.feed.item({
+      title: post.get("title"),
+      description: post.get("title"),
+      date: post.get("posted"),
+      url: "http://tbranyen.com/post/" + post.id
+    });
+  });
+});
 
 // TODO FileSystem Updates.
 
 // Expose the posts.
-module.exports = new Posts().fetch();
+module.exports = posts;

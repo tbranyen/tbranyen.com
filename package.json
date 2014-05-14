@@ -9,9 +9,9 @@
   },
   "dependencies": {
     "backbone": "~1.1.0",
-    "backbone.layoutmanager": "~0.9.4",
+    "backbone.layoutmanager": "~0.9.5",
     "cheerio": "~0.12.4",
-    "combyne": "combyne/combyne#master",
+    "combyne": "~0.3.4",
     "highlight.js": "~7.5.0",
     "marked": "~0.2.10",
     "rss": "~0.2.1",

@@ -1,17 +1,14 @@
-const fs = require("fs");
-const util = require("../lib/util");
+const createPage = require("../util/createPage");
 
 function talks(req, res) {
-  util.getLayout("index", function(err, tmpl) {
-    fs.readFile("./templates/talks.html", function(err, buf) {
-      tmpl.registerPartial("content", buf.toString(), {});
+  createPage("layouts/index", "talks").spread(function(page, talks) {
+    page.registerPartial("content", talks);
 
-      res.send(tmpl.render({
-        title: "Talks | Tim Branyen @tbranyen",
-        talks_active: "active",
-        node_env: process.env.NODE_ENV
-      }));
-    });
+    res.send(page.render({
+      title: "Talks | Tim Branyen @tbranyen",
+      talks_active: "active",
+      node_env: process.env.NODE_ENV
+    }));
   });
 }
 

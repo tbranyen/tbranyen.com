@@ -1,18 +1,19 @@
-const moment = require("moment");
 const createPage = require("../util/createPage");
 const posts = require("../lib/posts");
 
+// Immediately fetch all posts.
+posts.fetch();
+
 function home(req, res) {
-  createPage("index", "home").spread(function(pageLayout, home) {
-    pageLayout.registerFilter("formatDate", function(date) {
-      return moment(date).format("dddd, MMM D, YYYY");
-    });
+  createPage("layouts/index", "home").spread(function(page, home) {
+    // Add the posts to the partial.
+    home.data.posts = posts.toJSON()
 
-    pageLayout.registerPartial("content", String(home), {
-      posts: posts.toJSON()
-    });
+    // Add the partial.
+    page.registerPartial("content", home);
 
-    res.send(pageLayout.render({
+    // Render the page.
+    res.send(page.render({
       title: "Tim Branyen @tbranyen",
       posts_active: "active",
       node_env: process.env.NODE_ENV
