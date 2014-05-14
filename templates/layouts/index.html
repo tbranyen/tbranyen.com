@@ -11,9 +11,7 @@
 
   {%if node_env == "development"%}
     <link rel="stylesheet" href="/dist/styles.css">
-  {%endif%}
-
-  {%if node_env == "production"%}
+  {%else%}
     <link rel="stylesheet" href="/dist/styles.min.css">
   {%endif%}
 
@@ -29,8 +27,8 @@
       <div class="inner-header">
         <span>Hi! My name is </span>
         <a href="https://twitter.com/tbranyen"><strong>Tim Branyen</strong></a> & I am a
-        <a href="#" class="toggleSkydive"><strong>skydiver</strong></a>,
-        <!--<a href="http://backbonejs.org/"><strong>backbone.js</strong></a> project,--> an open source developer at
+        <strong>skydiver</strong>,
+        an open source developer at
         <a href="http://bocoup.com/"><strong>bocoup</strong></a>, and a maintainer of
         <a href="http://github.com/tbranyen"><strong>open-source</strong></a> projects.
       </div>
@@ -56,9 +54,7 @@
 
   {%if node_env == "development"%}
     <script src="http://localhost:35729/livereload.js"></script>
-  {%endif%}
-
-  {%if node_env == "production"%}
+  {%else%}
     <script type="text/javascript">
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-27325220-1']);

@@ -13,7 +13,6 @@ module.exports = ->
       tasks: [
         "stylus"
         "cssmin"
-        "express:development"
       ]
       
       options:

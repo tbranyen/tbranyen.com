@@ -1,11 +1,4 @@
 module.exports = ->
-  @initConfig
-    theme: "default"
-
-    content:
-      repo: "content/"
-      branch: "master"
-
   @loadTasks "build/tasks"
 
   @registerTask "default", [

@@ -1,7 +1,5 @@
 const fs = require("fs");
 const path = require("path");
-const moment = require("moment");
-const util = require("../lib/util");
 const posts = require("../lib/posts");
 const consumare = require("consumare");
 
