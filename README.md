@@ -74,30 +74,34 @@ grunt build
 
 ### Creating a page ###
 
-Creating a page is very simple.  Add a JavaScript file to the server/pages
-directory and add the following boilerplate:
+To create a new page, start with the template:
+
+``` html
+{%render layouts/index as content%}
+  {{pageVar}}
+{%endrender%}
+```
+
+Add a JavaScript file, such as myPage.js, to the server/pages directory and add
+the following boilerplate:
 
 ``` javascript
-// Function to assist with creating pages.
-const createPage = require("../util/createPage");
-
 // This function will be called everytime it's requested.
 function my_page(req, res) {
-  // Pass in the name of an HTML template inside the templates/layouts folder.
-  createPage("index", "myPage").then(function(layout, myPage) {
-    // Place your page within the layout.
-    layout.registerPartial("content", String(myPage));
+  // Pass in the name of an HTML template inside the templates/ directory.
+  res.render("myPage", {
+    // Top level properties are sent to the layout.
+    title: "My Page!",
 
-    // Send the page back to the client.
-    res.send(layout.render({
-      // A title to be used in the markup.  Any variables you set here will be
-      // available within your template.
-      title: "My Page!"
-    });
+    // Inside the layout there is a custom partial named content which is where
+    // pages are rendered to, custom data is also passed:
+    page: {
+      pageVar: "something"
+    }
   });
 }
 
-// Function that will be automatically called in the server/index.js file on
+// This function will be automatically called in the server/index.js file on
 // boot.
 module.exports = function(site) {
   site.get("/my-page", my_page);
@@ -110,8 +114,13 @@ Can be modified within the root templates directory.  They are using the
 [Combyne](https://github.com/tbranyen/combyne) template engine.  You can use
 this to add custom partials and filters.
 
-You can modify the data that is passed to the templates from the corresponding
-server/pages file.
+#### Partials ####
+
+[More information will go here.]
+
+#### Filters ####
+
+[More information will go here.]
 
 ### Setting up content ###
 
