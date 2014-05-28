@@ -12,12 +12,12 @@
     "backbone.layoutmanager": "~0.9.5",
     "cheerio": "~0.12.4",
     "combyne": "~0.3.4",
-    "highlight.js": "~7.5.0",
+    "highlight.js": "~7.3.0",
     "marked": "~0.2.10",
     "rss": "~0.2.1",
     "nodegit": "nodegit/nodegit#master",
     "underscore": "~1.5.2",
-    "express": "~3.4.7",
+    "express": "~4.3.1",
     "request": "~2.30.0",
     "moment": "~2.4.0",
     "stylus": "~0.41.3",
@@ -37,6 +37,7 @@
     "cheerio": "~0.12.4"
   },
   "site": {
+    "title": "Tim Branyen @tbranyen",
     "theme": "default",
     "content": {
       "repo": "content/",

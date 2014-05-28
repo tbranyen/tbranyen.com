@@ -6,7 +6,7 @@
 header
   background header-background
   color header-color
-  font-size 1.5rem
+  font-size header-font-size
   font-style normal
   font-weight 100
   line-height 1.5
@@ -17,7 +17,10 @@ header
     max-width global-max-width
     margin auto
 
-  a
+  div, span, a, strong
+    font-size header-font-size
+
+  a, strong
     color header-anchor-color
     padding-bottom 0.4rem
 

@@ -11,7 +11,7 @@ module.exports = ->
 
     development:
       options:
-        node_env: "development"
+        node_env: "test"
 
     production:
       options:

@@ -4,25 +4,13 @@ const Backbone = require("backbone");
 const RSS = require("rss");
 const consumare = promisify("consumare", require);
 const Q = require("q");
+const Post = require("./models/post");
 
 var basePath = __dirname + "/../../";
 var config = require(basePath + "package.json").site;
 
 // Locate the configuration and set the engine.
 consumare.configure(basePath, config);
-
-var Post = Backbone.Model.extend({
-  idAttribute: "slug",
-
-  initialize: function() {
-    this.set({ slug: this.slugify() });
-  },
-
-  slugify: function(title) {
-    return this.get("title").toLowerCase().replace(/ /g, "-")
-      .replace(/[^\w-]+/g, "");
-  }
-});
 
 // Posts collection.
 var Posts = Backbone.Collection.extend({

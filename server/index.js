@@ -6,7 +6,7 @@ if (process.env.NODE_ENV === "production" && require("cluster").isMaster) {
 const path = require("path");
 const fs = require("fs");
 const express = require("express");
-const combyne = require("combyne");
+const combynExpress = require("combynexpress");
 const request = require("request");
 const moment = require("moment");
 const RSS = require("rss");
@@ -14,6 +14,12 @@ const i18n = require("i18n");
 const posts = require("./lib/posts").posts;
 
 var site = express();
+
+// Set the view engine.
+site.engine("html", combynExpress());
+site.set("view engine", "html");
+site.set("views", path.join(__dirname, "../templates"));
+site.set("env", "test");
 
 // Serve static files.
 ["dist", "themes", "bower_components"].forEach(function(name) {

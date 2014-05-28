@@ -1,17 +1,27 @@
-const createPage = require("../util/createPage");
+const pkg = require("../../package.json");
 
+// Alias the site configuration.
+var config = pkg.site;
+
+/**
+ * Renders the `/talks` page.
+ *
+ * @param {Object} req - An Express Request object.
+ * @param {Object} res - An Express Response object.
+ */
 function talks(req, res) {
-  createPage("layouts/index", "talks").spread(function(page, talks) {
-    page.registerPartial("content", talks);
-
-    res.send(page.render({
-      title: "Talks | Tim Branyen @tbranyen",
-      talks_active: "active",
-      node_env: process.env.NODE_ENV
-    }));
+  res.render("talks", {
+    title: "Talks | Tim Branyen @tbranyen",
+    projects_active: "active",
+    node_env: process.env.NODE_ENV
   });
 }
 
+/**
+ * Bind routes.
+ *
+ * @param {Object} site - The Express application.
+ */
 module.exports = function(site) {
   site.get("/talks", talks);
 };

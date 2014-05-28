@@ -1,26 +1,36 @@
-const createPage = require("../util/createPage");
 const posts = require("../lib/posts");
+const pkg = require("../../package.json");
+
+// Alias the site configuration.
+var config = pkg.site;
 
 // Immediately fetch all posts.
 posts.fetch();
 
+/**
+ * Renders the `/` page.
+ *
+ * @param {Object} req - An Express Request object.
+ * @param {Object} res - An Express Response object.
+ */
 function home(req, res) {
-  createPage("layouts/index", "home").spread(function(page, home) {
-    // Add the posts to the partial.
-    home.data.posts = posts.toJSON()
+  res.locals.title2 = "test";
+  res.render("home", {
+    page: {
+      posts: posts.toJSON()
+    },
 
-    // Add the partial.
-    page.registerPartial("content", home);
-
-    // Render the page.
-    res.send(page.render({
-      title: "Tim Branyen @tbranyen",
-      posts_active: "active",
-      node_env: process.env.NODE_ENV
-    }));
+    title: config.title,
+    posts_active: "active",
+    node_env: process.env.NODE_ENV
   });
 }
 
+/**
+ * Bind routes.
+ *
+ * @param {Object} site - The Express application.
+ */
 module.exports = function(site) {
   site.get("/", home);
 };

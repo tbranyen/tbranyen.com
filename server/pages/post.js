@@ -2,61 +2,74 @@ const fs = require("fs");
 const path = require("path");
 const posts = require("../lib/posts");
 const consumare = require("consumare");
+const pkg = require("../../package.json");
 
-const createPage = require("../util/createPage");
+// Alias the site configuration.
+var config = pkg.site;
 
+/**
+ * Renders the `/post/*` pages.
+ *
+ * @param {Object} req - An Express Request object.
+ * @param {Object} res - An Express Response object.
+ */
 function showPost(req, res) {
-  createPage("layouts/index", "post").spread(function(page, postPage) {
-    try {
-      var post = posts.get(req.params.id).toJSON();
-      var sha = req.params.rev;
+  var post = posts.get(req.params.id);
 
-      consumare.assemble(post.path, sha, function(html, revs) {
-        var max = 0;
+  if (!post) {
+    return res.send(404);
+  }
 
-        postPage.data = {
-          post: post,
-          revs: revs.map(function(rev) {
-            var added = rev.stats.added;
-            var deleted = rev.stats.deleted;
-            var modified = rev.stats.modified;
+  var sha = req.params.rev;
+  var postPath = "posts/" + post.get("path") + "post.md";
 
-            // Find the largest number to set as base.
-            max = Math.max(max, added, deleted, modified);
+  // Fetch the associated post content from the Git content repository.  This
+  // will return the content and any revisions.
+  consumare.assemble(postPath, sha, function(html, revs) {
+    var max = 0;
 
-            rev.stats.added = (added / max) * 100;
-            rev.stats.deleted = (deleted / max) * 100;
-            rev.stats.modified = (modified / max) * 100;
+    res.render("post", {
+      // Attach data to the post template to be rendered.
+      page: {
+        post: post.toJSON(),
+        content: html,
+        url: req.url,
+        node_env: process.env.NODE_ENV,
 
-            // Construct a usable post url.
-            rev.url = "/post/" + post.slug + "/" + rev.sha;
+        revs: revs.map(function(rev) {
+          var added = rev.stats.added;
+          var deleted = rev.stats.deleted;
+          var modified = rev.stats.modified;
 
-            return rev;
-          }).reverse(),
-          content: html,
-          url: req.url,
-          node_env: process.env.NODE_ENV
-        };
+          // Find the largest number to set as base.
+          max = Math.max(max, added, deleted, modified);
 
-        page.registerPartial("content", postPage);
+          rev.stats.added = (added / max) * 100;
+          rev.stats.deleted = (deleted / max) * 100;
+          rev.stats.modified = (modified / max) * 100;
 
-        page.registerFilter("slice", function(val, count) {
-          return val.slice(0, count);
-        });
+          // Construct a usable post url.
+          rev.url = "/post/" + post.get("slug") + "/" + rev.sha;
 
-        res.send(page.render({
-          title: post.title + " | Tim Branyen @tbranyen",
-          posts_active: "active",
-          node_env: process.env.NODE_ENV
-        }));
-      });
-    } catch(ex) {
-      res.send(404);
-    }
+          return rev;
+        }).reverse()
+      },
+
+      title: post.get("title") + config.title,
+      posts_active: "active",
+      node_env: process.env.NODE_ENV
+    });
   });
 }
 
+/**
+ * Renders referenced post assets.
+ *
+ * @param {Object} req - An Express Request object.
+ * @param {Object} res - An Express Response object.
+ */
 function postAssets(req, res) {
+  // FIXME Untangle this.
   var post = "/../content/posts/" + posts.get(req.params.id).toJSON().path;
 
   // The actual asset path
@@ -74,6 +87,11 @@ function postAssets(req, res) {
   res.send(420);
 }
 
+/**
+ * Bind routes.
+ *
+ * @param {Object} site - The Express application.
+ */
 module.exports = function(site) {
   site.get("/post/:id", showPost);
   site.get("/post/:id/:rev", showPost);

@@ -1,16 +1,17 @@
+{%render layouts/index as content%}
 <section class="post-page">
   <div class="post">
     <div class="preamble">
       <div class="stats">
-        <hr>
-
         {%each revs as rev%}
           <div class="entry">
-            <a href="{{rev.url}}" title="{{rev.sha}}" class="stats">
+            <a href="{{rev.url}}" title="{{rev.sha}}" class="stats">{{rev.sha}}</a>
+          {%--
               <div class="added" style="height: {{rev.stats.added}}%"></div>
               <div class="modified" style="height: {{rev.stats.modified}}%"></div>
               <div class="deleted" style="height: {{rev.stats.deleted}}%"></div>
             </a>
+          --%}
           </div>
         {%endeach%}
       </div>
@@ -22,7 +23,7 @@
     <hr>
 
     <div class="instapaper_body">
-      {{content}}
+      {{{content}}}
     </div>
   </div>   
 
@@ -44,3 +45,4 @@
     </div>
   {%endif%}
 </section>
+{%endrender%}

@@ -1,3 +1,4 @@
+{%render layouts/index as content%}
 <section class="projects-page">
   <ul class="projects">
     <li>tbranyen.com</li>
@@ -7,35 +8,5 @@
     <li>Preview Code</li>
     <li>layoutmanager</li>
   </ul>
-  {%--
-  {%if mine.length%}
-  <ul class="projects">
-    {%each mine as project%}
-    <li class="project">
-      <h3 class="name">{{project.name}}</h3>
-      <p class="description">{{project.description}}</p>
-
-      <span><a target="_blank" href="{{project.html_url}}">GitHub</a> | {{project.watchers}} watchers and {{project.forks}} forks.</span>
-    </li>
-    {%endeach%}
-  </ul>
-  {%else%}
-  {%endif%}
-
-  <h2 class="">Open source projects I have forked/contribute to</h2>
-  {%if forks.length%}
-  <ul class="projects">
-    {%each forks as project%}
-    <li class="fork">
-      {%if original.length > i%}
-      <a target="_blank" href="{{project.html_url}}">{{project.name}}</a>, 
-      {%else%}
-      and <a target="_blank" href="{{project.html_url}}">{{project.name}}</a>
-      {%endif%}
-    </li>
-    {%endeach%}
-  </ul>
-  {%else%}
-  {%endif%}
-  --%}
 </section>
+{%endrender%}
