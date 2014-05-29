@@ -11,7 +11,7 @@ const request = require("request");
 const moment = require("moment");
 const RSS = require("rss");
 const i18n = require("i18n");
-const posts = require("./lib/posts").posts;
+const posts = require("./lib/collections/posts").posts;
 
 var site = express();
 

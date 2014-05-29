@@ -5,7 +5,7 @@ Boston, MA
 
 ### About ###
 
-This project was released because I enjoy writing open source.
+This project was released because I enjoy promoting open source.
 
 I started with the idea of content being stored in Git instead of a traditional
 database.  My content is available as I authored it.  It's even available for
@@ -46,12 +46,15 @@ cd my-site
 Install the dependencies:
 
 ``` bash
-# Ensure all NPM dependencies are installed locally.
+# Ensure you have the Grunt CLI and Bower installed globally.  You may need to
+# run this command with elevated privileges:
+npm install -g grunt-cli bower
+
+# Ensure all NPM dependencies are installed.
 npm install
 
-# Make sure you have Grunt CLI installed globally as well, you may need to
-# run this command with elevated privileges.
-npm install -g grunt-cli
+# Ensure all Bower dependencies are installed.
+bower install
 ```
 
 Run the server:
@@ -62,8 +65,8 @@ Run the server:
 grunt
 ```
 
-Open your browser to [http://localhost:1987](http://localhost:1987) to view
-the contents.
+Open your browser to [http://localhost:1987](http://localhost:1987) to view the
+contents.
 
 Building:
 
@@ -71,6 +74,30 @@ Building:
 # This will generate static assets and optimize all styles and scripts.
 grunt build
 ```
+
+### Setting up a content repo ###
+
+The website framework has been designed to load an external Git repository of
+posts and other content.  *Note this is optional.*
+
+By default this folder is named **content** and resides in the root of the
+site.  There are many ways to work with a nested Git repository, including
+Git submodules.
+
+To create your own content:
+
+``` bash
+# In some folder outside of my-site.
+git init site-content
+
+# Enter the newly cloned site.
+cd mysite
+
+# Now symlink the content into this project.
+ln -s path/to/site-content content
+```
+
+You can now create directories and files and reference them within the website.
 
 ### Creating a page ###
 
@@ -121,19 +148,6 @@ this to add custom partials and filters.
 #### Filters ####
 
 [More information will go here.]
-
-### Setting up content ###
-
-The website framework has been designed to load an external Git repository of
-posts and other content.
-
-By default this folder is named `content` and resides in the root of the site.
-
-To create your own content:
-
-``` bash
-# Assuming your structure looks like this.
-```
 
 ### Technical details ###
 

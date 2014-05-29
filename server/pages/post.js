@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const posts = require("../lib/posts");
+const posts = require("../lib/collections/posts");
 const consumare = require("consumare");
 const pkg = require("../../package.json");
 
@@ -30,30 +30,28 @@ function showPost(req, res) {
 
     res.render("post", {
       // Attach data to the post template to be rendered.
-      page: {
-        post: post.toJSON(),
-        content: html,
-        url: req.url,
-        node_env: process.env.NODE_ENV,
+      post: post.toJSON(),
+      content: html,
+      url: req.url,
+      node_env: process.env.NODE_ENV,
 
-        revs: revs.map(function(rev) {
-          var added = rev.stats.added;
-          var deleted = rev.stats.deleted;
-          var modified = rev.stats.modified;
+      revs: revs.map(function(rev) {
+        var added = rev.stats.added;
+        var deleted = rev.stats.deleted;
+        var modified = rev.stats.modified;
 
-          // Find the largest number to set as base.
-          max = Math.max(max, added, deleted, modified);
+        // Find the largest number to set as base.
+        max = Math.max(max, added, deleted, modified);
 
-          rev.stats.added = (added / max) * 100;
-          rev.stats.deleted = (deleted / max) * 100;
-          rev.stats.modified = (modified / max) * 100;
+        rev.stats.added = (added / max) * 100;
+        rev.stats.deleted = (deleted / max) * 100;
+        rev.stats.modified = (modified / max) * 100;
 
-          // Construct a usable post url.
-          rev.url = "/post/" + post.get("slug") + "/" + rev.sha;
+        // Construct a usable post url.
+        rev.url = "/post/" + post.get("slug") + "/" + rev.sha;
 
-          return rev;
-        }).reverse()
-      },
+        return rev;
+      }).reverse(),
 
       title: post.get("title") + config.title,
       posts_active: "active",

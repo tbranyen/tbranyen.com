@@ -1,4 +1,4 @@
-const posts = require("../lib/posts");
+const posts = require("../lib/collections/posts");
 const pkg = require("../../package.json");
 
 // Alias the site configuration.
@@ -14,12 +14,8 @@ posts.fetch();
  * @param {Object} res - An Express Response object.
  */
 function home(req, res) {
-  res.locals.title2 = "test";
   res.render("home", {
-    page: {
-      posts: posts.toJSON()
-    },
-
+    posts: posts.toJSON(),
     title: config.title,
     posts_active: "active",
     node_env: process.env.NODE_ENV
