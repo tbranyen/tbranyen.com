@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const posts = require("../lib/collections/posts");
+const posts = require("../collections/posts");
 const consumare = require("consumare");
 const pkg = require("../../package.json");
 

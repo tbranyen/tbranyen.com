@@ -1,6 +1,6 @@
-// Allow the master to facilitate the spawning of child processes.
+// Allow the maestro to facilitate the spawning of child processes.
 if (process.env.NODE_ENV === "production" && require("cluster").isMaster) {
-  return require("./lib/master").startup();
+  return require("maestro").startup();
 }
 
 const path = require("path");
@@ -11,24 +11,26 @@ const request = require("request");
 const moment = require("moment");
 const RSS = require("rss");
 const i18n = require("i18n");
-const posts = require("./lib/collections/posts").posts;
+const posts = require("./collections/posts").posts;
 
 var site = express();
+var staticDirs = ["dist", "themes", "bower_components"];
+var localdir = path.join.bind(path, __dirname);
 
 // Set the view engine.
 site.engine("html", combynExpress());
 site.set("view engine", "html");
-site.set("views", path.join(__dirname, "../templates"));
+site.set("views", localdir("../templates"));
 site.set("env", "test");
 
 // Serve static files.
-["dist", "themes", "bower_components"].forEach(function(name) {
+staticDirs.forEach(function(name) {
   site.use("/" + name, express.static(path.resolve(name)));
 });
 
 // Automatically attach all pages that have been defined in the `pages`
 // directory.
-var paths = fs.readdirSync(__dirname + "/pages/").filter(function(path) {
+var paths = fs.readdirSync(localdir("/pages/")).filter(function(path) {
   return path[0] !== ".";
 });
 

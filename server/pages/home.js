@@ -1,11 +1,11 @@
-const posts = require("../lib/collections/posts");
+const posts = require("../collections/posts");
 const pkg = require("../../package.json");
 
 // Alias the site configuration.
 var config = pkg.site;
 
 // Immediately fetch all posts.
-posts.fetch();
+var fetchPosts = posts.fetch();
 
 /**
  * Renders the `/` page.
@@ -14,11 +14,13 @@ posts.fetch();
  * @param {Object} res - An Express Response object.
  */
 function home(req, res) {
-  res.render("home", {
-    posts: posts.toJSON(),
-    title: config.title,
-    posts_active: "active",
-    node_env: process.env.NODE_ENV
+  fetchPosts.then(function() {
+    res.render("home", {
+      posts: posts.toJSON(),
+      title: config.title,
+      posts_active: "active",
+      node_env: process.env.NODE_ENV
+    });
   });
 }
 

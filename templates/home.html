@@ -2,9 +2,11 @@
 <section class="home-page center">
   <ul class="posts">
     {%each posts as post%}
-    <li class="post">
-      <a href="/post/{{post.slug}}"><h2>{{post.title}}</h2></a>
-    </li>
+      {%if not post.hidden%}
+        <li class="post">
+          <a href="/post/{{post.slug}}"><h2>{{post.title}}</h2></a>
+        </li>
+      {%endif%}
     {%endeach%}
   </ul>
 </section>

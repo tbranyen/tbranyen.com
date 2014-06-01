@@ -17,7 +17,7 @@ function parsePage(url, path, options, callback) {
 
     var root = resp.request.path !== "/" ? resp.request.path : "/index";
 
-    var $ = cheerio.load(body);
+    var $ = cheerio.load(body.toString());
 
     var page = {
       href: root + ".html"
@@ -28,7 +28,7 @@ function parsePage(url, path, options, callback) {
 
     images.each(function() {
       var img = {
-        href: this.attr("src")
+        href: $(this).attr("src")
       };
 
       options.counter += 1;
@@ -47,13 +47,13 @@ function parsePage(url, path, options, callback) {
     
     // Remove all external pages and initial page.
     anchors.filter(function() {
-      var href = this[0].attribs.href;
+      var href = this.attribs.href;
       return href.indexOf("/") === 0 && href !== path;
     }).each(function() {
-      var href = this.attr("href");
+      var href = $(this).attr("href");
 
       // Update the document.
-      this.attr("href", (href === "/" ? href + "index" : href) + ".html");
+      $(this).attr("href", (href === "/" ? href + "index" : href) + ".html");
 
       // Don't re-process the same urls.
       if (seen.indexOf(href) === -1) {

@@ -6,7 +6,7 @@ const consumare = promisify("consumare", require);
 const Q = require("q");
 const Post = require("../models/post");
 
-var basePath = __dirname + "/../../../";
+var basePath = __dirname + "/../../";
 var config = require(basePath + "package.json").site;
 
 // Locate the configuration and set the engine.
