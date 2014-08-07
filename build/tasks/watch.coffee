@@ -6,8 +6,9 @@ module.exports = ->
       files: [
         "templates/**/*.*"
         "themes/**/*.*"
-        "server/**/*.*",
+        "server/**/*.*"
         "content/**/*.*"
+        "public/**/*.*"
       ]
 
       tasks: [

@@ -4,4 +4,4 @@ module.exports = ->
   @config "cssmin",
     release:
       files:
-        "dist/dist/styles.min.css": ["dist/styles.css"]
+        "public/dist/styles.min.css": ["public/dist/styles.css"]

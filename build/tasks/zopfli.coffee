@@ -8,4 +8,4 @@ module.exports = ->
         format: "zlib"
 
       files:
-        "dist/styles.min.css.gz": "dist/styles.min.css"
+        "public/dist/styles.min.css.gz": "public/dist/styles.min.css"

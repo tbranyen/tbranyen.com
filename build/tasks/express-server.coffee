@@ -5,9 +5,7 @@ module.exports = ->
     options:
       delay: 1
       script: "."
-      port: 1987
-      spawn: false
-      background: true
+      port: process.env.PORT || 1987
 
     development:
       options:

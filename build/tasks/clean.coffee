@@ -1,4 +1,4 @@
 module.exports = ->
   @loadNpmTasks "grunt-contrib-clean"
 
-  @config "clean", ["dist/"]
+  @config "clean", ["public/dist/"]
