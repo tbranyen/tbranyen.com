@@ -17,7 +17,7 @@ function showPost(req, res) {
   var post = posts.get(req.params.id);
 
   if (!post) {
-    return res.send(404);
+    return res.status(404);
   }
 
   var sha = req.params.rev;
@@ -82,7 +82,7 @@ function postAssets(req, res) {
   }
 
   // Whatever, hackers.
-  res.send(420);
+  res.status(420);
 }
 
 /**

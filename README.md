@@ -5,11 +5,13 @@ Boston, MA
 
 ### About ###
 
-This project was released because I enjoy promoting open source.
+This project was released because I enjoy sharing my source code.
 
 I started with the idea of content being stored in Git instead of a traditional
-database.  My content is available as I authored it.  It's even available for
-you to change and update.  I wanted to replace the timestamp with a SHA.
+database.  The content would then be fetched and versioned by the commit SHA.
+This is opposed to traditional URLs that are fixed on title and date.  The
+commit SHA aligns with the content in an open repository that anyone may fork
+and update.
 
 Development of this site began in 2011 and has been put through many rewrites.
 It is now in a reasonable form for reference or reuse.

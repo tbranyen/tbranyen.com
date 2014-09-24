@@ -8,7 +8,7 @@ module.exports = ->
         "themes/**/*.*"
         "server/**/*.*"
         "content/**/*.*"
-        "public/**/*.*"
+        "public/js/*.*"
       ]
 
       tasks: [

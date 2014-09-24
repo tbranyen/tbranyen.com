@@ -14,7 +14,7 @@ const i18n = require("i18n");
 const posts = require("./collections/posts").posts;
 
 var site = express();
-var staticDirs = ["dist", "themes", "bower_components"];
+var staticDirs = ["public", "themes", "bower_components"];
 var localdir = path.join.bind(path, __dirname);
 
 // Set the view engine.

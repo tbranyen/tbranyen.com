@@ -7,12 +7,14 @@
   <meta name="author" content="Tim Branyen @tbranyen">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
+  <link rel="icon" href="/public/favicon.ico">
   <link rel="alternate" href="/rss.xml" type="application/rss+xml"> 
+  <link rel="author" name="Tim Branyen" gravatar="tim@tabdeveloper.com" paypal="tim@tabdeveloper.com" dwolla="tbranyen" stripe="tim@bocoup.com">
 
   {%if node_env == "production"%}
-    <link rel="stylesheet" href="/dist/styles.min.css">
+    <link rel="stylesheet" href="/public/dist/styles.min.css">
   {%else%}
-    <link rel="stylesheet" href="/dist/styles.css">
+    <link rel="stylesheet" href="/public/dist/styles.css">
   {%endif%}
 
   <title>{{title}}</title>
@@ -51,21 +53,29 @@
       <hr>
       Fork the <a target="_blank" href="https://github.com/tbranyen/site-content/">content</a> of this <a target="_blank" href="https://github.com/tbranyen/tbranyen.com">site</a>, it's <a target="blank" href="http://unlicense.org/">public domain</a>!
     </footer>
-
-  {%if node_env == "production"%}
-    <script type="text/javascript">
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-27325220-1']);
-      _gaq.push(['_trackPageview']);
-
-      (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-      })();
-    </script>
-  {%else%}
-    <script src="http://localhost:35729/livereload.js"></script>
-  {%endif%}
 </body>
+
+{%if node_env == "production"%}
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-27325220-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+{%else%}
+{%--
+  {%--
+  <script src="/public/js/three.js"></script>
+  <script src="/public/js/birds.js"></script>
+  --%}
+  <script src="/public/js/p5.js"></script>
+  <script src="/public/js/boid.js"></script>
+--%}
+  <script src="http://localhost:35729/livereload.js"></script>
+{%endif%}
 </html>

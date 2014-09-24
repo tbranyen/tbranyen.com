@@ -3,4 +3,5 @@
 /.sass-cache
 /content
 /public/dist
+/dist
 .vagrant

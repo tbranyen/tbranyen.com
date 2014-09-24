@@ -12,7 +12,7 @@ var config = pkg.site;
 function talks(req, res) {
   res.render("talks", {
     title: "Talks | Tim Branyen @tbranyen",
-    projects_active: "active",
+    talks_active: "active",
     node_env: process.env.NODE_ENV
   });
 }

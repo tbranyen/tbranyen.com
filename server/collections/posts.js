@@ -1,10 +1,12 @@
-const promisify = require("promisify-node");
-const fs = promisify("fs");
+const fs = require("fs");
 const Backbone = require("backbone");
 const RSS = require("rss");
-const consumare = promisify("consumare", require);
-const Q = require("q");
+const consumare = require("consumare");
+const Promise = require("bluebird");
 const Post = require("../models/post");
+
+// Make FS module Promise-aware.
+Promise.promisifyAll(fs);
 
 var basePath = __dirname + "/../../";
 var config = require(basePath + "package.json").site;
@@ -21,7 +23,7 @@ var Posts = Backbone.Collection.extend({
   },
 
   sync: function(method, model, options) {
-    return fs.readdir("content/posts/").then(function(folders) {
+    return fs.readdirAsync("content/posts/").then(function(folders) {
       var promises = folders.map(function(folder) {
         var path = "posts/" + folder + "/post.md";
 
@@ -32,7 +34,7 @@ var Posts = Backbone.Collection.extend({
         });
       });
 
-      return Q.all(promises).then(options.success);
+      return Promise.all(promises).then(options.success);
     });
   },
 

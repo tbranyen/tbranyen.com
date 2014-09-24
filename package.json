@@ -7,33 +7,37 @@
   "engines": {
     "node": "~0.10.12"
   },
+  "optionalDependenices": {
+    "consumare": "~0.1.0",
+    "maestro": "~0.1.0"
+  },
   "dependencies": {
     "backbone": "~1.1.2",
     "backbone.layoutmanager": "~0.9.5",
-    "cheerio": "~0.16.0",
-    "combyne": "~0.3.7",
-    "highlight.js": "~8.0.0",
+    "bluebird": "~2.3.2",
+    "cheerio": "~0.17.0",
+    "combynexpress": "~0.3.0",
+    "express": "~4.9.4",
+    "highlight.js": "~8.2.0",
+    "i18n": "~0.5.0",
     "marked": "~0.3.2",
-    "rss": "~0.3.2",
+    "moment": "~2.8.3",
     "nodegit": "~0.1.4",
-    "express": "~4.4.0",
-    "request": "~2.36.0",
-    "moment": "~2.6.0",
-    "stylus": "~0.45.1",
-    "q": "~1.0.1",
-    "consumare": "~0.1.0"
+    "request": "~2.44.0",
+    "rss": "~0.3.2",
+    "stylus": "~0.49.0"
   },
   "devDependencies": {
     "grunt": "~0.4.5",
-    "grunt-express-server": "~0.4.17",
+    "grunt-express-server": "~0.4.19",
     "grunt-contrib-watch": "~0.6.1",
-    "grunt-contrib-clean": "~0.5.0",
-    "grunt-contrib-stylus": "~0.16.0",
-    "grunt-contrib-cssmin": "~0.9.0",
+    "grunt-contrib-clean": "~0.6.0",
+    "grunt-contrib-stylus": "~0.20.0",
+    "grunt-contrib-cssmin": "~0.10.0",
     "grunt-zopfli": "~0.3.2",
-    "grunt-rsync": "~0.6.0",
-    "request": "~2.36.0",
-    "cheerio": "~0.16.0"
+    "grunt-rsync": "~0.6.2",
+    "request": "~2.44.0",
+    "cheerio": "~0.17.0"
   },
   "site": {
     "title": "Tim Branyen @tbranyen",
