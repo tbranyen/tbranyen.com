@@ -25,7 +25,9 @@ function showPost(req, res) {
 
   // Fetch the associated post content from the Git content repository.  This
   // will return the content and any revisions.
-  consumare.assemble(postPath, sha, function(html, revs) {
+  consumare.assemble(postPath, sha, function(html, revs, filename) {
+    revs = revs || [];
+
     var max = 0;
 
     res.render("post", {

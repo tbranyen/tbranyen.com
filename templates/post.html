@@ -2,18 +2,20 @@
 <section class="post-page">
   <div class="post">
     <div class="preamble">
-      <div class="stats">
-        {%each revs as rev%}
-          <div>
-          {%--
-            <a href="{{rev.url}}" title="{{rev.sha}}">{{rev.sha}}</a>
-              <div class="added" style="height: {{rev.stats.added}}%"></div>
-              <div class="modified" style="height: {{rev.stats.modified}}%"></div>
-              <div class="deleted" style="height: {{rev.stats.deleted}}%"></div>
-            </a>
-          --%}
-          </div>
-        {%endeach%}
+      <div class="menu">
+        <div class="stats">
+          {%each revs as rev%}
+            <div>
+            {%--
+              <a href="{{rev.url}}" title="{{rev.sha}}">{{rev.sha}}</a>
+                <div class="added" style="height: {{rev.stats.added}}%"></div>
+                <div class="modified" style="height: {{rev.stats.modified}}%"></div>
+                <div class="deleted" style="height: {{rev.stats.deleted}}%"></div>
+              </a>
+            --%}
+            </div>
+          {%endeach%}
+        </div>
       </div>
 
       <p><span class="date">{{post.posted|formatDate}}</span></p>
