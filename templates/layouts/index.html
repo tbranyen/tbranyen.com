@@ -25,36 +25,8 @@
 
 <body>
   <div id="container">
-    <header>
-      <div class="inner-header">
-        <span>Hi! My name is </span>
-        <a href="https://twitter.com/tbranyen"><strong>Tim Branyen</strong></a> & I am a
-        <strong>skydiver</strong>,
-        an open source developer at
-        <a href="http://bocoup.com/"><strong>bocoup</strong></a>, and a maintainer of
-        <a href="http://github.com/tbranyen"><strong>open-source</strong></a> projects.
-      </div>
-    </header>
-
-    <nav class="preamble">
-      <p>
-        <a class="nav return {{posts_active}}" href="/">Posts</a>
-        <!--
-        <span class="divider">&bull;</span>
-        <a class="nav return {{projects_active}}" href="/projects">Projects</a>
-        <span class="divider">&bull;</span>
-        <a class="nav return {{talks_active}}" href="/talks">Talks</a>
-        -->
-      </p>
-      <hr>
-    </nav>
-
     {%partial content%}
-
-    <footer>
-      <hr>
-      Fork the <a target="_blank" href="https://github.com/tbranyen/site-content/">content</a> of this <a target="_blank" href="https://github.com/tbranyen/tbranyen.com">site</a>, it's <a target="blank" href="http://unlicense.org/">public domain</a>!
-    </footer>
+  </div>
 </body>
 
 {%if node_env == "production"%}

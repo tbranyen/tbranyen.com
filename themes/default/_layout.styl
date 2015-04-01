@@ -3,6 +3,23 @@
 #container
   overflow hidden
 
+#container .home
+  display block
+  background #3F3F3F
+  position absolute
+  top 0
+  left 0
+  padding 5px
+  padding-bottom 0px
+  border-color #EEEEEE
+  transition border-width linear .2s
+  border 0px solid #EEEEEE
+
+  &:hover
+    border-width 15px
+    border-left-width 0px
+    border-top-width 0px
+
 header
   background header-background
   color header-color
@@ -65,3 +82,20 @@ footer
 
     &:hover, &:active
       opacity 1
+
+.menu
+  .t
+    padding 1rem
+    color #EDEDED
+    font-weight bold
+    font-size 3rem
+    line-height 4rem
+    text-align center
+
+  .im
+    padding 1rem
+    color #EDEDED
+    font-weight bold
+    font-size 3rem
+    line-height 4rem
+    text-align center
