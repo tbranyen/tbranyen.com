@@ -8,7 +8,7 @@ var extmap = {
 };
 
 // Convert scripts to GitHub flavored markdown
-module.exports = function(val) {
+module.exports = function(val, lang) {
   var type = val.split(".").pop();
   var codeBlock = "<pre><code>";
   var post = consumare.config.content.repo + path.dirname(filePath);
@@ -16,7 +16,8 @@ module.exports = function(val) {
   var ext = path.extname(val);
 
   try {
-    codeBlock += hl.highlight(extmap[ext] || "text", source).value;
+    var LANG = lang || extmap[ext] || "text";
+    codeBlock += hl.highlight(LANG, source).value;
     codeBlock += "</code></pre>";
   }
   catch (ex) {

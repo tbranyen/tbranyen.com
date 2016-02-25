@@ -11,29 +11,31 @@
     "consumare": "~0.1.0"
   },
   "devDependencies": {
-    "backbone": "^1.1.2",
-    "backbone.layoutmanager": "^0.9.5",
-    "bluebird": "^2.3.11",
-    "cheerio": "^0.18.0",
-    "combynexpress": "^0.6.2",
-    "express": "^4.10.2",
+    "backbone": "^1.2.3",
+    "backbone.layoutmanager": "^0.10.0",
+    "bluebird": "^3.2.1",
+    "cheerio": "^0.20.0",
+    "combynexpress": "^2.0.0",
+    "consumare": "0.1.0-alpha.1",
+    "express": "^4.13.4",
     "grunt": "^0.4.5",
     "grunt-codeblock-jshint": "git://github.com/kadamwhite/grunt-codeblock-jshint",
-    "grunt-contrib-clean": "^0.6.0",
-    "grunt-contrib-cssmin": "^0.10.0",
-    "grunt-contrib-stylus": "^0.20.0",
+    "grunt-contrib-clean": "^0.7.0",
+    "grunt-contrib-cssmin": "^0.14.0",
+    "grunt-contrib-stylus": "^1.0.0",
     "grunt-contrib-watch": "^0.6.1",
-    "grunt-express-server": "^0.4.19",
-    "grunt-rsync": "^0.6.2",
+    "grunt-express-server": "^0.5.1",
+    "grunt-rsync": "^1.0.1",
     "grunt-zopfli": "^0.3.2",
-    "highlight.js": "^8.3.0",
-    "i18n": "^0.5.0",
-    "marked": "^0.3.2",
-    "moment": "^2.8.3",
-    "nodegit": "nodegit/nodegit",
-    "request": "^2.48.0",
-    "rss": "^1.0.1",
-    "stylus": "^0.49.3"
+    "highlight.js": "^9.1.0",
+    "i18n": "^0.6.0",
+    "marked": "^0.3.5",
+    "moment": "^2.11.2",
+    "nodegit": "^0.11.0",
+    "q": "^1.4.1",
+    "request": "^2.69.0",
+    "rss": "^1.2.1",
+    "stylus": "^0.53.0"
   },
   "site": {
     "title": "Tim Branyen @tbranyen",
@@ -49,8 +51,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "highlight.js": "^8.4.0",
-    "normalize.css": "^3.0.2"
+    "highlight.js": "^9.1.0",
+    "normalize.css": "^3.0.3"
   },
   "scripts": {
     "start": "grunt"

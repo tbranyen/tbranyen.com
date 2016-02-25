@@ -52,6 +52,22 @@ a
     &:not(.no-border)
       box-shadow 0 0 0.3rem #949493
 
+  ul li
+    display table
+    line-height 40px
+
+    &:before
+      content '•'
+      position relative
+      left -15px
+      color #E1A16F
+
+    &:after
+      content ' '
+      display block
+      width: 100%
+      height 1px
+
   .instapaper_title
     font-size 3rem
     line-height 4rem

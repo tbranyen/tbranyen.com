@@ -15,6 +15,6 @@ module.exports = ->
         "stylus"
         "cssmin"
       ]
-      
+
       options:
-        livereload: true
+        livereload: if process.env.LIVERELOAD == "false" then false else true
