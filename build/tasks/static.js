@@ -24,7 +24,7 @@ function parsePage(url, path, options, callback) {
     };
 
     // Save all images.
-    var images = $("img"); 
+    var images = $("img");
 
     images.each(function() {
       var img = {
@@ -44,7 +44,7 @@ function parsePage(url, path, options, callback) {
 
     // Iterate over every page here.
     var anchors = $("a");
-    
+
     // Remove all external pages and initial page.
     anchors.filter(function() {
       var href = this.attribs.href;
@@ -93,7 +93,7 @@ module.exports = function(grunt) {
     });
 
     // Start the counter at 1 for the initial request.
-    options.counter = 1;
+    options.counter = 0;
 
     // Place to store pages.
     options.pages = [];

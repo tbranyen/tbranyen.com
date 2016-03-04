@@ -4,7 +4,7 @@ module.exports = ->
   @config "rsync",
     options:
       src: "."
-      host: "tbranyen.com"
+      host: "tim@tbranyen.com"
       recursive: true
       syncDestIgnoreExcl: true
 
