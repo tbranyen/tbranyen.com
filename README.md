@@ -24,8 +24,7 @@ I've implemented several specific ideas that may be useful for you:
 * Static generation if you don't want to run the above server.
 * Grunt-based workflow taking advantage of LiveReload. 
 * Theming and easy configuration to customize on your own.
-* Optimization of HTML, CSS, and JavaScript.
-* Internationalization support.
+* HTML, CSS, and JavaScript optimizations.
 
 ### Getting started ###
 
@@ -45,15 +44,8 @@ cd my-site
 Install the dependencies:
 
 ``` bash
-# Ensure you have the Grunt CLI and Bower installed globally.  You may need to
-# run this command with elevated privileges:
-npm install -g grunt-cli bower
-
 # Ensure all NPM dependencies are installed.
 npm install
-
-# Ensure all Bower dependencies are installed.
-bower install
 ```
 
 Run the server:
@@ -61,7 +53,7 @@ Run the server:
 ``` bash
 # This will compile all Stylus, run a web server on port 1987, and
 # automatically refresh the server when files change.
-grunt
+npm start
 ```
 
 Open your browser to [http://localhost:1987](http://localhost:1987) to view the
