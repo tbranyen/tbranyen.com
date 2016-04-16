@@ -1,20 +1,17 @@
 Tim Branyen
 ===========
 
-Boston, MA
+San Francisco, CA
 
 ### About ###
 
-This project was released because I enjoy sharing my source code.
+This project is open source because I enjoy sharing my source code.
 
 I started with the idea of content being stored in Git instead of a traditional
-database.  The content would then be fetched and versioned by the commit SHA.
-This is opposed to traditional URLs that are fixed on title and date.  The
-commit SHA aligns with the content in an open repository that anyone may fork
-and update.
-
-Development of this site began in 2011 and has been put through many rewrites.
-It is now in a reasonable form for reference or reuse.
+database. Not really novel or unique these days, but I thought it was a cool
+idea back in 2011. The content would be fetched and versioned by the commit
+SHA. This allows for tracking edits and citing precise versions of the content.
+This is opposed to traditional URLs that are fixed on title and date.
 
 ### What can this framework do for me? ###
 
