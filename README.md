@@ -59,13 +59,6 @@ npm start
 Open your browser to [http://localhost:1987](http://localhost:1987) to view the
 contents.
 
-Building:
-
-``` bash
-# This will generate static assets and optimize all styles and scripts.
-grunt build
-```
-
 ### Setting up a content repo ###
 
 The website framework has been designed to load an external Git repository of
@@ -132,14 +125,6 @@ Can be modified within the root templates directory.  They are using the
 [Combyne](https://github.com/tbranyen/combyne) template engine.  You can use
 this to add custom partials and filters.
 
-#### Partials ####
+### License ###
 
-[More information will go here.]
-
-#### Filters ####
-
-[More information will go here.]
-
-### Technical details ###
-
-### Stack ###
+MIT 2016 Tim Branyen
