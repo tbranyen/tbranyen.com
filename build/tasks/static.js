@@ -24,7 +24,7 @@ function parsePage(url, path, options, callback) {
     };
 
     // Save all images.
-    var images = $("img");
+    var images = $("img[src]");
 
     images.each(function() {
       var img = {
@@ -40,6 +40,25 @@ function parsePage(url, path, options, callback) {
       });
 
       options.pages.push(img);
+    });
+
+    // Save all scripts.
+    var scripts = $("script[src]");
+
+    scripts.each(function() {
+      var script = {
+        src: $(this).attr("src")
+      };
+
+      options.counter += 1;
+
+      // Fetch the image and save the contents.
+      request("http://" + url + script.href, function(err, resp, body) {
+        options.counter -= 1;
+        script.html = body;
+      });
+
+      options.pages.push(script);
     });
 
     // Iterate over every page here.
