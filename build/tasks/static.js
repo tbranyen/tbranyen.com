@@ -9,94 +9,70 @@ request = request.defaults({ encoding: null });
 function parsePage(url, path, options, callback) {
   console.log("Processing", "http://" + url + path);
 
-  request("http://" + url + path, function(err, resp, body) {
-    if (err) {
-      console.error(err, resp);
-      return;
-    }
-
-    var root = resp.request.path !== "/" ? resp.request.path : "/index";
-
-    var $ = cheerio.load(body.toString());
-
-    var page = {
-      href: root + ".html"
-    };
-
-    // Save all images.
-    var images = $("img[src]");
-
-    images.each(function() {
-      var img = {
-        href: $(this).attr("src")
-      };
-
-      options.counter += 1;
-
-      // Fetch the image and save the contents.
-      request("http://" + url + img.href, function(err, resp, body) {
-        options.counter -= 1;
-        img.html = body;
-      });
-
-      options.pages.push(img);
-    });
-
-    // Save all scripts.
-    var scripts = $("script[src]");
-
-    scripts.each(function() {
-      var script = {
-        src: $(this).attr("src")
-      };
-
-      options.counter += 1;
-
-      // Fetch the image and save the contents.
-      request("http://" + url + script.href, function(err, resp, body) {
-        options.counter -= 1;
-        script.html = body;
-      });
-
-      options.pages.push(script);
-    });
-
-    // Iterate over every page here.
-    var anchors = $("a");
-
-    // Remove all external pages and initial page.
-    anchors.filter(function() {
-      var href = this.attribs.href;
-      return href.indexOf("/") === 0 && href !== path;
-    }).each(function() {
-      var href = $(this).attr("href");
-
-      // Update the document.
-      $(this).attr("href", (href === "/" ? href + "index" : href) + ".html");
-
-      // Don't re-process the same urls.
-      if (seen.indexOf(href) === -1) {
-        parsePage(url, href, options, callback);
-        seen.push(href);
-
-        // Increment every new request.
-        options.counter += 1;
+  return new Promise(function(resolve, reject) {
+    request("http://" + url + path, function(err, resp, body) {
+      if (err) {
+        err.url = "http://" + url + path;
+        console.log('Failed to fetch %s', err.url);
+        return reject(err);
       }
+
+      var root = resp.request.path !== "/" ? resp.request.path : "/index";
+      var $ = cheerio.load(body.toString());
+
+      var page = {
+        href: root + ".html"
+      };
+
+      // Save all assets.
+      var assetPromises = $("img[src], script[src]").map(function() {
+        var asset = {
+          href: $(this).attr("src")
+        };
+
+        options.pages.push(asset);
+
+        // Fetch the image and save the contents.
+        return new Promise(function(resolve, reject) {
+          request("http://" + url + asset.href, function(err, resp, body) {
+            if (err) { return reject(err); }
+            asset.html = body;
+            resolve(body);
+          });
+        });
+      }).get();
+
+      // Iterate over every page here.
+      var anchors = $("a");
+
+      // Remove all external pages and initial page.
+      var anchorPromises = anchors.filter(function() {
+        var href = this.attribs.href;
+        return href.indexOf("/") === 0 && href !== path;
+      }).map(function() {
+        var href = $(this).attr("href");
+
+        // Update the document.
+        $(this).attr("href", (href === "/" ? href + "index" : href) + ".html");
+
+        // Don't re-process the same urls.
+        if (seen.indexOf(href) === -1) {
+          seen.push(href);
+          return parsePage(url, href, options, callback);
+        }
+      }).get();
+
+      // Add the correct contents.
+      page.html = $.html();
+
+      // Add to all pages.
+      options.pages.push(page);
+
+      Promise.all([].concat(assetPromises, anchorPromises)).then(
+        resolve,
+        reject
+      );
     });
-
-    // Add the correct contents.
-    page.html = $.html();
-
-    // Add to all pages.
-    options.pages.push(page);
-
-    // Decrement this completed request.
-    options.counter -= 1;
-
-    // Once all callbacks have completed, trigger main callback.
-    if (!options.counter) {
-      callback();
-    }
   });
 }
 
@@ -111,20 +87,29 @@ module.exports = function(grunt) {
       out: "dist"
     });
 
-    // Start the counter at 1 for the initial request.
-    options.counter = 0;
-
     // Place to store pages.
     options.pages = [];
 
-    // Start crawling the site.
-    parsePage(options.host + ":" + options.port, options.path, options, function() {
+    var url = options.host + ":" + options.port;
+    var retry = 1;
+
+    function success() {
       options.pages.forEach(function(page) {
         grunt.file.write(options.out + page.href, page.html, {
           encoding: null
         });
       });
+
       done();
-    });
+    }
+
+    // Start crawling the site.
+    parsePage(url, options.path, options).then(success).catch(function(err) {
+      return new Promise(function(resolve, reject) {
+        setTimeout(function() {
+          parsePage(url, options.path, options).then(success, reject);
+        }, 500);
+      });
+    }).then(done, done);;
   });
 };
