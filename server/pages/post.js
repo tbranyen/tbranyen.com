@@ -55,7 +55,7 @@ function showPost(req, res) {
         return rev;
       }).reverse(),
 
-      title: post.get("title") + config.title,
+      title: post.get("title") + ' - ' + config.title,
       posts_active: "active",
       node_env: process.env.NODE_ENV
     });
