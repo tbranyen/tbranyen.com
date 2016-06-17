@@ -35,6 +35,7 @@ function showPost(req, res) {
       post: post.toJSON(),
       content: html,
       url: req.url,
+      slug: post.get("slug"),
       node_env: process.env.NODE_ENV,
 
       revs: revs.map(function(rev) {
