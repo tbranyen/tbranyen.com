@@ -19,7 +19,7 @@ site.set("views", localdir("../templates"));
 site.set("env", "test");
 
 // Serve static files.
-staticDirs.forEach(function(name) {
+staticDirs.forEach(name => {
   site.use("/" + name, express.static(path.resolve(name)));
 });
 

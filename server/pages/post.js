@@ -71,7 +71,7 @@ function showPost(req, res) {
  */
 function postAssets(req, res) {
   // FIXME Untangle this.
-  var post = "/../content/posts/" + posts.get(req.params.id).toJSON().path;
+  var post = "/../" + config.content.repo + "/posts/" + posts.get(req.params.id).toJSON().path;
 
   // The actual asset path
   var assetPath = req.params[0];

@@ -7,7 +7,7 @@ var Post = Backbone.Model.extend({
     this.set({ slug: this.slugify() });
   },
 
-  slugify: function(title) {
+  slugify: function() {
     return this.get("title").toLowerCase().replace(/ /g, "-")
       .replace(/[^\w-]+/g, "");
   }
