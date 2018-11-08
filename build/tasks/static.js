@@ -1,6 +1,7 @@
 var request = require("request");
 var cheerio = require("cheerio");
 var grunt = require("grunt");
+const waitForPort = require("wait-for-port");
 
 var seen = [];
 
@@ -13,7 +14,7 @@ function parsePage(url, path, options, callback) {
     request("http://" + url + path, function(err, resp, body) {
       if (err) {
         err.url = "http://" + url + path;
-        console.log('Failed to fetch %s', err.url);
+        console.log("Failed to fetch %s", err.url);
         return reject(err);
       }
 
@@ -29,6 +30,10 @@ function parsePage(url, path, options, callback) {
         var asset = {
           href: $(this).attr("src")
         };
+
+        if (asset.href.indexOf("http") === 0) {
+          return;
+        }
 
         options.pages.push(asset);
 
@@ -106,10 +111,23 @@ module.exports = function(grunt) {
     // Start crawling the site.
     parsePage(url, options.path, options).then(success).catch(function(err) {
       return new Promise(function(resolve, reject) {
-        setTimeout(function() {
-          parsePage(url, options.path, options).then(success, reject);
-        }, 500);
+        // Wait for the server to start.
+        waitForPort("localhost", 1987, err => {
+          parsePage(url, options.path, options).then(resolve, reject);
+        });
       });
-    }).then(done, done);;
+    })
+    .then(() => new Promise((resolve, reject) => {
+      request("http://localhost:1987/rss.xml", (err, resp, body) => {
+        if (err) { return reject(err); }
+
+        grunt.file.write(options.out + "/rss.xml", body, {
+          encoding: null
+        });
+
+        resolve();
+      });
+    }))
+    .then(done, done);;
   });
 };

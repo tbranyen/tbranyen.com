@@ -6,7 +6,7 @@ const request = require("request");
 const moment = require("moment");
 const RSS = require("rss");
 const i18n = require("i18n");
-const posts = require("./collections/posts").posts;
+const posts = require("./collections/posts");
 
 var site = express();
 var staticDirs = ["public", "themes", "bower_components"];
@@ -41,7 +41,7 @@ paths.forEach(function(path) {
 
 // Serve RSS.
 site.get("/rss.xml", function(req, res) {
-  res.writeHead(200, { "Content-Type": "application/rss+xml" });
+  res.type('rss');
   res.end(posts.rss());
 });
 
