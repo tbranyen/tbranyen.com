@@ -41,7 +41,7 @@ paths.forEach(function(path) {
 
 // Serve RSS.
 site.get("/rss.xml", function(req, res) {
-  res.type('rss');
+  res.type("rss");
   res.end(posts.rss());
 });
 

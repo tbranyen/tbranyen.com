@@ -113,7 +113,9 @@ module.exports = function(grunt) {
       return new Promise(function(resolve, reject) {
         // Wait for the server to start.
         waitForPort("localhost", 1987, err => {
-          parsePage(url, options.path, options).then(resolve, reject);
+          parsePage(url, options.path, options)
+            .then(success)
+            .then(resolve, reject);
         });
       });
     })
