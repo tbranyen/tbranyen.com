@@ -13,7 +13,7 @@
     "bluebird": "^3.5.1",
     "cheerio": "^1.0.0-rc.2",
     "combynexpress": "^3.0.0",
-    "consumare": "^2.0.0",
+    "consumare": "^2.0.1",
     "express": "^4.16.2",
     "grunt": "^1.0.1",
     "grunt-codeblock-jshint": "^0.3.0",
